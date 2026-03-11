@@ -1,0 +1,1205 @@
+/* =================================
+   ANA STİL DOSYASI
+   TEMA: DERİN MAVİ & NEON VURGULU GECE MODU (Varsayılan) + AYDINLIK MOD (Cilalanmış)
+   Bu dosya, web sitesinin tüm görsel stilini yönetir. Hem karanlık hem de aydınlık tema için
+   gerekli tüm kuralları ve değişkenleri içerir.
+   ================================= */
+
+/* =================================
+   İÇE AKTARMALAR (IMPORTS)
+   Gerekli dış kaynakları (örneğin yazı tipleri) projeye dahil eder.
+   ================================= */
+
+/* Google Fonts'tan Poppins yazı tipini (400, 600, 700 kalınlıklarında) içe aktarır */
+/* Poppins, modern ve okunabilir bir yazı tipidir ve projenin genel estetiğine uygundur. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+
+/* =================================
+   CSS DEĞİŞKENLERİ (VARIABLES)
+   Tekrar tekrar kullanılan değerleri (renkler, boşluklar vb.) merkezi bir yerde tanımlar.
+   Bu, tema yönetimini ve genel tutarlılığı kolaylaştırır.
+   ================================= */
+
+/* :root seçicisi, değişkenlerin tüm belge için geçerli (global) olmasını sağlar */
+:root {
+    /* === Renk Paleti - KARANLIK TEMA (Varsayılan) === */
+    /* Karanlık tema, modern bir görünüm sunar ve genellikle gece kullanımı için daha rahattır. */
+    --bg-primary: #111827;       /* Ana (en dış) arka plan rengi - Koyu Mavi/Gri */
+    --bg-secondary: #1F2937;    /* İkincil (sol sütun, kartlar vb.) arka plan rengi - Biraz daha açık Mavi/Gri */
+    --bg-tertiary: #374151;     /* Üçüncül (hover, bazı kenarlıklar vb. için kullanılan) arka plan/renk - Orta Gri */
+    --text-primary: #F3F4F6;   /* Ana metin rengi (başlıklar, önemli metinler) - Çok Açık Gri */
+    --text-secondary: #9CA3AF; /* İkincil metin rengi (paragraflar, daha soluk metinler) - Açık Gri */
+    --accent-primary: #22D3EE;       /* Ana vurgu rengi (linkler, ikonlar, kenarlıklar) - Parlak Neon Mavi */
+    --accent-primary-darker: #0BC5EA;/* Vurgu renginin biraz daha koyu tonu (hover vb. için) */
+    --border-color: #4B5563;         /* Genel kenarlık rengi - Koyu Gri */
+    --footer-bg: #1F2937;           /* Footer (alt bilgi) bölümünün arka plan rengi - İkincil arka planla aynı */
+    --footer-text: #9CA3AF;         /* Footer metin rengi - İkincil metinle aynı */
+    --shadow-glow: 0 0 15px rgba(34, 211, 238, 0.15); /* Vurgu rengiyle oluşturulan hafif parlama efekti */
+    --shadow-soft: 0 5px 15px rgba(0, 0, 0, 0.2);     /* Yumuşak, hafif koyu kutu gölgesi */
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.25);  /* Orta seviyede koyu kutu gölgesi */
+    --shadow-strong: 0 12px 35px rgba(0, 0, 0, 0.3);  /* Güçlü, belirgin koyu kutu gölgesi */
+
+    /* İç gölge efekti için değişken - Daha geniş ve yumuşak hale getirildi */
+    /* Orijinal: inset 7px 0 15px -6px rgba(34, 211, 238, 0.15); */
+    --inset-glow-shadow: inset 10px 0 25px -5px rgba(34, 211, 238, 0.18); /* Yatay ofset, bulanıklık, yayılma ve opaklık artırıldı */
+
+    --highlight-bg: rgba(34, 211, 238, 0.05); /* Vurgulanan metin (span.highlight) için arka plan rengi */
+    --table-header-bg: rgba(55, 65, 81, 0.7);  /* Eğitim tablosu başlık satırı arka plan rengi */
+    --table-row-hover-bg: #374151;             /* Eğitim tablosu satırının üzerine gelindiğinde arka plan rengi */
+    --quote-icon-color: var(--accent-primary); /* Alıntı bölümündeki tırnak işareti ikonunun rengi */
+    --control-text: var(--text-secondary);     /* Tema/Dil kontrol butonlarının varsayılan metin/ikon rengi */
+    --control-hover-text: var(--text-primary); /* Tema/Dil kontrol butonlarının üzerine gelindiğinde metin/ikon rengi */
+    --control-hover-bg: rgba(55, 65, 81, 0.5); /* Tema/Dil kontrol butonlarının üzerine gelindiğinde hafif arka plan rengi */
+    --control-active-text: var(--accent-primary); /* Aktif olan dil seçici butonunun metin rengi */
+    --scrolltop-color: var(--bg-primary);      /* Yukarı çık butonunun ikon rengi (Karanlık temada koyu arka plan üzerinde açık renk ikon yerine, ana arka plan rengini kullanmak kontrastı artırır) */
+    /* --list-number-color: var(--bg-primary); // Bu değişken artık kullanılmadığı için yorum satırına alındı. */
+
+    /* Geçiş Süreleri - Animasyonların hızını kontrol eder */
+    --transition-speed: 0.3s;       /* Standart animasyon geçiş süresi */
+    --transition-speed-fast: 0.2s;  /* Hızlı animasyon geçiş süresi (hover efektleri vb. için) */
+    --transition-speed-slow: 0.5s;  /* Yavaş animasyon geçiş süresi (Tema değişimi gibi daha belirgin geçişler için) */
+}
+
+
+/* =================================
+   AYDINLIK TEMA DEĞİŞKENLERİ (CİLALANDI VE KONTRAST AYARLANDI)
+   Aydınlık tema, daha geleneksel bir web deneyimi sunar ve genellikle daha iyi okunabilirlik sağlar.
+   Renkler, WCAG kontrast yönergelerine uygun olacak şekilde ayarlanmıştır.
+   ================================= */
+
+/* body elementine JS tarafından data-theme='light' özniteliği eklendiğinde bu değişkenler aktif olur */
+body[data-theme='light'] {
+    /* === Renk Paleti - AYDINLIK TEMA (Cilalanmış ve Kontrastı Ayarlanmış) === */
+    /* Arka Plan Renkleri (Daha Yumuşak Tonlar) */
+    --bg-primary: #FDFDFD;       /* Çok çok açık gri, beyaza yakın ana arka plan */
+    --bg-secondary: #FFFFFF;     /* Beyaz (Kartlar, sol sütun vb. için ikincil arka plan) */
+    --bg-tertiary: #F0F0F0;      /* Açık gri (Hover, kenarlık alt tonları vb. için üçüncül renk) */
+
+    /* Metin Renkleri (Daha Okunabilir) */
+    --text-primary: #1A202C;    /* Daha koyu, doygun siyah/gri ana metin rengi (kontrastı artırır) */
+    --text-secondary: #4A5568;  /* Orta tonlu, okunabilir gri ikincil metin rengi */
+
+    /* Vurgu Renkleri (Kontrast İçin Ayarlandı) */
+    --accent-primary: #0062cc;       /* Biraz daha koyu, okunabilir mavi (Beyaz arka plan üzerinde yeterli kontrast sağlar - Kontrast Oranı: 4.86:1) */
+    --accent-primary-darker: #004c9e;/* Vurgu renginin daha koyu tonu (Hover durumları için) */
+
+    /* Diğer Renkler */
+    --border-color: #E2E8F0;          /* Daha yumuşak, açık gri kenarlık rengi */
+    --footer-bg: #F8F9FA;            /* Footer için çok açık gri arka plan */
+    --footer-text: #6C757D;          /* Footer için biraz daha açık gri metin rengi */
+
+    /* Gölgeler (Yeni vurgu rengine ve açık temaya göre güncellendi) */
+    --shadow-glow: 0 0 15px rgba(0, 98, 204, 0.15); /* Aydınlık tema için mavi parlama */
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);     /* Daha hafif gölgeler */
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-strong: 0 8px 20px rgba(0, 0, 0, 0.1);
+
+    /* İç gölge efekti için değişken (Aydınlık Tema) - Daha geniş ve yumuşak hale getirildi */
+    /* Orijinal: inset 7px 0 15px -6px rgba(0, 98, 204, 0.12); */
+    --inset-glow-shadow: inset 10px 0 25px -5px rgba(0, 98, 204, 0.15); /* Yatay ofset, bulanıklık, yayılma ve opaklık artırıldı */
+
+    /* Özel Eleman Renkleri (Yeni vurgu rengine göre güncellendi) */
+    --highlight-bg: rgba(0, 98, 204, 0.1); /* Vurgulu metin arka planı (Açık mavi) */
+    --table-header-bg: #F1F3F5;            /* Tablo başlığı için açık gri */
+    --table-row-hover-bg: #F8F9FA;         /* Tablo satırı üzerine gelince çok açık gri */
+    --quote-icon-color: var(--accent-primary); /* Alıntı ikonu rengi (Aydınlık tema vurgu rengi) */
+    --control-text: var(--text-secondary);     /* Kontrol metin/ikon rengi */
+    --control-hover-text: var(--text-primary); /* Kontrol hover metin/ikon rengi */
+    --control-hover-bg: rgba(222, 226, 230, 0.5); /* Açık tema hover arka planı (Hafif Gri) */
+    --control-active-text: var(--accent-primary); /* Aktif dil butonu rengi (Artık yeterli kontrast sağlıyor) */
+    --scrolltop-color: #FFFFFF;                 /* Yukarı çık butonu ikon rengi (Mavi arka plan üzerinde Beyaz) */
+     /* --list-number-color: #FFFFFF; // Bu değişken artık kullanılmadığı için yorum satırına alındı. */
+}
+
+
+/* =================================
+   GENEL STİLLER VE RESETLEME
+   Tarayıcı varsayılan stillerini sıfırlar ve temel sayfa ayarlarını yapar.
+   ================================= */
+
+/* Tüm elementler (*) için temel sıfırlama ve varsayılan ayarlar */
+* {
+    margin: 0; /* Dış boşlukları sıfırla */
+    padding: 0; /* İç boşlukları sıfırla */
+    box-sizing: border-box; /* Kutu modeli: padding ve border genişliğe/yüksekliğe dahil edilir. Bu, layout yönetimini kolaylaştırır. */
+    scroll-behavior: smooth; /* Sayfa içi linklere tıklandığında yumuşak bir kaydırma animasyonu sağlar. */
+    /* Tema değişimi için tüm elementlere yavaş geçiş (box-shadow eklendi) */
+    /* Renk, arka plan, kenarlık ve gölge değişikliklerinin animasyonlu olmasını sağlar. */
+    transition: background-color var(--transition-speed-slow) ease,
+                color var(--transition-speed-slow) ease,
+                border-color var(--transition-speed-slow) ease,
+                box-shadow var(--transition-speed-slow) ease;
+}
+
+/* HTML kök elementi */
+html {
+    font-size: 100%; /* Tarayıcı varsayılan font boyutunu (genellikle 16px) temel alır. Bu, kullanıcıların kendi tarayıcı ayarlarını korur. */
+}
+
+/* Hafif Animasyonlu Arka Plan Tanımı */
+@keyframes subtleGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Sayfa gövdesi (body) */
+body {
+    font-family: 'Poppins', sans-serif; /* Ana yazı tipi ailesi */
+    background-color: var(--bg-primary); /* Değişkenlerden gelen ana arka plan rengi */
+    color: var(--text-secondary); /* Değişkenlerden gelen varsayılan metin rengi (genellikle paragraflar için) */
+    line-height: 1.7; /* Satırlar arası boşluk, okunabilirliği artırır */
+    padding: 0; /* Body etrafında gereksiz boşlukları kaldırır */
+    display: flex; /* Ana konteyneri ve footer'ı düzenlemek için Flexbox kullanılır */
+    flex-direction: column; /* Öğeleri dikey olarak sıralar (konteyner üste, footer alta) */
+    align-items: center; /* Ana konteyneri yatayda ortalar */
+    min-height: 100vh; /* Sayfanın en az ekran yüksekliği kadar olmasını sağlar, footer'ın sayfa sonunda kalmasına yardımcı olur */
+    letter-spacing: 0.5px; /* Harfler arası boşluğu hafifçe artırarak okunabilirliği iyileştirir */
+    overflow-x: hidden; /* Yatay kaydırma çubuğunun çıkmasını engeller */
+
+    /* Hafif Animasyonlu Arka Plan Uygulaması (Sadece geniş ekranlarda etkili olabilir) */
+    /* Çok hafif renk farkları olan büyük, yavaş hareket eden degrade arka plan */
+    background: linear-gradient(-45deg, var(--bg-primary), var(--bg-secondary), var(--bg-primary), var(--bg-tertiary));
+    background-size: 400% 400%; /* Degrade boyutunu büyüterek animasyon için daha fazla alan yaratır */
+    animation: subtleGradient 30s ease infinite; /* Tanımlanan animasyonu 30 saniyelik döngülerle uygular */
+}
+
+/* Ana İçerik Kapsayıcısı (.container) */
+/* Sol ve sağ sütunları içeren ana çerçeve */
+.container {
+    display: flex; /* İç sütunları (sol ve sağ) yan yana getirmek için Flexbox kullanılır */
+    max-width: 1200px; /* Konteynerin maksimum genişliğini sınırlar, çok geniş ekranlarda içeriğin yayılmasını önler */
+    width: 100%; /* Daha küçük ekranlarda tam genişlik kullanır */
+    background-color: var(--bg-secondary); /* Konteynerin kendi arka plan rengi (sol sütun ve potansiyel iç boşluklar için) */
+    border: 1px solid var(--border-color); /* İnce bir kenarlık ekler */
+    border-radius: 15px; /* Köşeleri yuvarlatarak daha yumuşak bir görünüm sağlar */
+    overflow: visible; /* Kontroller gibi dışarı taşabilecek öğelerin görünmesini sağlar */
+    margin: 50px 20px 0 20px; /* Üst (50px), yan (20px), alt (0) dış boşluklar. Alt boşluk footer ile ayarlanır. */
+    position: relative; /* İçindeki absolute konumlandırılmış öğeler (örn. kontroller) için referans noktası olur */
+    box-shadow: var(--shadow-medium); /* Orta seviyede bir gölge ekleyerek konteynere derinlik katar */
+    flex-grow: 1; /* Eğer body'de dikey boşluk varsa, konteynerin bu boşluğu doldurmasını sağlar */
+    /* Geçişler (Kenarlık, Gölge, Arka Plan Rengi) */
+    transition: border-color var(--transition-speed-fast) ease,
+                box-shadow var(--transition-speed-fast) ease,
+                background-color var(--transition-speed-slow) ease; /* Tema geçişi için yavaş arka plan rengi geçişi */
+}
+
+/* Başlık Stilleri (H1-H6) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Poppins', sans-serif; /* Başlıklar için de Poppins kullanılır */
+    color: var(--text-primary);         /* Ana metin rengi (daha belirgin) */
+    letter-spacing: 1px;                /* Başlıklarda harf aralığı biraz daha fazla */
+    font-weight: 700;                   /* Kalın yazı tipi ağırlığı */
+    margin-bottom: 20px;                /* Başlıkların altına varsayılan boşluk */
+}
+
+/* Başlık boyutları ve alt boşlukları (override) */
+h1 { font-size: clamp(2.1em, 5vw, 3em); line-height: 1.2; margin-bottom: 20px; } /* En büyük başlık, akışkan boyut */
+h2 { font-size: clamp(1.6em, 4vw, 2em); margin-bottom: 30px; } /* Bölüm başlıkları, daha fazla alt boşluk */
+h3 { font-size: clamp(1.3em, 3.5vw, 1.4em); margin-bottom: 15px; font-weight: 600; } /* Alt bölüm başlıkları, biraz daha az kalın */
+h4 { font-size: 1.1em; margin-bottom: 12px; font-weight: 600; } /* Daha küçük başlıklar (örn. Kategori başlıkları) */
+
+/* Link (<a>) Stilleri */
+a {
+    color: var(--accent-primary); /* Bağlantılar vurgu rengini alır */
+    text-decoration: none;        /* Varsayılan alt çizgiyi kaldırır */
+    /* Geçiş efektleri - Renk, gölge ve hafif pozisyon değişikliği için */
+    transition: color var(--transition-speed-fast) ease-in-out,
+                text-shadow var(--transition-speed-fast) ease,
+                transform var(--transition-speed-fast) ease; /* Mikro animasyon için transform eklendi */
+    border-radius: 2px; /* Odaklanma (focus) stili için hafif köşe yuvarlatma */
+}
+/* Link üzerine gelince (hover) */
+a:hover {
+    color: var(--accent-primary-darker); /* Rengi koyulaştır */
+    text-shadow: 0 0 8px var(--accent-primary); /* Hafif bir parlama efekti ekler */
+    opacity: 0.9; /* Çok hafif şeffaflık */
+    transform: translateY(-2px); /* Bağlantıyı hafifçe yukarı kaydırarak dikkat çeker */
+}
+/* Link tıklandığı an (active) */
+a:active {
+    transform: translateY(0); /* Tıklama anında yukarı kaydırma efektini sıfırlar */
+}
+/* Klavye ile linke odaklanınca (:focus-visible) */
+/* Fare ile tıklamayı değil, sadece klavye (örn. Tab tuşu) ile gezinmeyi hedefler, görsel kirliliği önler */
+a:focus-visible {
+    outline: 2px solid var(--accent-primary); /* Net bir dış çizgi ekleyerek odaklanan öğeyi belirtir */
+    outline-offset: 2px; /* Dış çizgi ile element arasına küçük bir boşluk ekler */
+}
+
+/* Genel Resim (<img>) Stilleri */
+img {
+    max-width: 100%; /* Resimlerin kendi konteynerlerinden taşmasını engeller */
+    height: auto;    /* Genişlik değiştiğinde oranın korunmasını sağlar */
+    display: block;  /* Resimlerin altında oluşabilecek istenmeyen boşlukları kaldırır */
+    border-radius: 8px; /* Resim köşelerini hafifçe yuvarlatır */
+}
+
+
+/* =================================
+   SOL SÜTUN (ASIDE - Profil vb.)
+   Kişisel bilgiler, profil resmi ve sosyal medya bağlantılarını içerir.
+   ================================= */
+
+/* Sol sütun (.left-column) flex container ayarları */
+.left-column {
+    flex: 0 0 340px; /* Sabit genişlik (büyümez, küçülmez, temel genişlik 340px) */
+    display: flex; /* İçeriği (profil resmi, bio, sosyal ikonlar) düzenlemek için Flexbox */
+    flex-direction: column; /* Öğeleri dikey olarak sıralar */
+    align-items: center; /* Öğeleri yatay eksende ortalar */
+    text-align: center; /* İçindeki metinleri ortalar */
+    padding: 40px; /* İç boşluklar */
+    background-color: var(--bg-secondary); /* Sol sütunun arka plan rengi */
+    transition: background-color var(--transition-speed-slow) ease,
+                box-shadow var(--transition-speed-slow) ease; /* Tema değişimi için geçişler */
+}
+
+/* Kişisel bilgi alanı (.personal-info) */
+.personal-info {
+    margin-top: 20px; /* Sol sütunun üst kısmında biraz boşluk bırakır */
+    width: 100%;      /* Sol sütunun tam genişliğini kullanır */
+}
+
+/* Profil resmi (.profile-picture) stilleri ve hover efekti */
+.profile-picture {
+    width: clamp(160px, 30vw, 210px); /* Genişliği ekran boyutuna göre ayarlar (min 160px, max 210px) */
+    height: clamp(160px, 30vw, 210px);/* Yüksekliği ekran boyutuna göre ayarlar */
+    border-radius: 50%; /* Tamamen yuvarlak bir görünüm sağlar */
+    object-fit: cover; /* Resmin oranını koruyarak alanı kaplamasını sağlar, gerekirse kırpar */
+    border: 5px solid var(--bg-tertiary); /* Resmin etrafına bir çerçeve ekler */
+    box-shadow: 0 0 20px rgba(8, 145, 178, 0.2); /* Neon mavi tonlarında hafif bir başlangıç gölgesi */
+    display: block; /* Blok element olarak davranmasını sağlar */
+    margin: 0 auto 35px auto; /* Yatayda otomatik ortalar ve altına 35px boşluk bırakır */
+    /* Geçiş efektleri - Boyut ve gölge değişiklikleri için */
+    transition: transform var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
+}
+/* Profil resminin üzerine gelince */
+.profile-picture:hover {
+    transform: scale(1.05) rotate(1deg); /* Resmi hafifçe büyütür ve döndürür */
+    box-shadow: var(--shadow-glow); /* Vurgulu parlama gölgesini uygular */
+}
+
+
+/* Biyografi alanı (.bio) */
+.bio {
+    font-size: 1.05em; /* Biraz daha büyük yazı tipi boyutu */
+    color: var(--text-secondary); /* İkincil metin rengi */
+    margin-bottom: 35px; /* Altına boşluk bırakır */
+    line-height: 1.8; /* Daha ferah satır yüksekliği */
+}
+
+/* Sosyal medya ikonları (.social-icons) */
+.social-icons {
+    display: flex; /* İkonları yan yana dizer */
+    justify-content: center; /* İkonları yatayda ortalar */
+    gap: 35px; /* İkonlar arasına boşluk bırakır */
+    margin-top: 15px; /* Üstüne boşluk bırakır */
+}
+/* Sosyal medya ikon linkleri */
+.social-icons a {
+    color: var(--text-secondary); /* İkonların varsayılan rengi */
+    font-size: clamp(1.8em, 4vw, 2em); /* İkon boyutunu ekran boyutuna göre ayarlar */
+    /* Geçiş efektleri - Pozisyon, renk ve gölge değişiklikleri için */
+    transition: transform var(--transition-speed-fast) ease-out,
+                color var(--transition-speed-fast) ease-out,
+                text-shadow var(--transition-speed-fast) ease;
+}
+/* Sosyal medya ikon linklerinin üzerine gelince */
+.social-icons a:hover {
+    color: var(--accent-primary); /* Rengi vurgu rengine değiştirir */
+    transform: translateY(-4px) scale(1.15); /* İkonu yukarı kaldırır ve büyütür */
+    text-shadow: 0 0 10px var(--accent-primary); /* Parlama efekti ekler */
+    opacity: 0.9; /* Hafif şeffaflık verir */
+}
+
+
+/* =================================
+   SAĞ SÜTUN (MAIN - Ana İçerik) & İÇERİK BLOKLARI
+   Hakkımda, Eğitim, Yetenekler gibi ana içerik bölümlerini barındırır.
+   ================================= */
+
+/* Sağ sütun (.right-column) */
+.right-column {
+    flex: 1; /* Sol sütun sabit genişlikte olduğu için kalan tüm alanı kaplar */
+    min-width: 0; /* Flexbox öğelerinin küçülürken taşmasını engeller */
+    padding: 50px 40px; /* İç boşluklar (üst/alt 50px, sağ/sol 40px) */
+    background-color: transparent; /* Body'nin animasyonlu arka planının görünmesini sağlar */
+}
+
+/* Genel içerik bloğu stilleri (.content-block) */
+/* Hakkımda, Eğitim, Yetenekler gibi her bir bölüm için ortak stil */
+.content-block {
+    background-color: transparent; /* Sağ sütun gibi şeffaf arka plan */
+    padding: 0; /* Dıştan padding sağ sütun tarafından verildiği için burada sıfırlanır */
+    margin-bottom: 55px; /* Bloklar arasına dikey boşluk ekler */
+    padding-left: 35px; /* İçeriği sola dayalı bir iç gölge efektiyle hizalamak için sol iç boşluk */
+    opacity: 0; /* Scroll animasyonu için başlangıçta görünmez yapar */
+    transform: translateY(40px); /* Scroll animasyonu için başlangıçta aşağıda konumlandırır */
+    /* İç gölge efekti - Bloklara hafif bir derinlik ve vurgu katar */
+    box-shadow: var(--inset-glow-shadow); /* CSS Değişkenleri bölümünde güncellendi */
+    border-radius: 8px; /* Gölgenin köşelerde düzgün görünmesi için hafif yuvarlatma */
+    /* Geçişler (Animasyon, Tema ve Gölge) */
+    transition: opacity 0.7s ease-out, /* Görünürlük animasyonu */
+                transform 0.7s ease-out, /* Pozisyon animasyonu */
+                box-shadow var(--transition-speed-slow) ease; /* Tema değişimi için gölge geçişi */
+}
+/* İçerik bloğu üzerine gelince */
+.content-block:hover {
+     transform: translateY(-2px) scale(1.005); /* Hafif bir yukarı kaydırma ve büyütme efekti */
+}
+/* İçerik bloğu ekrana girince (JavaScript ile .visible sınıfı eklenir) */
+.content-block.visible {
+    opacity: 1; /* Tamamen görünür yapar */
+    transform: translateY(0); /* Orijinal pozisyonuna getirir */
+}
+/* İçerik blokları için animasyon gecikmeleri */
+/* Blokların sırayla ekrana girmesini sağlar, daha akıcı bir görünüm sunar. */
+/* (Sıralama HTML'deki sıraya göre) */
+.content-block:nth-of-type(1).visible { transition-delay: 0.1s; } /* Hakkımda */
+.content-block:nth-of-type(2).visible { transition-delay: 0.15s; } /* Eğitim */
+.content-block:nth-of-type(3).visible { transition-delay: 0.2s; } /* Yetenekler */
+.content-block:nth-of-type(4).visible { transition-delay: 0.25s; } /* Gönüllülük */
+/* .content-block:nth-of-type(5) -> Alıntı bölümü, kendi animasyon kurallarına sahip olabilir */
+
+
+/* İçerik bloğu başlığı (.block-title) */
+.block-title {
+    margin-bottom: 18px; /* Başlığın altına boşluk ekler */
+    display: flex; /* Başlık ikonu ve metnini yan yana getirmek için Flexbox */
+    align-items: center; /* İkon ve metni dikeyde ortalar */
+    color: var(--text-primary); /* Başlık için ana metin rengi */
+}
+/* Başlık ikonu */
+.block-title .icon {
+    margin-right: 18px; /* İkon ile metin arasına boşluk koyar */
+    font-size: 1.1em; /* İkon boyutunu ayarlar */
+    color: var(--accent-primary); /* İkon için vurgu rengi */
+    width: auto; /* Genişliği içeriğe göre ayarlar */
+    /* Geçişler - Renk ve dönüşüm efektleri için */
+    transition: color var(--transition-speed-fast) ease,
+                transform var(--transition-speed-fast) ease;
+    /* Font Awesome fontunu ve kalınlığını zorla - Bazı durumlarda ikonların doğru görünmesi için */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+/* İçerik bloğuna hover olduğunda -> başlık ikonuna efekt uygula */
+.content-block:hover .block-title .icon {
+    color: var(--accent-primary-darker); /* Rengi koyulaştırır */
+    transform: rotate(5deg) scale(1.1); /* Hafifçe döndürür ve büyütür */
+}
+
+/* İçerik bloğu açıklama alanı (.block-description) */
+.block-description {
+    font-size: 1.05em; /* Açıklama metni için biraz daha büyük boyut */
+    color: var(--text-secondary); /* İkincil metin rengi */
+    line-height: 1.8; /* Daha ferah satır yüksekliği */
+}
+/* Açıklama içindeki paragraflar */
+.block-description p { margin-bottom: 1em; } /* Paragraflar arasına boşluk ekler */
+.block-description p:last-child { margin-bottom: 0; } /* Son paragrafın altına gereksiz boşluk eklemez */
+/* Gönüllülük gibi bölümlerdeki listeler */
+.block-description ul {
+    padding-left: 0; /* Varsayılan liste girintisini kaldırır */
+    list-style: none; /* Madde işaretlerini (bullet points) kaldırır */
+}
+/* Gönüllülük gibi bölümlerdeki liste elemanları */
+.block-description li {
+    margin-bottom: 10px; /* Liste elemanları arasına boşluk ekler */
+}
+/* Gönüllülük gibi bölümlerdeki kalın metinler */
+.block-description li strong {
+    color: var(--text-primary); /* Kalın metinler için ana metin rengi */
+    font-weight: 600; /* Yarı-kalın (semi-bold) */
+}
+
+/* Hakkımda bölümü özel stilleri */
+.about-me .block-description strong { color: var(--text-primary); font-weight: 600; } /* Kalın metin */
+.about-me .block-description em { color: var(--accent-primary); font-style: normal; } /* Eğik (italic) yerine vurgu rengi kullanır */
+
+/* Vurgulanan metin (.highlight) */
+/* Belirli anahtar kelimeleri veya becerileri görsel olarak ayırmak için kullanılır */
+.highlight {
+    color: var(--accent-primary); /* Vurgu rengi */
+    font-weight: 600; /* Yarı-kalın */
+    background-color: var(--highlight-bg); /* Çok hafif vurgu rengi arka planı */
+    padding: 2px 4px; /* Metin etrafında küçük iç boşluk */
+    border-radius: 3px; /* Hafif yuvarlak köşeler */
+    /* Tema geçişi */
+    transition: background-color var(--transition-speed-fast) ease,
+                color var(--transition-speed-fast) ease;
+}
+/* Açık temada vurgulanan metinlerin rengini ayarla (kontrast için) */
+body[data-theme='light'] .highlight {
+    color: var(--text-primary); /* Açık arka planda daha iyi okunabilirlik için ana metin rengini kullanır */
+}
+
+
+/* Eğitim Bilgileri Tablosu (.education-table) */
+.education-table {
+    width: 100%; /* Konteynerin tam genişliğini kaplar */
+    border-collapse: separate; /* Hücre kenarlıklarını ayırır, border-spacing kullanılmasına izin verir */
+    border-spacing: 0; /* Hücreler arası boşluğu sıfırlar (modern görünüm için) */
+    margin-top: 20px; /* Tablonun üstüne boşluk ekler */
+    font-size: 1em; /* Tablo içi yazı tipi boyutu */
+    border: 1px solid var(--border-color); /* Tablonun dış kenarlığı */
+    border-radius: 10px; /* Tablonun köşelerini yuvarlatır */
+    overflow: hidden; /* border-radius'un düzgün çalışması için taşan içeriği gizler */
+    background-color: var(--bg-secondary); /* Tablonun arka plan rengi */
+    /* Tema geçişi */
+    transition: background-color var(--transition-speed-slow) ease,
+                border-color var(--transition-speed-fast) ease;
+}
+/* Tablo hücreleri (Başlık - th ve Veri - td) */
+.education-table th,
+.education-table td {
+    padding: 15px 18px; /* Hücre içi boşluklar (dikey 15px, yatay 18px) */
+    text-align: left; /* Metni sola hizalar */
+    vertical-align: middle; /* İçeriği dikeyde ortalar */
+    border-bottom: 1px solid var(--border-color); /* Hücrelerin altını ayıran çizgi */
+    /* Tema geçişi */
+    transition: color var(--transition-speed-slow) ease,
+                border-color var(--transition-speed-fast) ease;
+}
+/* Veri hücreleri (td) */
+.education-table td { color: var(--text-secondary); } /* Veriler için ikincil metin rengi */
+/* Başlık hücreleri (th) */
+.education-table th {
+    background-color: var(--table-header-bg); /* Başlık satırı için hafif farklı arka plan */
+    font-weight: 600; /* Yarı-kalın */
+    color: var(--text-primary); /* Ana metin rengi */
+    border-bottom-width: 2px; /* Başlık altındaki ayırıcı çizgiyi biraz daha kalın yapar */
+    /* Tema geçişi */
+    transition: background-color var(--transition-speed-slow) ease,
+                color var(--transition-speed-slow) ease,
+                border-color var(--transition-speed-fast) ease;
+}
+/* Son satırın altındaki kenarlığı kaldırır, daha temiz bir görünüm sağlar */
+.education-table tbody tr:last-child td { border-bottom: none; }
+/* Tablo satırları için geçişler (Hover efekti için) */
+.education-table tbody tr {
+    transition: background-color var(--transition-speed-fast) ease,
+                transform var(--transition-speed-fast) ease,
+                box-shadow var(--transition-speed-fast) ease;
+}
+/* Tablo satırlarına fare ile üzerine gelince (hover) efekti */
+.education-table tbody tr:hover {
+    background-color: var(--table-row-hover-bg); /* Arka plan rengini değiştirir */
+    transform: scale(1.015) translateX(5px); /* Satırı hafifçe büyütür ve sağa kaydırır */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif bir gölge ekler */
+    cursor: default; /* İmleci varsayılan olarak ayarlar (tıklanabilir olmadığını belirtir) */
+}
+
+/* === Yetenekler Bölümü === */
+/* Not: .skills-lists sınıfı kaldırıldı, bu bölüm artık doğrudan .content-block altında */
+
+/* Yetenekler bölümü başlığı */
+/* Artık section > div > h3 şeklinde seçilebilir, daha spesifik olmak için */
+.content-block.skills > div:first-of-type > h3 {
+    /* Stil ihtiyacı varsa buraya eklenebilir, mevcut h3 stilleri zaten uygulanıyor */
+}
+
+/* --- Teknik Beceriler Etiket Stilleri --- */
+.skills-tags-container {
+    display: flex; /* Etiketleri yan yana dizer */
+    flex-wrap: wrap; /* Konteynere sığmayan etiketleri alt satıra atar */
+    gap: 8px 12px; /* Etiketler arası boşluk (dikey 8px, yatay 12px) */
+    padding-left: 0; /* Liste olmadığı için iç boşluk yok */
+    margin-top: 5px; /* Başlığın hemen altına yerleştirir */
+    margin-bottom: 15px; /* Etiket grubunun altına boşluk bırakır */
+}
+
+/* Tek bir yetenek etiketi */
+.skill-tag {
+    background-color: var(--bg-tertiary); /* Hafif gri arka plan (temaya göre değişir) */
+    color: var(--text-secondary); /* İkincil metin rengi */
+    padding: 5px 15px; /* İç boşluk (dikey 5px, yatay 15px) */
+    border-radius: 5px; /* Kenar yuvarlaklığı */
+    font-size: 0.9em; /* Etiket yazı boyutu */
+    font-weight: 500; /* Orta kalınlık */
+    transition: all var(--transition-speed-fast) ease; /* Tüm özellikler için hızlı geçiş */
+    cursor: default; /* Üzerine gelince normal imleç */
+    border: 1px solid transparent; /* Hover durumunda kenarlık çıkması için yer ayırır */
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1); /* Çok hafif bir derinlik hissi verir */
+    white-space: nowrap; /* Etiket metninin bölünmesini engeller */
+}
+
+/* Etiket üzerine gelince */
+.skill-tag:hover {
+    background-color: var(--bg-secondary); /* Arka planı ana ikincil renge çevirir (karanlıkta daha koyu, aydınlıkta beyaz) */
+    color: var(--accent-primary); /* Yazı rengini vurgu rengi yapar */
+    border-color: var(--accent-primary); /* Vurgu renginde kenarlık ekler */
+    transform: translateY(-1px); /* Hafifçe yukarı kaydırır */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.15); /* Gölgeyi biraz daha belirginleştirir */
+}
+
+/* Açık tema için özel etiket renkleri */
+body[data-theme='light'] .skill-tag {
+     background-color: #f1f3f5; /* Açık gri arka plan */
+     color: #495057; /* Koyu gri yazı */
+     box-shadow: 1px 1px 3px rgba(0,0,0,0.07); /* Daha hafif gölge */
+}
+body[data-theme='light'] .skill-tag:hover {
+     background-color: #fff; /* Beyaz arka plan */
+     color: var(--accent-primary); /* Mavi yazı */
+     border-color: var(--accent-primary); /* Mavi kenarlık */
+     box-shadow: 2px 2px 5px rgba(0,0,0,0.1); /* Hafif belirgin gölge */
+}
+/* --- Etiket Stilleri Sonu --- */
+
+
+/* ================================================= */
+/* === Sertifikalar - Sade Kart Tasarımı (v3) === */
+/* ================================================= */
+
+/* Sertifika Kartlarını İçeren Konteyner */
+/* Konteyner artık sağ sütunun tam genişliğini kullanacak */
+.certificate-cards-container {
+    display: grid;
+    /* Kartlar için sütunlar. Min 270px, sığarsa otomatik sığdır */
+    /* Bu ayar artık tam genişlikte daha iyi çalışmalı ve 2+ sütun oluşturmalı */
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px; /* Kartlar arası boşluk */
+    margin-top: 20px; /* Başlığın altına boşluk */
+    /* Margin-bottom kaldırıldı, dil listesi kendi üst boşluğunu alacak */
+}
+
+/* Yeni Sertifika Kartı Stili (v3) */
+.certificate-card-v3 {
+    background-color: var(--bg-secondary); /* Kart arka planı (ana ikincil renk) */
+    border-radius: 10px; /* Köşe yuvarlaklığı */
+    border: 1px solid var(--border-color);
+    padding: 18px 22px; /* Kart içi boşluk */
+    display: flex;
+    flex-direction: column; /* İçeriği alt alta dizer (header, body) */
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.certificate-card-v3:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--accent-primary);
+}
+
+/* Kart Başlığı Alanı (İkon ve Kurum) */
+.cert-header {
+    display: flex;
+    align-items: center; /* İkon ve kurumu dikeyde ortala */
+    gap: 12px; /* İkon ve kurum arası boşluk */
+    margin-bottom: 12px; /* Başlık ile isim arasına boşluk */
+}
+
+/* Kart İkonu (v3) */
+.cert-icon-v3 {
+    font-size: 1.4em; /* İkon boyutu */
+    color: var(--accent-primary); /* Varsayılan vurgu rengi */
+    width: 25px; /* Hizalama için yaklaşık genişlik */
+    text-align: center;
+    flex-shrink: 0; /* Daralmamasını sağlar */
+}
+
+/* Özel Renk Sınıfları (örn. MEB) */
+.cert-icon-v3.meb-color {
+    color: #E30A17;
+}
+
+/* Kurum Adı */
+.cert-issuer {
+    font-size: 0.75em;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: var(--bg-tertiary); /* Kurum adı için hafif arka plan */
+    padding: 2px 6px;
+    border-radius: 4px;
+    line-height: 1.2;
+}
+
+/* Kart Gövdesi (Sertifika Adı) */
+.cert-body {
+    flex-grow: 1; /* Kalan alanı doldurur */
+}
+
+/* Sertifika Adı (v3) */
+.cert-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+/* Açık Tema Ayarlamaları (v3) */
+body[data-theme='light'] .certificate-card-v3 {
+    background-color: #ffffff;
+    border-color: #e9ecef;
+}
+body[data-theme='light'] .cert-issuer {
+    background-color: #e9ecef;
+    color: #495057;
+}
+body[data-theme='light'] .cert-icon-v3 {
+    color: var(--accent-primary); /* Mavi */
+}
+body[data-theme='light'] .cert-icon-v3.meb-color {
+    color: #D90429; /* Açık tema için kırmızı */
+}
+/* === Sade Kart Tasarımı Sonu === */
+
+
+/* ================================= */
+/* === Diller Bölümü Tasarımı === */
+/* ================================= */
+
+/* Dil Listesi Konteyneri */
+.language-list {
+    display: flex; /* Dilleri yan yana dizer */
+    flex-wrap: wrap; /* Sığmazsa alt satıra atar */
+    gap: 15px; /* Dil öğeleri arası boşluk */
+    margin-top: 30px; /* Sertifika kartlarından sonra boşluk */
+    padding-left: 0; /* Liste stilini sıfırla */
+    justify-content: flex-start; /* Öğeleri sola dayalı başlatır (Ortalamak istersen -> center) */
+}
+
+/* Tek Bir Dil Öğesi (Rozet/Pill Görünümü) */
+.language-item {
+    display: flex; /* İkon ve metni yan yana getirir */
+    align-items: center; /* Dikeyde ortalar */
+    gap: 10px; /* İkon ve metin arası boşluk */
+    background-color: var(--bg-tertiary); /* Arka plan */
+    padding: 8px 15px; /* İç boşluk (dikey 8px, yatay 15px) */
+    border-radius: 20px; /* Hap (pill) şekli için yuvarlak köşeler */
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: default; /* Tıklanabilir değil */
+}
+
+.language-item:hover {
+    transform: translateY(-2px); /* Hafif yukarı kalkma efekti */
+    box-shadow: var(--shadow-medium);
+}
+
+/* Dil İkonu */
+.language-list .lang-icon {
+    color: var(--accent-primary);
+    font-size: 1.2em; /* İkonu biraz büyüt */
+    width: auto; /* Genişlik otomatik */
+    margin-top: 0; /* Üst boşluğu sıfırla */
+    flex-shrink: 0;
+}
+
+/* Dil Detayları (Metin) */
+.language-details {
+    color: var(--text-primary); /* Ana metin rengiyle daha belirgin */
+    font-size: 0.95em; /* Yazı boyutunu hafif büyüt */
+    line-height: 1.4;
+    font-weight: 500; /* Orta kalınlık */
+    white-space: nowrap; /* Metnin alt satıra kaymasını engeller (kısa metinler için) */
+}
+/* Seviye bilgisi (parantez içi) biraz daha soluk olabilir */
+.language-details span[data-key^="lang_level_"] {
+    color: var(--text-secondary);
+    font-size: 0.9em; /* Seviyeyi biraz küçült */
+    margin-left: 4px; /* Dil adından sonra hafif boşluk */
+}
+.language-details span {
+    display: inline; /* Yan yana durması için */
+}
+
+/* Açık Tema Dil Listesi */
+body[data-theme='light'] .language-item {
+    background-color: #e9ecef; /* Açık gri arka plan */
+    border-color: #dee2e6;
+}
+body[data-theme='light'] .language-details {
+    color: var(--text-primary);
+}
+body[data-theme='light'] .language-details span[data-key^="lang_level_"] {
+     color: var(--text-secondary);
+}
+/* === Diller Bölümü Tasarımı Sonu === */
+
+
+/* Gönüllü Çalışma Bölümü (.volunteer) Özel Stilleri */
+.volunteer .block-description ul {
+    padding-left: 0; /* Liste girintisini sıfırlar */
+    list-style: none; /* Madde işaretlerini kaldırır */
+    margin-top: 10px; /* Başlığın altına boşluk */
+}
+.volunteer .block-description li {
+    margin-bottom: 15px; /* Gönüllülük deneyimleri arasına boşluk */
+    line-height: 1.6; /* Satır yüksekliği */
+}
+.volunteer .block-description li strong {
+    display: block; /* Başlığı ayrı bir satırda gösterir */
+    margin-bottom: 2px; /* Başlık ile kurum adı arasına boşluk */
+}
+.volunteer .block-description li span {
+     display: block; /* Kurum adı ve tarihi ayrı satırlarda gösterir */
+     margin-top: 4px; /* Kurum adı/tarih üstüne boşluk */
+}
+
+/* Alıntı Bölümü (.quote-section) */
+.quote-section {
+    margin-top: 60px; margin-bottom: 50px; /* Üst ve alt dış boşluklar */
+    padding: 50px 55px; /* İç boşluklar */
+    background: var(--bg-secondary); /* İkincil arka plan rengi */
+    border-radius: 15px; /* Köşe yuvarlaklığı */
+    position: relative; /* İçindeki ::before pseudo-elementi için referans */
+    overflow: visible; /* Tırnak ikonunun dışarı taşabilmesi için */
+    border: 1px solid var(--border-color); /* Kenarlık */
+    box-shadow: var(--shadow-soft); /* Yumuşak gölge */
+    text-align: center; /* İçeriği ortalar */
+    opacity: 0; transform: translateY(40px); /* Scroll animasyonu başlangıç değerleri */
+    /* Geçişler (Animasyon, Tema, Kenarlık, Gölge) */
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out, background-color var(--transition-speed-slow) ease, border-color var(--transition-speed-fast) ease, box-shadow var(--transition-speed-fast) ease;
+}
+/* Alıntı bölümü görünür olunca animasyon */
+.quote-section.visible { opacity: 1; transform: translateY(0); transition-delay: 0.3s; } /* Gecikmeli başlar */
+/* Alıntı tırnak ikonu (pseudo-element ile eklenir) */
+.quote-section::before {
+    content: "\f10d"; /* Font Awesome sol tırnak ikonu */
+    font-family: "Font Awesome 6 Free"; font-weight: 900; /* Font Awesome ayarları */
+    position: absolute; /* Konteynerin içine göre konumlanır */
+    top: -30px; /* Konteynerin üst kenarının 30px yukarısına */
+    left: 50%; transform: translateX(-50%); /* Yatayda tam ortaya hizalar */
+    font-size: 4em; /* Büyük ikon boyutu */
+    color: var(--quote-icon-color); /* İkon rengi */
+    opacity: 0.8; /* Hafif şeffaflık */
+    z-index: 1; /* Diğer içeriğin üzerinde görünmesini sağlar */
+    line-height: 1; /* Satır yüksekliğini ayarlar */
+    text-shadow: var(--shadow-glow); /* Parlama efekti */
+    /* Geçişler (Renk ve Gölge) */
+    transition: color var(--transition-speed-fast) ease, text-shadow var(--transition-speed-fast) ease;
+}
+/* Alıntı metni (blockquote) */
+.quote-section blockquote {
+    margin: 0; padding: 0; /* Varsayılan boşlukları sıfırlar */
+    font-style: normal; /* Tarayıcı varsayılan eğik stilini kaldırır */
+    font-weight: 400; /* Normal yazı kalınlığı */
+    color: var(--text-primary); /* Ana metin rengi */
+    line-height: 1.9; /* Daha ferah satır yüksekliği */
+    font-size: clamp(1.3em, 3.5vw, 1.4em); /* Akışkan yazı boyutu */
+    position: relative; z-index: 0; /* Tırnak ikonunun arkasında kalması için */
+    padding-top: 20px; /* Tırnak ikonuna yer açmak için üst iç boşluk */
+}
+.quote-section blockquote p { margin-bottom: 20px; } /* Alıntı paragrafları arası boşluk */
+/* Alıntı kaynağı (cite) */
+.quote-section cite {
+    display: block; /* Ayrı bir satırda görünmesini sağlar */
+    text-align: center; /* Ortalar */
+    font-style: normal; /* Tarayıcı varsayılan eğik stilini kaldırır */
+    font-weight: normal; /* Normal yazı kalınlığı */
+    color: var(--text-secondary); /* İkincil metin rengi */
+    font-size: 1em; /* Normal yazı boyutu */
+    margin-top: 10px; /* Alıntı metni ile arasına boşluk koyar */
+}
+/* Kaynaktan önce tire ekler */
+.quote-section cite::before { content: "— "; }
+
+
+/* =================================
+   KONTROL BUTONLARI (Tema ve Dil) - Mikro Animasyonlar
+   Sağ üst köşede yer alan tema ve dil değiştirme kontrolleri.
+   ================================= */
+
+/* Kontrol butonları ana kapsayıcısı */
+.controls {
+    position: absolute; top: 20px; right: 25px; /* Sağ üst köşeye sabitler */
+    display: flex; align-items: center; /* Öğeleri (dil değiştirici, tema butonu) yan yana dizer ve dikeyde ortalar */
+    gap: 10px; /* Öğeler arasına boşluk koyar */
+    z-index: 100; /* Diğer içeriklerin üzerinde görünmesini sağlar */
+    background-color: transparent; /* Arka planı şeffaf */
+    padding: 0; border-radius: 0; box-shadow: none; border: none; /* Ekstra stil yok */
+}
+
+/* Tema Değiştirme Butonu (#theme-toggle) */
+#theme-toggle {
+    background: transparent; /* Arka plan yok */
+    color: var(--control-text); /* Varsayılan kontrol metni/ikon rengi */
+    border: none; /* Kenarlık yok */
+    border-radius: 50%; /* Tamamen yuvarlak */
+    width: 32px; height: 32px; /* Boyutlar */
+    font-size: 1em; /* İkon boyutu */
+    cursor: pointer; /* Tıklanabilir olduğunu belirtir */
+    display: flex; justify-content: center; align-items: center; /* İkonu tam ortaya hizalar */
+    transition: color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease, background-color var(--transition-speed-fast) ease; /* Geçişler */
+    padding: 5px; /* İkon etrafında hafif iç boşluk */
+    order: 2; /* Dil değiştiriciden sonra gelmesini sağlar */
+}
+/* Tema butonu üzerine gelince (hover) */
+#theme-toggle:hover {
+    color: var(--control-hover-text); /* Hover metin/ikon rengi */
+    background-color: var(--control-hover-bg); /* Hafif hover arka planı */
+    transform: scale(1.15) rotate(15deg); /* Büyütür ve döndürür */
+}
+/* Tema butonu tıklama anı (active) */
+#theme-toggle:active { transform: scale(1.0) rotate(0deg); } /* Hover efektini anlık olarak sıfırlar */
+/* Tema butonu klavye odağı (:focus-visible) */
+#theme-toggle:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
+
+/* Dil Seçici Alanı (.language-switcher) */
+.language-switcher {
+    display: flex; align-items: center; /* Butonları yan yana dizer ve dikeyde ortalar */
+    gap: 6px; /* Dil butonları arasına boşluk koyar */
+    order: 1; /* Tema butonundan önce gelmesini sağlar */
+    background-color: var(--control-hover-bg); /* Kontrollere hafif bir arka plan verir */
+    padding: 4px 6px; /* İç boşluk */
+    border-radius: 6px; /* Köşe yuvarlaklığı */
+    transition: background-color var(--transition-speed-slow) ease; /* Tema geçişi için yavaş arka plan rengi geçişi */
+}
+/* Dil Seçici Butonları */
+.language-switcher button {
+    background: transparent; /* Arka plan yok */
+    color: var(--control-text); /* Varsayılan kontrol metni rengi */
+    border: none; /* Kenarlık yok */
+    padding: 4px 8px; /* İç boşluk */
+    font-family: 'Poppins', sans-serif; /* Ana yazı tipi */
+    font-size: 0.8em; /* Küçük yazı boyutu */
+    font-weight: 600; /* Yarı-kalın */
+    border-radius: 4px; /* Hafif köşe yuvarlaklığı */
+    cursor: pointer; /* Tıklanabilir */
+    line-height: 1; /* Satır yüksekliğini sıfırlar (dikey hizalama için) */
+    transition: background-color var(--transition-speed-fast) ease, color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease; /* Geçişler */
+}
+/* Dil butonu üzerine gelince (hover) */
+.language-switcher button:hover {
+    color: var(--control-hover-text); /* Hover metin rengi */
+    background-color: transparent; /* Arka plan değişmez */
+    transform: translateY(-2px); /* Hafifçe yukarı kaydırır */
+}
+/* Aktif dil butonu (.active sınıfı JS tarafından eklenir) */
+.language-switcher button.active {
+    color: var(--control-active-text); /* Vurgu rengini alır */
+    background-color: rgba(128, 128, 128, 0.1); /* Çok hafif bir gri arka plan */
+    font-weight: 700; /* Kalın */
+    transform: translateY(0); /* Hover efektini iptal eder */
+}
+/* Dil butonu tıklama anı (active) */
+.language-switcher button:active { transform: translateY(0); } /* Hover efektini anlık olarak sıfırlar */
+/* Dil butonu klavye odağı (:focus-visible) */
+.language-switcher button:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -1px; /* İçeriye doğru odak çizgisi */ }
+
+
+/* =================================
+   FOOTER (Alt Bilgi)
+   Sayfanın en altında yer alan telif hakkı ve sosyal medya bağlantıları bölümü.
+   ================================= */
+
+/* Footer alanı (.site-footer) */
+.site-footer {
+    width: 100%; /* Tam genişlik kaplar */
+    max-width: none; /* body genişliğini takip eder */
+    margin-top: auto; /* Ana içeriğin altına iter, sayfa içeriği kısaysa bile en altta kalmasını sağlar */
+    padding: 35px 40px; /* İç boşluklar */
+    background-color: var(--footer-bg); /* Footer arka plan rengi */
+    color: var(--footer-text); /* Footer metin rengi */
+    text-align: center; /* İçeriği ortalar */
+    border-top: 1px solid var(--border-color); /* Üstüne ince bir ayırıcı çizgi ekler */
+    font-size: 0.95em; /* Biraz daha küçük yazı boyutu */
+    /* Tema geçişi */
+    transition: background-color var(--transition-speed-slow) ease, color var(--transition-speed-slow) ease, border-color var(--transition-speed-fast) ease;
+}
+/* Footer sosyal ikonları */
+.footer-social-icons { margin-top: 18px; } /* Telif hakkı metninin altına boşluk koyar */
+/* Footer sosyal ikon linkleri */
+.footer-social-icons a {
+    color: var(--footer-text); /* Footer metin rengini alır */
+    font-size: 1.6em; /* İkon boyutu */
+    margin: 0 15px; /* İkonlar arasına yatay boşluk koyar */
+    /* Geçişler */
+    transition: color var(--transition-speed-fast) ease, transform var(--transition-speed-fast) ease, text-shadow var(--transition-speed-fast) ease;
+}
+/* Footer sosyal ikon linkleri üzerine gelince (hover) */
+.footer-social-icons a:hover {
+    color: var(--accent-primary); /* Vurgu rengini alır */
+    transform: scale(1.15) translateY(-2px); /* Büyütür ve yukarı kaydırır */
+    text-shadow: 0 0 8px var(--accent-primary); /* Parlama efekti */
+    opacity: 0.9; /* Hafif şeffaflık */
+}
+
+
+/* =================================
+   SCROLL TO TOP BUTTON (Yukarı Çık Butonu) - Mikro Animasyon
+   Kullanıcı sayfayı aşağı kaydırdığında görünen ve en üste dönmeyi sağlayan buton.
+   ================================= */
+
+/* Yukarı çık butonu (.scroll-to-top) */
+.scroll-to-top {
+    position: fixed; /* Sayfa kaydırılsa bile aynı yerde kalır */
+    bottom: 35px; right: 35px; /* Sağ alt köşeye konumlandırır */
+    width: 55px; height: 55px; /* Boyutlar */
+    /* Vurgu renginden koyu tonuna doğru degrade arka plan */
+    background: linear-gradient(45deg, var(--accent-primary), var(--accent-primary-darker));
+    color: var(--scrolltop-color); /* İkon rengi (tema değişkeniyle belirlenir) */
+    border-radius: 50%; /* Tamamen yuvarlak */
+    display: none; /* Başlangıçta gizli (JS ile görünür yapılır) */
+    justify-content: center; align-items: center; /* İçindeki ikonu tam ortaya hizalar */
+    box-shadow: 0 5px 15px rgba(8, 145, 178, 0.4); /* Belirgin bir gölge */
+    cursor: pointer; /* Tıklanabilir */
+    z-index: 1000; /* Diğer tüm öğelerin üzerinde görünmesini sağlar */
+    /* Geçişler - Görünürlük, pozisyon, gölge, renk ve arka plan değişiklikleri için */
+    transition: opacity var(--transition-speed-fast) ease, transform var(--transition-speed) ease, box-shadow var(--transition-speed-fast) ease, color var(--transition-speed-slow) ease, background var(--transition-speed-slow) ease;
+    opacity: 0.75; /* Başlangıçta hafif şeffaf */
+}
+/* Yukarı çık butonu üzerine gelince (hover) */
+.scroll-to-top:hover {
+    opacity: 1; /* Tamamen opak yapar */
+    transform: scale(1.1) translateY(-4px) rotate(5deg); /* Büyütür, yukarı kaldırır ve döndürür */
+    box-shadow: 0 8px 20px rgba(8, 145, 178, 0.5); /* Gölgeyi belirginleştirir */
+}
+/* Yukarı çık butonu ikonu */
+.scroll-to-top i { font-size: 1.4em; line-height: 1; /* İkon boyutu ve hizalaması */ }
+/* Yukarı çık butonu tıklama anı (active) */
+.scroll-to-top:active {
+    transform: scale(1.0) translateY(0) rotate(0deg); /* Hover efektini anlık olarak sıfırlar */
+    box-shadow: 0 3px 10px rgba(8, 145, 178, 0.4); /* Gölgeyi hafifletir */
+}
+/* Yukarı çık butonu klavye odağı (:focus-visible) */
+.scroll-to-top:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: 2px; opacity: 1; /* Odak çizgisi ve tam opaklık */ }
+
+
+/* =================================
+   DUYARLILIK (RESPONSIVE)
+   Farklı ekran boyutlarına uyum sağlamak için kullanılan media query'ler.
+   ================================= */
+
+/* Sticky Sol Sütun (Sadece Geniş Ekran 993px ve üzeri) */
+@media (min-width: 993px) {
+    /* Sol sütunu dikeyde sabitler (sticky) */
+    .left-column {
+        position: sticky; /* Kaydırma sırasında belirli bir konumda yapışık kalır */
+        top: 0; /* Ekranın en üstüne yapışır */
+        height: 100vh; /* Ekran yüksekliği kadar yer kaplar */
+        max-height: 100vh; /* Yüksekliğin ekranı aşmasını engeller */
+        overflow-y: auto; /* İçerik sığmazsa dikey kaydırma çubuğu çıkarır */
+        align-self: flex-start; /* Dikey hizalamayı başlangıca (üste) ayarlar */
+        /* İç gölge (Sağ kenara hafif bir gölge ekleyerek ayrım sağlar) */
+        box-shadow: inset -15px 0 15px -10px rgba(0,0,0,0.1), inset 0 -15px 15px -10px rgba(0,0,0,0.05);
+        transition: box-shadow var(--transition-speed-slow) ease, background-color var(--transition-speed-slow) ease; /* Tema geçişi */
+        -ms-overflow-style: none; scrollbar-width: none; /* Scrollbar'ı gizler (IE, Edge, Firefox) */
+    }
+    .left-column::-webkit-scrollbar { display: none; } /* Scrollbar'ı gizler (Chrome, Safari, Opera) */
+
+    /* Geniş ekranda sağ sütun için hafif sol boşluk (gölge için daha iyi görünüm) */
+    .right-column {
+        padding-left: 50px; /* Sol iç boşluğu artırır */
+        padding-right: 40px; /* Sağ iç boşluk (değişmedi) */
+    }
+    /* İçerik bloklarının sol iç boşluğunu artırır (sticky sütun gölgesiyle daha iyi uyum için) */
+    .content-block {
+        padding-left: 45px;
+    }
+}
+
+/* Tablet ve Altı (992px ve altı) - Layout Dikey Olur */
+/* Bu kırılma noktasında, iki sütunlu yapı tek sütunlu yapıya dönüşür. */
+@media (max-width: 992px) {
+    /* Animasyonlu arka planı iptal et, normal arka planı uygula (performans ve görünüm için) */
+    body { padding: 0; animation: none; background-size: auto; background: var(--bg-primary); }
+    /* Konteyner ayarları */
+    .container {
+        flex-direction: column; /* Sütunları alt alta getirir */
+        margin: 0; /* Dış boşlukları sıfırlar */
+        padding: 60px 25px 0 25px; /* İç boşluklar (üst 60px, yan 25px, alt 0) */
+        max-width: 100%; /* Tam genişlik */
+        border: none; border-radius: 0; /* Kenarlık ve köşe yuvarlatmayı kaldırır */
+        box-shadow: none; /* Gölgeyi kaldırır */
+        overflow: hidden; /* Taşmayı gizler */
+        background-color: var(--bg-primary); /* Ana arka plan rengini alır */
+    }
+    /* Sol sütun ayarları */
+    .left-column {
+        position: static; /* Yapışkan (sticky) özelliği kaldırılır */
+        height: auto; /* Yükseklik içeriğe göre belirlenir */
+        overflow-y: visible; /* Dikey taşma görünür olur */
+        flex-basis: auto; /* Esnek boyutlandırma */
+        width: 100%; /* Tam genişlik */
+        border-right: none; /* Sağ kenarlığı kaldırır */
+        border-bottom: 1px solid var(--border-color); /* Altına ayırıcı çizgi ekler */
+        padding: 40px 0; /* Dikey iç boşluk, yatay sıfır */
+        box-shadow: none; /* Gölgeyi kaldırır */
+        overflow-x: hidden; /* Yatay taşmayı engeller */
+        background-color: var(--bg-secondary); /* İkincil arka plan rengini alır */
+    }
+    /* Sağ sütun ayarları */
+    .right-column {
+        padding: 40px 0; /* Dikey iç boşluk, yatay sıfır */
+        width: 100%; /* Tam genişlik */
+        overflow-x: hidden; /* Yatay taşmayı engeller */
+     }
+
+    /* İçerik bloğu mobil ayarları: İç gölgeyi koru, border yok, padding ayarla */
+    .content-block {
+        padding-left: 25px; /* Mobil için sol iç boşluk */
+        border-radius: 8px; /* Köşe yuvarlatma mobilde de kalsın */
+    }
+    /* Yetenek etiketleri mobil */
+     .skills-tags-container {
+        gap: 6px 10px; /* Mobil için etiket aralıklarını azalt */
+     }
+     .skill-tag {
+        padding: 4px 12px; /* İç boşlukları azalt */
+        font-size: 0.85em; /* Yazı boyutunu küçült */
+     }
+
+    /* Sertifika Kartları Mobil */
+    .certificate-cards-container {
+         /* Mobilde genellikle tek sütun daha iyi olur */
+         grid-template-columns: 1fr;
+         gap: 15px; /* Kart arası boşluk */
+    }
+    .certificate-card-v3 {
+         border-radius: 10px;
+    }
+    /* Mobil için ikon boyutu, padding vs. ayarlanabilir */
+    .cert-icon-v3 {
+         font-size: 1.6em;
+         width: 20px; /* Mobilde ikon genişliği */
+    }
+    .cert-header {
+        gap: 10px; /* Mobil ikon-kurum arası boşluk */
+        margin-bottom: 10px; /* Boşluk ayarı */
+    }
+    .cert-details {
+         padding: 0; /* Padding karttan geldiği için sıfırlanabilir */
+    }
+    .cert-name {
+         font-size: 0.9em;
+    }
+    .cert-issuer {
+        font-size: 0.75em;
+        padding: 1px 5px; /* Daha küçük padding */
+    }
+
+     /* Dil Listesi Mobil */
+     .language-list {
+         justify-content: center; /* Mobil ortalayabiliriz */
+         gap: 10px; /* Mobil öğe aralığı */
+         margin-top: 25px; /* Sertifikalardan sonra boşluk */
+     }
+     .language-item {
+         padding: 6px 12px; /* Daha küçük padding */
+         border-radius: 15px; /* Yuvarlaklık */
+     }
+     .language-list .lang-icon {
+         font-size: 1.1em;
+     }
+     .language-details {
+         font-size: 0.9em; /* Yazı boyutunu küçült */
+     }
+
+
+    /* Kontrollerin mobil konumu */
+    .controls {
+        top: 12px; /* Biraz aşağı alır */
+        right: auto; /* Sağa dayalı konumu iptal eder */
+        left: 50%; transform: translateX(-50%); /* Yatayda tam ortaya hizalar */
+        width: auto; /* İçeriğe göre genişlik */
+        padding: 5px 8px; /* İç boşluk */
+        background-color: var(--control-hover-bg); /* Hafif arka plan */
+        border-radius: 6px; /* Köşe yuvarlaklığı */
+        box-shadow: var(--shadow-soft); /* Yumuşak gölge */
+        border: 1px solid var(--border-color); /* İnce kenarlık */
+        /* Tema geçişi */
+        transition: background-color var(--transition-speed-slow) ease, border-color var(--transition-speed-fast) ease, box-shadow var(--transition-speed-fast) ease;
+    }
+    /* Dil seçici mobil */
+    .language-switcher { flex-direction: row; gap: 6px; background-color: transparent; padding: 0; border-radius: 0; /* Stil sıfırlama */ }
+    /* Tema butonu mobil */
+     #theme-toggle { margin-top: 0; /* Ekstra üst boşluk yok */ }
+    /* Footer mobil */
+    .site-footer { border-radius: 0; /* Köşe yuvarlatmayı kaldırır */ }
+}
+
+/* Mobil (768px ve altı) - Daha küçük ayarlamalar */
+@media (max-width: 768px) {
+    /* Konteyner yan boşluklarını azaltır */
+    .container { padding: 60px 20px 0 20px; }
+    /* Yetenekler bölümü tek sütun */
+
+    /* Sertifika Kartları Tablet/Küçük Mobil */
+    /* Zaten tek sütun */
+
+    /* Alıntı bölümü iç boşluklarını azaltır */
+    .quote-section { padding: 40px 25px; }
+    /* Alıntı tırnak ikonunu küçültür ve yukarı kaydırır */
+    .quote-section::before { font-size: 3.5em; top: -20px; }
+    /* Yukarı çık butonunu küçültür ve konumunu ayarlar */
+    .scroll-to-top { width: 50px; height: 50px; bottom: 25px; right: 25px; }
+    /* Yukarı çık butonu ikonunu küçültür */
+    .scroll-to-top i { font-size: 1.2em; }
+    /* İçerik bloğu sol iç boşluğunu azaltır */
+    .content-block { padding-left: 20px; }
+    /* Yetenek etiketleri daha küçük mobil */
+    .skills-tags-container { gap: 5px 8px; /* Aralıkları daha da azaltır */ }
+    .skill-tag { padding: 4px 10px; font-size: 0.8em; /* Boyutları küçültür */ }
+    /* Dil listesi mobil */
+    .language-details { font-size: 0.85em; } /* Yazı boyutunu ayarlar */
+    .language-list .lang-icon { font-size: 1em; } /* İkon boyutunu ayarlar */
+}
+
+/* Küçük Mobil (480px ve altı) - En küçük ekran ayarları */
+@media (max-width: 480px) {
+    /* Konteyner yan boşluklarını daha da azaltır */
+    .container { padding: 55px 15px 0 15px; }
+    /* Sütunların (artık alt alta) dikey boşluklarını azaltır */
+    .left-column, .right-column { padding: 30px 0; }
+    /* Eğitim tablosu hücrelerinin iç boşluklarını ve yazı boyutunu küçültür */
+    .education-table th, .education-table td { padding: 10px 12px; font-size: 0.85em; }
+    /* Footer iç boşluklarını azaltır */
+    .site-footer { padding: 25px 20px; }
+    /* İçerik bloğu sol iç boşluğunu en aza indirir */
+    .content-block { padding-left: 15px; }
+     /* Yetenek etiketleri en küçük mobil */
+     .skills-tags-container { gap: 4px 6px; /* Aralıkları en aza indirir */ }
+     .skill-tag { padding: 3px 8px; font-size: 0.75em; /* Boyutları en aza indirir */ }
+
+     /* Sertifika Kartları En Küçük Mobil */
+     .certificate-cards-container {
+        gap: 10px;
+     }
+     .certificate-card-v3 {
+         border-radius: 8px;
+         padding: 12px 15px; /* Mobil için daha az padding */
+     }
+     .cert-header {
+         gap: 8px;
+         margin-bottom: 8px;
+     }
+     .cert-icon-v3 {
+        font-size: 1.5em; /* İkon daha küçük */
+        width: 18px;
+     }
+     .cert-name {
+         font-size: 0.85em;
+     }
+     .cert-issuer {
+         font-size: 0.7em;
+         padding: 1px 4px; /* Daha küçük padding */
+     }
+
+     /* Dil listesi en küçük mobil */
+     .language-item {
+        padding: 5px 10px;
+        gap: 8px;
+        border-radius: 12px; /* Daha az yuvarlak */
+     }
+     .language-details { font-size: 0.8em; /* Yazı boyutu */ }
+     .language-list .lang-icon { font-size: 1em; } /* İkon boyutu */
+
+    /* Mobil kontrolleri daha kompakt hale getirir */
+    .controls { top: 10px; gap: 8px; padding: 4px 6px; /* Konum, aralık, iç boşluk */ }
+    /* Tema butonunu küçültür */
+    #theme-toggle { width: 28px; height: 28px; font-size: 0.85em; padding: 4px; }
+    /* Dil değiştirici buton aralığını azaltır */
+    .language-switcher { gap: 4px; }
+    /* Dil butonlarını küçültür */
+    .language-switcher button { font-size: 0.7em; padding: 3px 5px; }
+}
