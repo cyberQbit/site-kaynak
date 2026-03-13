@@ -268,7 +268,7 @@ img {
     width: 100%;      /* Sol sütunun tam genişliğini kullanır */
 }
 
-/* Profil resmi (.profile-picture) stilleri ve hover efekti */
+/* Profil resmi (.profile-picture) stilleri ve hover efekti. */
 .profile-picture {
     width: clamp(160px, 30vw, 210px); /* Genişliği ekran boyutuna göre ayarlar (min 160px, max 210px) */
     height: clamp(160px, 30vw, 210px);/* Yüksekliği ekran boyutuna göre ayarlar */
