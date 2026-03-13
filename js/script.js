@@ -750,6 +750,10 @@ function createParticles() {
  * EmailJS kullanarak e-posta gönderir.
  * Kurulum: EmailJS'e kaydolun ve Service ID, Template ID, Public Key'i ekleyin.
  */
+/**
+ * İletişim formu gönder - Web3Forms kullanarak Protonmail'e email gönderir.
+ * Kurulum: https://web3forms.com adresinden free API key alın ve config.js'e ekleyin.
+ */
 function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
@@ -767,42 +771,46 @@ function initializeContactForm() {
         formMessage.className = 'form-message';
 
         try {
-            // EmailJS başlat (Public Key ekleyin)
-            // Kurulum: https://www.emailjs.com/ adresinde hesap açın
-            // YOUR_PUBLIC_KEY yerine kendi public key'inizi yazın
-            emailjs.init('YOUR_PUBLIC_KEY'); // ⚠️ Değiştirin!
+            // API key'i config.js'den al
+            if (!window.API_CONFIG || !window.API_CONFIG.web3forms_access_key) {
+                throw new Error('API key bulunamadı. config.js dosyasını kontrol edin.');
+            }
 
             // Form verileri
-            const formData = {
-                name: document.getElementById('contact-name').value,
-                email: document.getElementById('contact-email').value,
-                subject: document.getElementById('contact-subject').value,
-                message: document.getElementById('contact-message').value,
-                to_email: 'aydinaydmr@proton.me' // ⚠️ Değiştirin!
-            };
+            const formData = new FormData(contactForm);
+            
+            // Web3Forms için gerekli parametreler
+            formData.append('access_key', window.API_CONFIG.web3forms_access_key);
+            formData.append('subject', `Yeni İletişim Formu: ${formData.get('subject')}`);
+            formData.append('from_name', formData.get('name'));
+            formData.append('reply_to', formData.get('email'));
 
-            // E-posta gönder
-            // YOUR_SERVICE_ID ve YOUR_TEMPLATE_ID yerine kendi ID'lerinizi yazın
-            const response = await emailjs.send(
-                'YOUR_SERVICE_ID',  // ⚠️ Değiştirin!
-                'YOUR_TEMPLATE_ID', // ⚠️ Değiştirin!
-                formData
-            );
+            // Web3Forms API'ye POST isteği gönder
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
 
-            if (response.status === 200) {
+            const responseData = await response.json();
+
+            if (response.ok && responseData.success) {
                 formMessage.textContent = 'Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓';
                 formMessage.className = 'form-message success';
                 contactForm.reset();
+            } else {
+                throw new Error(responseData.message || 'Form gönderme hatası');
             }
         } catch (error) {
             console.error('Form gönderme hatası:', error);
             let errorMsg = 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.';
             
-            // EmailJS hata mesajları
-            if (error.text) {
-                errorMsg = error.text;
-            } else if (error.message) {
+            if (error.message) {
                 errorMsg = error.message;
+            }
+            
+            // config.js eksikse özel mesaj göster
+            if (errorMsg.includes('API key')) {
+                errorMsg = '⚠️ API key yapılandırılmamış. config.js dosyasını kontrol edin.';
             }
             
             formMessage.textContent = errorMsg + ' ✗';
