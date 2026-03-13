@@ -8,6 +8,7 @@ const allLangButtons = languageSwitcher ? languageSwitcher.querySelectorAll('but
 // data-key'leri içeren elementler için seçici (dinamik olarak seçilecek)
 const htmlTag = document.documentElement; // <html> elementi (lang özniteliği için)
 const scrollTopButton = document.getElementById('scrollToTop'); // Yukarı çık butonu
+const particleContainer = document.querySelector('.particle-container'); // Particle animasyonu için container
 // Scroll animasyonu uygulanacak elementler
 const animatedElements = document.querySelectorAll('.content-block, .quote-section, .volunteer');
 
@@ -22,7 +23,7 @@ const translations = {
     "tr": { // Türkçe
         "portfolio_title": "Aydın Aydemir'in Portföyü",
         "profile_name": "Aydın<br>Aydemir",
-        "bio": "Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim. https://linktr.ee/aydinaydmr",
+        "bio": "Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim.",
         "linkedin_label": "Aydın Aydemir'in LinkedIn Profilini Ziyaret Et",
         "email_label": "Aydın Aydemir'e E-posta Gönder",
         "github_label": "Aydın Aydemir'in GitHub Profilini Ziyaret Et",
@@ -101,12 +102,35 @@ const translations = {
         "volunteer_ihh_org": "İHH İnsani Yardım Vakfı",
         "volunteer_footer_text": "Gönüllülük faaliyetlerimle topluma katkıda bulunmaktan mutluluk duyuyorum.",
         "ataturk_quote": "\"Hayattaki yegane üstünlüğüm, Türk doğmaktır!\"",
-        "footer_copyright": "&copy; 2025 Aydın Aydemir. Tüm hakları saklıdır."
+        "portfolio_title_section": "Projelerim",
+        "portfolio_github_btn": "GitHub",
+        "project_shadowprint_name": "ShadowPrint-OSINT",
+        "project_shadowprint_desc": "Siber güvenlik araştırması için geliştirilmiş OSINT aracı. Verileri toplar, analiz eder ve raporama sağlar.",
+        "project_mooweather_name": "MooWeather",
+        "project_mooweather_desc": "Modern hava durumu uygulaması. Gerçek zamanlı veri, güzel arayüz ve PWA desteği ile geliştirildi.",
+        "project_portfolio_name": "Bu Portfolyo Sitesi",
+        "project_portfolio_desc": "Modern, responsive ve PWA destekli kişisel portfolyo sitesi. Çoklu dil ve tema desteği ile geliştirildi.",
+        "experience_title": "İş Deneyimi",
+        "exp_job1_title": "BT Stajyeri (IT Intern)",
+        "exp_job1_company": "İş Yazılım A.Ş.",
+        "exp_job1_date": "Haziran 2024 - Ekim 2024",
+        "exp_job1_desc": "BT departmanında sistem yönetimi, ağ yapılandırması ve kullanıcı desteği görevlerinde çalıştım. Sistem güvenliği ve veri yönetimi konularında deneyim kazandım.",
+        "exp_job2_title": "Yazılım Geliştirici (Developer)",
+        "exp_job2_company": "Gelecek Proje",
+        "exp_job2_date": "Yakında...",
+        "exp_job2_desc": "Yeni maceraların beklediği bir kariyer başlangıcı...",
+        "footer_copyright": "&copy; 2025 Aydın Aydemir. Tüm hakları saklıdır.",
+        "contact_title": "Bana Ulaşın",
+        "contact_name_label": "İsim",
+        "contact_email_label": "E-posta",
+        "contact_subject_label": "Konu",
+        "contact_message_label": "Mesaj",
+        "contact_submit_btn": "Gönder"
     },
     "en": { // İngilizce
         "portfolio_title": "Aydın Aydemir's Portfolio",
         "profile_name": "Aydın<br>Aydemir",
-        "bio": "I am a technology enthusiast studying Computer Programming at Ankara University and Web Design and Coding at Atatürk University. https://linktr.ee/aydinaydmr",
+        "bio": "I am a technology enthusiast studying Computer Programming at Ankara University and Web Design and Coding at Atatürk University.",
         "linkedin_label": "Visit Aydın Aydemir's LinkedIn Profile",
         "email_label": "Send Email to Aydın Aydemir",
         "github_label": "Visit Aydın Aydemir's GitHub Profile",
@@ -185,12 +209,35 @@ const translations = {
         "volunteer_ihh_org": "IHH Humanitarian Relief Foundation",
         "volunteer_footer_text": "I am happy to contribute to the community through my volunteering activities.",
         "ataturk_quote": "\"My sole advantage in life is to be born a Turk!\"",
-        "footer_copyright": "&copy; 2025 Aydın Aydemir. All rights reserved."
+        "portfolio_title_section": "My Projects",
+        "portfolio_github_btn": "GitHub",
+        "project_shadowprint_name": "ShadowPrint-OSINT",
+        "project_shadowprint_desc": "An OSINT tool developed for cybersecurity research. Collects, analyzes data and provides reporting.",
+        "project_mooweather_name": "MooWeather",
+        "project_mooweather_desc": "Modern weather application. Developed with real-time data, beautiful interface and PWA support.",
+        "project_portfolio_name": "This Portfolio Website",
+        "project_portfolio_desc": "Modern, responsive personal portfolio website with PWA support. Developed with multi-language and theme support.",
+        "experience_title": "Work Experience",
+        "exp_job1_title": "IT Intern",
+        "exp_job1_company": "İş Yazılım A.Ş.",
+        "exp_job1_date": "June 2024 - October 2024",
+        "exp_job1_desc": "Worked on system management, network configuration and user support tasks in the IT department. Gained experience in system security and data management.",
+        "exp_job2_title": "Software Developer",
+        "exp_job2_company": "Future Project",
+        "exp_job2_date": "Coming Soon...",
+        "exp_job2_desc": "New adventures awaiting in a career beginning...",
+        "footer_copyright": "&copy; 2025 Aydın Aydemir. All rights reserved.",
+        "contact_title": "Contact Me",
+        "contact_name_label": "Name",
+        "contact_email_label": "Email",
+        "contact_subject_label": "Subject",
+        "contact_message_label": "Message",
+        "contact_submit_btn": "Send"
     },
     "es": { // İspanyolca
         "portfolio_title": "Portafolio de Aydın Aydemir",
         "profile_name": "Aydın<br>Aydemir",
-        "bio": "Soy un entusiasta de la tecnología que estudia Programación Informática en la Universidad de Ankara y Diseño y Codificación Web en la Universidad de Atatürk. https://linktr.ee/aydinaydmr",
+        "bio": "Soy un entusiasta de la tecnología que estudia Programación Informática en la Universidad de Ankara y Diseño y Codificación Web en la Universidad de Atatürk.",
         "linkedin_label": "Visitar el Perfil de LinkedIn de Aydın Aydemir",
         "email_label": "Enviar Correo Electrónico a Aydın Aydemir",
         "github_label": "Visitar el Perfil de GitHub de Aydın Aydemir",
@@ -268,8 +315,29 @@ const translations = {
         "volunteer_ihh_title": "Voluntario de IHH",
         "volunteer_ihh_org": "Fundación de Ayuda Humanitaria IHH",
         "volunteer_footer_text": "Estoy feliz de contribuir a la comunidad a través de mis actividades de voluntariado.",
-        "ataturk_quote": "\"¡Mi única ventaja en la vida es nacer turco!\"",
-        "footer_copyright": "&copy; 2025 Aydın Aydemir. Todos los derechos reservados."
+        "ataturk_quote": "\"¡Mi única ventaja en la vida es nacer turco!\"",        "portfolio_title_section": "Mis Proyectos",
+        "portfolio_github_btn": "GitHub",
+        "project_shadowprint_name": "ShadowPrint-OSINT",
+        "project_shadowprint_desc": "Herramienta OSINT desarrollada para investigación de ciberseguridad. Recopila, analiza datos y proporciona informes.",
+        "project_mooweather_name": "MooWeather",
+        "project_mooweather_desc": "Aplicación de clima moderna. Desarrollada con datos en tiempo real, interfaz hermosa y soporte PWA.",
+        "project_portfolio_name": "Este Sitio Web de Portafolio",
+        "project_portfolio_desc": "Sitio web de portafolio personal moderno y responsivo con soporte PWA. Desarrollado con soporte multilingüe y de tema.",
+        "experience_title": "Experiencia Laboral",
+        "exp_job1_title": "Pasante de TI",
+        "exp_job1_company": "İş Yazılım A.Ş.",
+        "exp_job1_date": "Junio 2024 - Octubre 2024",
+        "exp_job1_desc": "Trabajó en tareas de gestión de sistemas, configuración de redes y soporte al usuario en el departamento de TI. Adquirió experiencia en seguridad de sistemas y gestión de datos.",
+        "exp_job2_title": "Desarrollador de Software",
+        "exp_job2_company": "Proyecto Futuro",
+        "exp_job2_date": "Próximamente...",
+        "exp_job2_desc": "Nuevas aventuras esperan en un comienzo de carrera...",        "footer_copyright": "&copy; 2025 Aydın Aydemir. Todos los derechos reservados.",
+        "contact_title": "Contactarme",
+        "contact_name_label": "Nombre",
+        "contact_email_label": "Correo Electrónico",
+        "contact_subject_label": "Asunto",
+        "contact_message_label": "Mensaje",
+        "contact_submit_btn": "Enviar"
     }
 };
 
@@ -434,9 +502,14 @@ function setLanguage(lang) {
             if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
                 element.innerHTML = translation;
             }
-            // aria-label gibi öznitelikler
-            else if (key.endsWith('_label')) {
+            // Label elementi - metin içeriğini güncelle
+            else if (element.tagName === 'LABEL') {
+                element.textContent = translation;
                 element.setAttribute('aria-label', translation);
+            }
+            // Button elementi - metin içeriğini güncelle
+            else if (element.tagName === 'BUTTON') {
+                element.textContent = translation;
             }
             // Diğer tüm metin içerikleri
             else {
@@ -511,10 +584,33 @@ animatedElements.forEach(el => {
 // ==================================
 
 /**
- * Sayfayı yumuşak bir şekilde en üste kaydırır.
+ * Sayfayı yumuşak bir şekilde en üste kaydırır (Smooth animated scroll).
+ * EaseInOutCubic easing fonksiyonu kullanarak doğal bir hareket sağlar.
  */
 function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const scrollDuration = 1200; // ms (1.2 saniye)
+    const scrollStart = window.scrollY;
+    const scrollStartTime = performance.now();
+    
+    // Easing function for smooth animation
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+    
+    function animate(currentTime) {
+        const elapsed = currentTime - scrollStartTime;
+        const progress = Math.min(elapsed / scrollDuration, 1);
+        const easeProgress = easeInOutCubic(progress);
+        
+        // Scroll from current position to 0
+        window.scrollTo(0, scrollStart - scrollStart * easeProgress);
+        
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+    }
+    
+    requestAnimationFrame(animate);
 }
 
 /**
@@ -555,9 +651,197 @@ if ('serviceWorker' in navigator) {
 // ==============================================
 // === SAYFA YÜKLEME OLAYLARI ==================
 // ==============================================
-// DOM hazır olduğunda başlangıç fonksiyonlarını çağır
+
+/**
+ * Typing effect animasyonu - Aydın yazılır, br yapılır, Aydemir yazılır
+ * Cursor (çizgi) yazıyı harf harf takip eder, yazma bitince cursor kaybolur
+ */
+function initTypingEffect() {
+    const typingElement = document.querySelector('.typing-effect');
+    if (!typingElement) return;
+    
+    // HTML'deki mevcut metni temizle
+    typingElement.innerHTML = '';
+    
+    // İki satırda yazılan metin
+    const lines = ['Aydın', 'Aydemir'];
+    let lineIndex = 0;
+    let charIndex = 0;
+    const typingSpeed = 120; // ms per character
+    const lineDelay = 300; // ms pause before next line
+    
+    function typeCharacter() {
+        if (lineIndex < lines.length) {
+            const currentLine = lines[lineIndex];
+            
+            if (charIndex < currentLine.length) {
+                // Şu anki satırdan bir karakter al
+                const char = currentLine[charIndex];
+                const currentContent = typingElement.innerHTML;
+                
+                // Cursor'ı kaldır ve karakteri ekle
+                let newContent = currentContent.replace(/<span class="cursor">.*?<\/span>/g, '');
+                newContent += char;
+                
+                // Karakteri ve yanında cursor'ı ekle
+                typingElement.innerHTML = newContent + '<span class="cursor"></span>';
+                charIndex++;
+                
+                // Sonraki karakter için timeout
+                setTimeout(typeCharacter, typingSpeed);
+            } else if (lineIndex < lines.length - 1) {
+                // Satırı bitirdik, sonraki satıra geç
+                // Cursor'ı kaldır, <br> ekle
+                let newContent = typingElement.innerHTML.replace(/<span class="cursor">.*?<\/span>/g, '');
+                typingElement.innerHTML = newContent + '<br>';
+                
+                lineIndex++;
+                charIndex = 0;
+                
+                // Sonraki satırı yazma öncesinde biraz bekle
+                setTimeout(typeCharacter, lineDelay);
+            } else {
+                // Yazma tamamlandı - cursor'ı kaldır
+                let finalContent = typingElement.innerHTML.replace(/<span class="cursor">.*?<\/span>/g, '');
+                typingElement.innerHTML = finalContent;
+            }
+        }
+    }
+    
+    // Typing efektini başlat
+    typeCharacter();
+}
+
+/**
+ * Particle animasyonu oluşturur. Rastgele sayıda parçacık ekrana eklenir.
+ */
+function createParticles() {
+    if (!particleContainer) return; // Container yoksa çıkış yap
+
+    const particleCount = 30; // Toplam parçacık sayısı
+    const sizes = ['small', 'medium', 'large'];
+
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle', sizes[Math.floor(Math.random() * sizes.length)]);
+
+        // Rastgele yatay pozisyon (0-100%)
+        const randomLeft = Math.random() * 100;
+        particle.style.left = randomLeft + '%';
+
+        // Rastgele başlangıç yüksekliği (100-150%)
+        const randomBottom = Math.random() * 50 + 100;
+        particle.style.bottom = randomBottom + '%';
+
+        // Rastgele animasyon gecikmeleri (parçacıklar farklı zamanlarda çıkar)
+        const randomDelay = Math.random() * 5;
+        particle.style.animationDelay = randomDelay + 's';
+
+        // Rastgele animasyon süresi (10-20 saniye)
+        const randomDuration = Math.random() * 10 + 10;
+        particle.style.animationDuration = randomDuration + 's';
+
+        particleContainer.appendChild(particle);
+    }
+}
+
+/**
+ * İletişim formu gönder.
+ * EmailJS kullanarak e-posta gönderir.
+ * Kurulum: EmailJS'e kaydolun ve Service ID, Template ID, Public Key'i ekleyin.
+ */
+function initializeContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    const formMessage = document.getElementById('form-message');
+    
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
+        formMessage.textContent = '';
+        formMessage.className = 'form-message';
+
+        try {
+            // EmailJS başlat (Public Key ekleyin)
+            // Kurulum: https://www.emailjs.com/ adresinde hesap açın
+            // YOUR_PUBLIC_KEY yerine kendi public key'inizi yazın
+            emailjs.init('YOUR_PUBLIC_KEY'); // ⚠️ Değiştirin!
+
+            // Form verileri
+            const formData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                subject: document.getElementById('contact-subject').value,
+                message: document.getElementById('contact-message').value,
+                to_email: 'iletisim@aydinaydmr.com.tr' // ⚠️ Değiştirin!
+            };
+
+            // E-posta gönder
+            // YOUR_SERVICE_ID ve YOUR_TEMPLATE_ID yerine kendi ID'lerinizi yazın
+            const response = await emailjs.send(
+                'YOUR_SERVICE_ID',  // ⚠️ Değiştirin!
+                'YOUR_TEMPLATE_ID', // ⚠️ Değiştirin!
+                formData
+            );
+
+            if (response.status === 200) {
+                formMessage.textContent = 'Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓';
+                formMessage.className = 'form-message success';
+                contactForm.reset();
+            }
+        } catch (error) {
+            console.error('Form gönderme hatası:', error);
+            let errorMsg = 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.';
+            
+            // EmailJS hata mesajları
+            if (error.text) {
+                errorMsg = error.text;
+            } else if (error.message) {
+                errorMsg = error.message;
+            }
+            
+            formMessage.textContent = errorMsg + ' ✗';
+            formMessage.className = 'form-message error';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+        }
+    });
+}
+
+// Scroll bar update
+/**
+ * Scroll Progress Bar'ı sayfa aşağılanma yüzdesine göre günceller.
+ */
+function updateScrollProgressBar() {
+    const scrollProgressBar = document.getElementById('scroll-progress-bar');
+    if (!scrollProgressBar) return;
+
+    // Sayfa yüksekliği - viewport yüksekliği = kaydırılabilir mesafe
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = window.scrollY;
+
+    // Yüzdeyi hesapla (0-100)
+    const scrollPercent = (scrolled / scrollableHeight) * 100;
+
+    // Progress bar'ın genişliğini güncelle
+    scrollProgressBar.style.width = scrollPercent + '%';
+}
+
+// Scroll olayında progress bar'ı güncelle
+window.addEventListener('scroll', updateScrollProgressBar);
+
+
 document.addEventListener('DOMContentLoaded', () => {
     applyInitialTheme();            // Temayı uygula
     applyInitialLanguage();         // Dili uygula (IP kontrolü dahil)
     handleScrollButtonVisibility(); // Scroll butonunun ilk durumunu ayarla
+    createParticles();              // Particle animasyonlarını oluştur
+    initTypingEffect();             // Typing effect animasyonunu başlat
+    initializeContactForm();        // Contact form handler'ını başlat
 });
