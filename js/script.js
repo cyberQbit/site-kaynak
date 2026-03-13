@@ -507,8 +507,13 @@ function setLanguage(lang) {
         const translation = translations[lang]?.[key]; // Çeviriyi al
 
         if (translation !== undefined) {
+            // İkon içeren sosyal linklerde ikonu koru, sadece erişilebilir metni güncelle.
+            if (element.tagName === 'A' && element.querySelector('i')) {
+                element.setAttribute('aria-label', translation);
+                element.setAttribute('title', translation);
+            }
             // HTML içeren özel durumlar (_html, profile_name, <, & içerenler)
-            if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
+            else if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
                 element.innerHTML = translation;
             }
             // Label elementi - metin içeriğini güncelle
