@@ -10,7 +10,7 @@ const htmlTag = document.documentElement; // <html> elementi (lang özniteliği 
 const scrollTopButton = document.getElementById('scrollToTop'); // Yukarı çık butonu
 const particleContainer = document.querySelector('.particle-container'); // Particle animasyonu için container
 // Scroll animasyonu uygulanacak elementler
-const animatedElements = document.querySelectorAll('.content-block, .quote-section, .volunteer');
+const animatedElements = document.querySelectorAll('.content-block, .quote-section');
 
 // Sitenin o anki aktif dilini tutan değişken. Başlangıç değeri applyInitialLanguage içinde belirlenecek.
 let currentLanguage = 'en'; // Varsayılan olarak İngilizce atayalım, başlangıçta güncellenecek
@@ -718,7 +718,9 @@ function initTypingEffect() {
 function createParticles() {
     if (!particleContainer) return; // Container yoksa çıkış yap
 
-    const particleCount = 30; // Toplam parçacık sayısı
+    // Mobil cihazlarda performans için parçacık sayısını sınırla
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 10 : 30; // Mobilde 10, PC'de 30 parçacık
     const sizes = ['small', 'medium', 'large'];
 
     for (let i = 0; i < particleCount; i++) {
@@ -795,9 +797,6 @@ function initializeContactForm() {
         } finally {
             submitBtn.textContent = originalText;
             submitBtn.disabled = false;
-        }
-    });
-}
         }
     });
 }
