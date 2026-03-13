@@ -473,6 +473,9 @@
                         <textarea id="contact-message" name="message" rows="5" required placeholder="Mesajınız..."></textarea>
                     </div>
 
+                    <!-- hCaptcha Entegrasyonu -->
+                    <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
+
                     <button type="submit" class="submit-btn" data-key="contact_submit_btn">Gönder</button>
                     <div id="form-message" class="form-message"></div>
                 </form>
@@ -506,5 +509,8 @@
 
     <!-- Main Script -->
     <script src="js/script.js"></script>
+
+    <!-- hCaptcha Script (Web3Forms Integration) -->
+    <script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
 </html>

@@ -125,7 +125,10 @@ const translations = {
         "contact_email_label": "E-posta",
         "contact_subject_label": "Konu",
         "contact_message_label": "Mesaj",
-        "contact_submit_btn": "Gönder"
+        "contact_submit_btn": "Gönder",
+        "contact_success_msg": "Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓",
+        "contact_error_msg": "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin. ✗",
+        "contact_captcha_error": "Lütfen captcha doğrulamasını tamamlayın."
     },
     "en": { // İngilizce
         "portfolio_title": "Aydın Aydemir's Portfolio",
@@ -232,7 +235,10 @@ const translations = {
         "contact_email_label": "Email",
         "contact_subject_label": "Subject",
         "contact_message_label": "Message",
-        "contact_submit_btn": "Send"
+        "contact_submit_btn": "Send",
+        "contact_success_msg": "Message sent successfully! Thank you. ✓",
+        "contact_error_msg": "An error occurred while sending your message. Please try again. ✗",
+        "contact_captcha_error": "Please complete the captcha verification."
     },
     "es": { // İspanyolca
         "portfolio_title": "Portafolio de Aydın Aydemir",
@@ -337,7 +343,10 @@ const translations = {
         "contact_email_label": "Correo Electrónico",
         "contact_subject_label": "Asunto",
         "contact_message_label": "Mensaje",
-        "contact_submit_btn": "Enviar"
+        "contact_submit_btn": "Enviar",
+        "contact_success_msg": "¡Tu mensaje se envió exitosamente! Gracias. ✓",
+        "contact_error_msg": "Ocurrió un error al enviar tu mensaje. Por favor, intenta de nuevo. ✗",
+        "contact_captcha_error": "Por favor, completa la verificación de captcha."
     }
 };
 
@@ -753,7 +762,7 @@ function createParticles() {
  * Kurulum: EmailJS'e kaydolun ve Service ID, Template ID, Public Key'i ekleyin.
  */
 /**
- * İletişim formu gönder - Web3Forms kullanarak Protonmail'e email gönderir.
+ * İletişim formu gönder - Web3Forms + hCaptcha kullanarak Protonmail'e email gönderir.
  */
 function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
@@ -765,12 +774,20 @@ function initializeContactForm() {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
+        // hCaptcha doğrulaması
+        const hCaptchaResponse = contactForm.querySelector('textarea[name=h-captcha-response]');
+        if (!hCaptchaResponse || !hCaptchaResponse.value) {
+            formMessage.textContent = translations[currentLanguage].contact_captcha_error;
+            formMessage.className = 'form-message error';
+            return;
+        }
+
         const formData = new FormData(contactForm);
         formData.append("access_key", "114aaeca-ee6b-4fff-8083-f24269fc4075");
 
-        const originalText = submitBtn.textContent;
-
-        submitBtn.textContent = '⏳ Gönderiliyor...';
+        // Loading durumunda yazıyı güncelle
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (currentLanguage === 'tr' ? 'Gönderiliyor...' : currentLanguage === 'en' ? 'Sending...' : 'Enviando...');
         submitBtn.disabled = true;
         formMessage.textContent = '';
         formMessage.className = 'form-message';
@@ -783,19 +800,19 @@ function initializeContactForm() {
 
             const data = await response.json();
 
-            if (response.ok && data.success) {
-                formMessage.textContent = 'Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓';
+            if (response.ok) {
+                formMessage.textContent = translations[currentLanguage].contact_success_msg;
                 formMessage.className = 'form-message success';
                 contactForm.reset();
             } else {
-                throw new Error(data.message || 'Form gönderme hatası');
+                throw new Error(data.message || translations[currentLanguage].contact_error_msg);
             }
         } catch (error) {
             console.error('Form gönderme hatası:', error);
-            formMessage.textContent = (error.message || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.') + ' ✗';
+            formMessage.textContent = (error.message || translations[currentLanguage].contact_error_msg);
             formMessage.className = 'form-message error';
         } finally {
-            submitBtn.textContent = originalText;
+            submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
         }
     });

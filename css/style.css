@@ -1357,20 +1357,21 @@ body[data-theme='light'] .scroll-progress-bar {
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    margin-top: 30px;
-    padding: 40px;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 25px;
     background-color: var(--bg-secondary);
     border-radius: 12px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-soft);
+    max-width: 600px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 22px;
+    gap: 8px;
+    padding: 12px;
     border-radius: 8px;
     background-color: var(--bg-tertiary);
 }
@@ -1384,7 +1385,7 @@ body[data-theme='light'] .scroll-progress-bar {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 16px 18px;
+    padding: 12px 14px;
     border: 2px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-primary);
@@ -1464,6 +1465,20 @@ body[data-theme='light'] .scroll-progress-bar {
     display: block;
 }
 
+/* hCaptcha Styling */
+.h-captcha {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: var(--bg-tertiary);
+}
+
+.h-captcha iframe {
+    border-radius: 4px;
+}
+
 /* Light Mode Form Adjustments */
 body[data-theme='light'] .contact-form {
     background-color: #ffffff;
@@ -1487,13 +1502,19 @@ body[data-theme='light'] .form-group textarea:focus {
 /* Light Mode Responsive */
 @media (max-width: 768px) {
     .contact-form {
-        padding: 30px 25px;
-        gap: 25px;
+        padding: 20px 18px;
+        gap: 12px;
+        max-width: 100%;
     }
 
     .form-group {
-        padding: 18px;
-        gap: 12px;
+        padding: 10px;
+        gap: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
     }
 
     .form-group input,
