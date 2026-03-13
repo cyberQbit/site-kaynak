@@ -367,7 +367,7 @@ function applyInitialTheme() {
     } else if (prefersDark) {
         setTheme('dark');
     } else {
-        setTheme('light'); // Varsayılan olarak açık tema
+        setTheme('dark'); // Varsayılan olarak koyu tema
     }
 }
 
