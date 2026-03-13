@@ -12,15 +12,57 @@
     <link rel="icon" href="./A.ico" type="image/x-icon">
     <meta name="theme-color" content="#1F2937">
     <link rel="manifest" href="/manifest.json">
+    
+    <!-- Open Graph Meta Tags (Social Media Preview) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aydinaydmr.com.tr">
+    <meta property="og:title" content="Aydın Aydemir - Yazılım Geliştirici Portfolio">
+    <meta property="og:description" content="Modern, PWA destekli portfolio sitesi. Teknoloji merakı, yazılım geliştirme ve problem çözme konularında uzman.">
+    <meta property="og:image" content="https://aydinaydmr.com.tr/images/profile_placeholder.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://aydinaydmr.com.tr">
+    <meta name="twitter:title" content="Aydın Aydemir - Yazılım Geliştirici">
+    <meta name="twitter:description" content="Modern, PWA destekli portfolio sitesi. GitHub: cyberQbit">
+    <meta name="twitter:image" content="https://aydinaydmr.com.tr/images/profile_placeholder.png">
+    <meta name="twitter:creator" content="@aydinaydmr">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="description" content="Aydın Aydemir'in kişisel portfolio sitesi. Yazılım geliştirme, web tasarımı ve siber güvenlik konularında deneyimli.">
+    <meta name="keywords" content="Portfolio, Yazılımcı, Developer, Web Developer, Python, JavaScript, Flutter, Ankara">
+    <meta name="author" content="Aydın Aydemir">
+    <meta name="robots" content="index, follow">
+    <meta name="canonical" content="https://aydinaydmr.com.tr">
+    
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+    
+    <!-- Google Analytics (Optional - Replace with your Measurement ID) -->
+    <!-- Uncomment and replace 'G-XXXXXXXXXX' with your Google Analytics Measurement ID -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
 </head>
 <body>
+    <!-- Particle Animation Container -->
+    <div class="particle-container"></div>
+
     <div class="container">
         <aside class="left-column">
             <div class="personal-info">
                 <img src="images/profile_placeholder.png" alt="Aydın Aydemir" class="profile-picture" loading="lazy">
-                <h1 data-key="profile_name">Aydın<br>Aydemir</h1>
+                <h1 class="typing-effect"></h1>
                 <p class="bio" data-key="bio">
-                    Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim. <a href="https://linktr.ee/aydinaydmr" target="_blank" rel="noopener noreferrer">https://linktr.ee/aydinaydmr</a>
+                    Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim.
                 </p>
                 <div class="social-icons">
                     <a href="https://www.linkedin.com/in/aydinaydmr" target="_blank" rel="noopener noreferrer" aria-label="Linkedin" data-key="linkedin_label">
@@ -43,6 +85,99 @@
                 </h2>
                 <div class="block-description" data-key="about_desc_html">
                     <p>Merhaba! Ben Aydın Aydemir. Teknolojiye olan tutkum ve öğrenme azmimle, hem <strong>Ankara Üniversitesi</strong>'nde <em>Bilgisayar Programcılığı</em> hem de <strong>Atatürk Üniversitesi</strong>'nde <em>Web Tasarım ve Kodlama</em> alanlarında çift önlisans eğitimi alıyorum. Web tasarımı, yazılım geliştirme ve problem çözme konularında kendimi sürekli geliştiriyorum. <span class="highlight">HTML5</span>, <span class="highlight">CSS</span>, <span class="highlight">SQL</span> ve <span class="highlight">Microsoft SQL Server</span> gibi teknik becerilere sahibim. Ayrıca, araştırma yapma, öğrenmeye açıklık ve analitik düşünme gibi güçlü yönlerimle projelerime değer katıyorum. Daha fazla bilgi için <a href="https://www.linkedin.com/in/aydinaydmr" target="_blank" rel="noopener noreferrer"><strong>LinkedIn profilimi</strong></a> ziyaret edebilirsiniz.</p>
+                </div>
+            </section>
+
+            <section class="content-block portfolio">
+                <h2 class="block-title">
+                    <i class="fas fa-briefcase icon"></i> <span data-key="portfolio_title_section">Projelerim</span>
+                </h2>
+                <div class="portfolio-grid">
+                    <!-- Project 1 -->
+                    <div class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="images/portfolio_placeholder_1.png" alt="ShadowPrint-OSINT" class="project-image" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" class="project-link-btn" data-key="portfolio_github_btn">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_shadowprint_name">ShadowPrint-OSINT</h3>
+                            <p class="project-description" data-key="project_shadowprint_desc">Siber güvenlik araştırması için geliştirilmiş OSINT aracı. Verileri toplar, analiz eder ve raporama sağlar.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Flutter</span>
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">API</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="images/portfolio_placeholder_2.png" alt="MooWeather" class="project-image" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" class="project-link-btn" data-key="portfolio_github_btn">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_mooweather_name">MooWeather</h3>
+                            <p class="project-description" data-key="project_mooweather_desc">Modern hava durumu uygulaması. Gerçek zamanlı veri, güzel arayüz ve PWA desteği ile geliştirildi.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">.NET Core</span>
+                                <span class="project-tag">React</span>
+                                <span class="project-tag">PWA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-card">
+                        <div class="project-image-wrapper">
+                            <img src="images/portfolio_placeholder_3.png" alt="Portfolio Site" class="project-image" loading="lazy">
+                            <div class="project-overlay">
+                                <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" class="project-link-btn" data-key="portfolio_github_btn">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_portfolio_name">Bu Portfolyo Sitesi</h3>
+                            <p class="project-description" data-key="project_portfolio_desc">Modern, responsive ve PWA destekli kişisel portfolyo sitesi. Çoklu dil ve tema desteği ile geliştirildi.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">HTML</span>
+                                <span class="project-tag">CSS</span>
+                                <span class="project-tag">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content-block experience">
+                <h2 class="block-title">
+                    <i class="fas fa-briefcase icon"></i> <span data-key="experience_title">İş Deneyimi</span>
+                </h2>
+                <div class="timeline-container">
+                    <!-- Experience Item 1 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="experience-title" data-key="exp_job1_title">BT Stajyeri (IT Intern)</h3>
+                            <p class="experience-company" data-key="exp_job1_company">İş Yazılım A.Ş.</p>
+                            <p class="experience-date" data-key="exp_job1_date">Haziran 2024 - Ekim 2024</p>
+                            <p class="experience-description" data-key="exp_job1_desc">BT departmanında sistem yönetimi, ağ yapılandırması ve kullanıcı desteği görevlerinde çalıştım. Sistem güvenliği ve veri yönetimi konularında deneyim kazandım.</p>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 2 (Opsiyonel - gelecek için) -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3 class="experience-title" data-key="exp_job2_title">Yazılım Geliştirici (Developer)</h3>
+                            <p class="experience-company" data-key="exp_job2_company">Gelecek Proje</p>
+                            <p class="experience-date" data-key="exp_job2_date">Yakında...</p>
+                            <p class="experience-description" data-key="exp_job2_desc">Yeni maceraların beklediği bir kariyer başlangıcı...</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -305,11 +440,35 @@
                 </div>
             </section>
 
-            <section class="quote-section">
-                <blockquote>
-                    <p data-key="ataturk_quote">"Hayattaki yegane üstünlüğüm, Türk doğmaktır!"</p>
-                    <cite>Mustafa Kemal Atatürk</cite>
-                </blockquote>
+            <!-- Contact Form Section -->
+            <section class="content-block contact">
+                <h2 class="block-title">
+                    <i class="fas fa-envelope icon"></i> <span data-key="contact_title">Bana Ulaşın</span>
+                </h2>
+                <form id="contact-form" class="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name" data-key="contact_name_label">İsim</label>
+                        <input type="text" id="contact-name" name="name" required placeholder="Adınız">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-email" data-key="contact_email_label">E-posta</label>
+                        <input type="email" id="contact-email" name="email" required placeholder="E-posta adresiniz">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-subject" data-key="contact_subject_label">Konu</label>
+                        <input type="text" id="contact-subject" name="subject" required placeholder="Konu">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-message" data-key="contact_message_label">Mesaj</label>
+                        <textarea id="contact-message" name="message" rows="5" required placeholder="Mesajınız..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" data-key="contact_submit_btn">Gönder</button>
+                    <div id="form-message" class="form-message"></div>
+                </form>
             </section>
         </main>
 
@@ -338,6 +497,8 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

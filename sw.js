@@ -1,7 +1,7 @@
 // sw.js (Basit Service Worker)
 
 // Önbellek sürümünü artır!
-const CACHE_NAME = 'aydin-portfolio-cache-v2'; // Sürüm v2 oldu
+const CACHE_NAME = 'aydin-portfolio-cache-v4'; // Sürüm v4 oldu
 // Önbelleğe alınacak temel dosyaların listesi (offline.html eklendi)
 const urlsToCache = [
   '/',
