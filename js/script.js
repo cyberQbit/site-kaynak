@@ -778,7 +778,7 @@ function initializeContactForm() {
                 email: document.getElementById('contact-email').value,
                 subject: document.getElementById('contact-subject').value,
                 message: document.getElementById('contact-message').value,
-                to_email: 'iletisim@aydinaydmr.com.tr' // ⚠️ Değiştirin!
+                to_email: 'aydinaydmr@proton.me' // ⚠️ Değiştirin!
             };
 
             // E-posta gönder
