@@ -643,22 +643,16 @@ function handleScrollButtonVisibility() {
 window.addEventListener('scroll', handleScrollButtonVisibility);
 
 // ==============================================
-// === SERVICE WORKER KAYDI =====================
+// === SERVICE WORKER DEVRE DISI ===============
 // ==============================================
-// Tarayıcı Service Worker desteğini kontrol et
+// Service Worker'i devre disi birakma ve silme
 if ('serviceWorker' in navigator) {
-  // Sayfa yüklendiğinde kaydet
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js') // sw.js dosyasının yolu
-      .then(registration => {
-        console.log('Service Worker registered successfully with scope: ', registration.scope);
-      })
-      .catch(error => {
-        console.error('Service Worker registration failed: ', error);
-      });
-  });
-} else {
-    console.log('Service Worker is not supported by this browser.');
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (let registration of registrations) {
+                        registration.unregister();
+                        console.log('Service Worker basariyla silindi.');
+                }
+        });
 }
 
 
