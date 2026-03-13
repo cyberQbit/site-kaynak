@@ -504,7 +504,7 @@ body[data-theme='light'] .highlight {
 
 /* Yetenekler bölümü başlığı */
 /* Artık section > div > h3 şeklinde seçilebilir, daha spesifik olmak için */
-.content-block.skills > div:first-of-type > h3 {
+.content-block.skills > div:first-of-type > h3 { 
     /* Stil ihtiyacı varsa buraya eklenebilir, mevcut h3 stilleri zaten uygulanıyor */
 }
 
@@ -958,7 +958,7 @@ body[data-theme='light'] .language-details span[data-key^="lang_level_"] {
     box-shadow: 0 8px 20px rgba(8, 145, 178, 0.5); /* Gölgeyi belirginleştirir */
 }
 /* Yukarı çık butonu ikonu */
-.scroll-to-top i { font-size: 1.4em; line-height: 1; /* İkon boyutu ve hizalaması */ }
+.scroll-to-top i { font-size: 1.4em; line-height: 1; color: #111827 !important; /* İkon boyutu, hizalaması ve görünür renk */ }
 /* Yukarı çık butonu tıklama anı (active) */
 .scroll-to-top:active {
     transform: scale(1.0) translateY(0) rotate(0deg); /* Hover efektini anlık olarak sıfırlar */
@@ -985,7 +985,7 @@ body[data-theme='light'] .language-details span[data-key^="lang_level_"] {
 .project-card {
     background-color: var(--bg-secondary);
     border-radius: 12px;
-    overflow: hidden; /* İmajın köşe yuvarlaklığını düzgün gösterir */
+    overflow: hidden;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-soft);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -1000,60 +1000,32 @@ body[data-theme='light'] .language-details span[data-key^="lang_level_"] {
     border-color: var(--accent-primary);
 }
 
-/* Project Image Wrapper (Overlay için) */
-.project-image-wrapper {
-    position: relative;
-    width: 100%;
-    height: 240px;
-    overflow: hidden;
-    background-color: var(--bg-tertiary);
-}
-
-.project-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-/* Hover'da Resim Zoom Efekti */
-.project-card:hover .project-image {
-    transform: scale(1.05);
-}
-
-/* Project Overlay (GitHub butonu) */
-.project-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    justify-content: center;
+/* Project Repo Link */
+.project-repo-link {
+    display: inline-flex;
     align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    backdrop-filter: blur(2px);
-}
-
-.project-card:hover .project-overlay {
-    opacity: 1;
-}
-
-.project-link-btn {
+    gap: 8px;
     background: var(--accent-primary);
     color: #111827;
-    padding: 10px 25px;
+    padding: 10px 16px;
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.95em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     box-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+    text-decoration: none;
+    width: fit-content;
+    margin-top: 15px;
 }
 
-.project-link-btn:hover {
-    transform: scale(1.1);
+.project-repo-link:hover {
+    transform: translateX(4px);
     box-shadow: 0 6px 20px rgba(34, 211, 238, 0.5);
-    text-shadow: none;
+    background: var(--accent-secondary);
+}
+
+.project-repo-link i {
+    font-size: 0.9em;
 }
 
 /* Project Content */
@@ -1108,8 +1080,15 @@ body[data-theme='light'] .project-card {
     border-color: #e9ecef;
 }
 
-body[data-theme='light'] .project-image-wrapper {
-    background-color: #f0f0f0;
+body[data-theme='light'] .project-repo-link {
+    background: #06b6d4;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+body[data-theme='light'] .project-repo-link:hover {
+    background: #0891b2;
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
 }
 
 
@@ -1378,20 +1357,21 @@ body[data-theme='light'] .scroll-progress-bar {
 .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    margin-top: 30px;
-    padding: 40px;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 25px;
     background-color: var(--bg-secondary);
     border-radius: 12px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-soft);
+    max-width: 600px;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding: 22px;
+    gap: 8px;
+    padding: 12px;
     border-radius: 8px;
     background-color: var(--bg-tertiary);
 }
@@ -1405,7 +1385,7 @@ body[data-theme='light'] .scroll-progress-bar {
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 16px 18px;
+    padding: 12px 14px;
     border: 2px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-primary);
@@ -1485,6 +1465,20 @@ body[data-theme='light'] .scroll-progress-bar {
     display: block;
 }
 
+/* hCaptcha Styling */
+.h-captcha {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: var(--bg-tertiary);
+}
+
+.h-captcha iframe {
+    border-radius: 4px;
+}
+
 /* Light Mode Form Adjustments */
 body[data-theme='light'] .contact-form {
     background-color: #ffffff;
@@ -1508,13 +1502,19 @@ body[data-theme='light'] .form-group textarea:focus {
 /* Light Mode Responsive */
 @media (max-width: 768px) {
     .contact-form {
-        padding: 30px 25px;
-        gap: 25px;
+        padding: 20px 18px;
+        gap: 12px;
+        max-width: 100%;
     }
 
     .form-group {
-        padding: 18px;
-        gap: 12px;
+        padding: 10px;
+        gap: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
     }
 
     .form-group input,
@@ -1532,7 +1532,7 @@ body[data-theme='light'] .form-group textarea:focus {
 
 
 
-   ================================= */
+/* ================================= */
 
 /* Küçük ekranlar için Portfolio */
 @media (max-width: 768px) {
@@ -1541,9 +1541,7 @@ body[data-theme='light'] .form-group textarea:focus {
         gap: 20px;
     }
 
-    .project-image-wrapper {
-        height: 200px;
-    }
+
 
     /* Timeline'a daha az padding */
     .timeline-container {

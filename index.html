@@ -51,6 +51,13 @@
         gtag('config', 'G-XXXXXXXXXX');
     </script>
     -->
+
+    <!-- Varsayılan Koyu Tema (FOUC önleme) -->
+    <style>
+        html:not([data-theme="light"]) {
+            color-scheme: dark;
+        }
+    </style>
 </head>
 <body>
     <!-- Particle Animation Container -->
@@ -93,60 +100,67 @@
                     <i class="fas fa-briefcase icon"></i> <span data-key="portfolio_title_section">Projelerim</span>
                 </h2>
                 <div class="portfolio-grid">
-                    <!-- Project 1 -->
+                    <!-- Project 1: MooWeather-Mobile -->
                     <div class="project-card">
-                        <div class="project-image-wrapper">
-                            <img src="images/portfolio_placeholder_1.png" alt="ShadowPrint-OSINT" class="project-image" loading="lazy">
-                            <div class="project-overlay">
-                                <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" class="project-link-btn" data-key="portfolio_github_btn">GitHub</a>
-                            </div>
-                        </div>
                         <div class="project-content">
-                            <h3 class="project-title" data-key="project_shadowprint_name">ShadowPrint-OSINT</h3>
-                            <p class="project-description" data-key="project_shadowprint_desc">Siber güvenlik araştırması için geliştirilmiş OSINT aracı. Verileri toplar, analiz eder ve raporama sağlar.</p>
+                            <h3 class="project-title">MooWeather-Mobile</h3>
+                            <p class="project-description">Premium, tam yığın hava durumu uygulaması. Glassmorphism arayüzü, Google Sign-In, dinamik temalar, çoklu dil desteği ve bulut senkronizasyonu ile geliştirildi.</p>
                             <div class="project-tags">
                                 <span class="project-tag">Flutter</span>
-                                <span class="project-tag">Python</span>
+                                <span class="project-tag">Dart</span>
+                                <span class="project-tag">Mobile</span>
+                            </div>
+                            <a href="https://github.com/cyberQbit/MooWeather-Mobile" target="_blank" rel="noopener noreferrer" class="project-repo-link">
+                                GitHub Repository <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: MooWeather-BackEnd -->
+                    <div class="project-card">
+                        <div class="project-content">
+                            <h3 class="project-title">MooWeather-BackEnd</h3>
+                            <p class="project-description">MooWeather mobil uygulaması için özel geliştirilmiş C# .NET Backend REST API. JWT kimlik doğrulaması, OpenWeatherMap veri analizi ve kullanıcı bulut senkronizasyonunu yönetir.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">C#</span>
+                                <span class="project-tag">.NET Core</span>
                                 <span class="project-tag">API</span>
                             </div>
+                            <a href="https://github.com/cyberQbit/MooWeather-BackEnd" target="_blank" rel="noopener noreferrer" class="project-repo-link">
+                                GitHub Repository <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- Project 2 -->
+                    <!-- Project 3: site-kaynak -->
                     <div class="project-card">
-                        <div class="project-image-wrapper">
-                            <img src="images/portfolio_placeholder_2.png" alt="MooWeather" class="project-image" loading="lazy">
-                            <div class="project-overlay">
-                                <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" class="project-link-btn" data-key="portfolio_github_btn">GitHub</a>
-                            </div>
-                        </div>
                         <div class="project-content">
-                            <h3 class="project-title" data-key="project_mooweather_name">MooWeather</h3>
-                            <p class="project-description" data-key="project_mooweather_desc">Modern hava durumu uygulaması. Gerçek zamanlı veri, güzel arayüz ve PWA desteği ile geliştirildi.</p>
+                            <h3 class="project-title">Bu Portfolyo Sitesi</h3>
+                            <p class="project-description">Modern, responsive ve PWA destekli kişisel portfolyo sitesi. Çoklu dil desteği (TR/EN/ES), karanlık/açık tema, servis worker, typing efekti, parçacık animasyonları ve pürüzsüz kaydırma ile geliştirildi.</p>
                             <div class="project-tags">
-                                <span class="project-tag">.NET Core</span>
-                                <span class="project-tag">React</span>
-                                <span class="project-tag">PWA</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 3 -->
-                    <div class="project-card">
-                        <div class="project-image-wrapper">
-                            <img src="images/portfolio_placeholder_3.png" alt="Portfolio Site" class="project-image" loading="lazy">
-                            <div class="project-overlay">
-                                <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" class="project-link-btn" data-key="portfolio_github_btn">GitHub</a>
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title" data-key="project_portfolio_name">Bu Portfolyo Sitesi</h3>
-                            <p class="project-description" data-key="project_portfolio_desc">Modern, responsive ve PWA destekli kişisel portfolyo sitesi. Çoklu dil ve tema desteği ile geliştirildi.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">HTML</span>
-                                <span class="project-tag">CSS</span>
+                                <span class="project-tag">HTML5</span>
+                                <span class="project-tag">CSS3</span>
                                 <span class="project-tag">JavaScript</span>
                             </div>
+                            <a href="https://github.com/cyberQbit/site-kaynak" target="_blank" rel="noopener noreferrer" class="project-repo-link">
+                                GitHub Repository <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: gokturk-ordusu-bot -->
+                    <div class="project-card">
+                        <div class="project-content">
+                            <h3 class="project-title">Gökturk Ordusu Bot</h3>
+                            <p class="project-description">Gökturk Ordusu topluluğu için geliştirilmiş resmi Discord botu. Sunucu yönetimi, kullanıcı etkileşimi ve otomatik moderasyon özelliklerini sağlar.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">JavaScript</span>
+                                <span class="project-tag">Discord.js</span>
+                                <span class="project-tag">Bot</span>
+                            </div>
+                            <a href="https://github.com/cyberQbit/gokturk-ordusu-bot" target="_blank" rel="noopener noreferrer" class="project-repo-link">
+                                GitHub Repository <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -294,7 +308,7 @@
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
-                </h2>                <span class="cert-name" data-key="cert_cloud_storage">Bulut Depolama Kavramları: Hizmetler, Maliyet Kontrolü ve Güvenlik</span>
+                                <span class="cert-name" data-key="cert_cloud_storage">Bulut Depolama Kavramları: Hizmetler, Maliyet Kontrolü ve Güvenlik</span>
                             </div>
                          </div>
                          <div class="certificate-card-v3">
@@ -466,6 +480,9 @@
                         <textarea id="contact-message" name="message" rows="5" required placeholder="Mesajınız..."></textarea>
                     </div>
 
+                    <!-- hCaptcha Entegrasyonu -->
+                    <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
+
                     <button type="submit" class="submit-btn" data-key="contact_submit_btn">Gönder</button>
                     <div id="form-message" class="form-message"></div>
                 </form>
@@ -497,8 +514,10 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+    <!-- Main Script -->
     <script src="js/script.js"></script>
+
+    <!-- hCaptcha Script (Web3Forms Integration) -->
+    <script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
 </html>

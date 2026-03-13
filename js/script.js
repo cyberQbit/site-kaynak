@@ -10,7 +10,7 @@ const htmlTag = document.documentElement; // <html> elementi (lang özniteliği 
 const scrollTopButton = document.getElementById('scrollToTop'); // Yukarı çık butonu
 const particleContainer = document.querySelector('.particle-container'); // Particle animasyonu için container
 // Scroll animasyonu uygulanacak elementler
-const animatedElements = document.querySelectorAll('.content-block, .quote-section, .volunteer');
+const animatedElements = document.querySelectorAll('.content-block, .quote-section');
 
 // Sitenin o anki aktif dilini tutan değişken. Başlangıç değeri applyInitialLanguage içinde belirlenecek.
 let currentLanguage = 'en'; // Varsayılan olarak İngilizce atayalım, başlangıçta güncellenecek
@@ -125,7 +125,10 @@ const translations = {
         "contact_email_label": "E-posta",
         "contact_subject_label": "Konu",
         "contact_message_label": "Mesaj",
-        "contact_submit_btn": "Gönder"
+        "contact_submit_btn": "Gönder",
+        "contact_success_msg": "Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓",
+        "contact_error_msg": "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin. ✗",
+        "contact_captcha_error": "Lütfen captcha doğrulamasını tamamlayın."
     },
     "en": { // İngilizce
         "portfolio_title": "Aydın Aydemir's Portfolio",
@@ -232,7 +235,10 @@ const translations = {
         "contact_email_label": "Email",
         "contact_subject_label": "Subject",
         "contact_message_label": "Message",
-        "contact_submit_btn": "Send"
+        "contact_submit_btn": "Send",
+        "contact_success_msg": "Message sent successfully! Thank you. ✓",
+        "contact_error_msg": "An error occurred while sending your message. Please try again. ✗",
+        "contact_captcha_error": "Please complete the captcha verification."
     },
     "es": { // İspanyolca
         "portfolio_title": "Portafolio de Aydın Aydemir",
@@ -337,7 +343,10 @@ const translations = {
         "contact_email_label": "Correo Electrónico",
         "contact_subject_label": "Asunto",
         "contact_message_label": "Mensaje",
-        "contact_submit_btn": "Enviar"
+        "contact_submit_btn": "Enviar",
+        "contact_success_msg": "¡Tu mensaje se envió exitosamente! Gracias. ✓",
+        "contact_error_msg": "Ocurrió un error al enviar tu mensaje. Por favor, intenta de nuevo. ✗",
+        "contact_captcha_error": "Por favor, completa la verificación de captcha."
     }
 };
 
@@ -358,7 +367,7 @@ function applyInitialTheme() {
     } else if (prefersDark) {
         setTheme('dark');
     } else {
-        setTheme('light'); // Varsayılan olarak açık tema
+        setTheme('dark'); // Varsayılan olarak koyu tema
     }
 }
 
@@ -498,8 +507,13 @@ function setLanguage(lang) {
         const translation = translations[lang]?.[key]; // Çeviriyi al
 
         if (translation !== undefined) {
+            // İkon içeren sosyal linklerde ikonu koru, sadece erişilebilir metni güncelle.
+            if (element.tagName === 'A' && element.querySelector('i')) {
+                element.setAttribute('aria-label', translation);
+                element.setAttribute('title', translation);
+            }
             // HTML içeren özel durumlar (_html, profile_name, <, & içerenler)
-            if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
+            else if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
                 element.innerHTML = translation;
             }
             // Label elementi - metin içeriğini güncelle
@@ -718,7 +732,9 @@ function initTypingEffect() {
 function createParticles() {
     if (!particleContainer) return; // Container yoksa çıkış yap
 
-    const particleCount = 30; // Toplam parçacık sayısı
+    // Mobil cihazlarda performans için parçacık sayısını sınırla
+    const isMobile = window.innerWidth <= 768;
+    const particleCount = isMobile ? 10 : 30; // Mobilde 10, PC'de 30 parçacık
     const sizes = ['small', 'medium', 'large'];
 
     for (let i = 0; i < particleCount; i++) {
@@ -750,66 +766,59 @@ function createParticles() {
  * EmailJS kullanarak e-posta gönderir.
  * Kurulum: EmailJS'e kaydolun ve Service ID, Template ID, Public Key'i ekleyin.
  */
+/**
+ * İletişim formu gönder - Web3Forms + hCaptcha kullanarak Protonmail'e email gönderir.
+ */
 function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
+    const submitBtn = contactForm.querySelector('.submit-btn');
     
     if (!contactForm) return;
 
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalBtnText = submitBtn.innerHTML;
+        // hCaptcha doğrulaması
+        const hCaptchaResponse = contactForm.querySelector('textarea[name=h-captcha-response]');
+        if (!hCaptchaResponse || !hCaptchaResponse.value) {
+            formMessage.textContent = translations[currentLanguage].contact_captcha_error;
+            formMessage.className = 'form-message error';
+            return;
+        }
+
+        const formData = new FormData(contactForm);
+        formData.append("access_key", "114aaeca-ee6b-4fff-8083-f24269fc4075");
+
+        // Loading durumunda yazıyı güncelle
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (currentLanguage === 'tr' ? 'Gönderiliyor...' : currentLanguage === 'en' ? 'Sending...' : 'Enviando...');
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
         formMessage.textContent = '';
         formMessage.className = 'form-message';
 
         try {
-            // EmailJS başlat (Public Key ekleyin)
-            // Kurulum: https://www.emailjs.com/ adresinde hesap açın
-            // YOUR_PUBLIC_KEY yerine kendi public key'inizi yazın
-            emailjs.init('YOUR_PUBLIC_KEY'); // ⚠️ Değiştirin!
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+            });
 
-            // Form verileri
-            const formData = {
-                name: document.getElementById('contact-name').value,
-                email: document.getElementById('contact-email').value,
-                subject: document.getElementById('contact-subject').value,
-                message: document.getElementById('contact-message').value,
-                to_email: 'aydinaydmr@proton.me' // ⚠️ Değiştirin!
-            };
+            const data = await response.json();
 
-            // E-posta gönder
-            // YOUR_SERVICE_ID ve YOUR_TEMPLATE_ID yerine kendi ID'lerinizi yazın
-            const response = await emailjs.send(
-                'YOUR_SERVICE_ID',  // ⚠️ Değiştirin!
-                'YOUR_TEMPLATE_ID', // ⚠️ Değiştirin!
-                formData
-            );
-
-            if (response.status === 200) {
-                formMessage.textContent = 'Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓';
+            if (response.ok) {
+                formMessage.textContent = translations[currentLanguage].contact_success_msg;
                 formMessage.className = 'form-message success';
                 contactForm.reset();
+            } else {
+                throw new Error(data.message || translations[currentLanguage].contact_error_msg);
             }
         } catch (error) {
             console.error('Form gönderme hatası:', error);
-            let errorMsg = 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.';
-            
-            // EmailJS hata mesajları
-            if (error.text) {
-                errorMsg = error.text;
-            } else if (error.message) {
-                errorMsg = error.message;
-            }
-            
-            formMessage.textContent = errorMsg + ' ✗';
+            formMessage.textContent = (error.message || translations[currentLanguage].contact_error_msg);
             formMessage.className = 'form-message error';
         } finally {
+            submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
         }
     });
 }
