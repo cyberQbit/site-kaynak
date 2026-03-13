@@ -766,10 +766,10 @@ function createParticles() {
  */
 function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
+
     const formMessage = document.getElementById('form-message');
     const submitBtn = contactForm.querySelector('.submit-btn');
-    
-    if (!contactForm) return;
 
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -782,8 +782,14 @@ function initializeContactForm() {
             return;
         }
 
-        const formData = new FormData(contactForm);
-        formData.append("access_key", "114aaeca-ee6b-4fff-8083-f24269fc4075");
+        const payload = {
+            access_key: '114aaeca-ee6b-4fff-8083-f24269fc4075',
+            name: contactForm.querySelector('#contact-name').value,
+            email: contactForm.querySelector('#contact-email').value,
+            subject: contactForm.querySelector('#contact-subject').value,
+            message: contactForm.querySelector('#contact-message').value,
+            'h-captcha-response': hCaptchaResponse.value
+        };
 
         // Loading durumunda yazıyı güncelle
         const originalText = submitBtn.innerHTML;
@@ -795,7 +801,11 @@ function initializeContactForm() {
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
             });
 
             const data = await response.json();
