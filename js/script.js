@@ -752,72 +752,52 @@ function createParticles() {
  */
 /**
  * İletişim formu gönder - Web3Forms kullanarak Protonmail'e email gönderir.
- * Kurulum: https://web3forms.com adresinden free API key alın ve config.js'e ekleyin.
  */
 function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
     const formMessage = document.getElementById('form-message');
+    const submitBtn = contactForm.querySelector('.submit-btn');
     
     if (!contactForm) return;
 
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const submitBtn = contactForm.querySelector('.submit-btn');
-        const originalBtnText = submitBtn.innerHTML;
+        const formData = new FormData(contactForm);
+        formData.append("access_key", "114aaeca-ee6b-4fff-8083-f24269fc4075");
+
+        const originalText = submitBtn.textContent;
+
+        submitBtn.textContent = '⏳ Gönderiliyor...';
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gönderiliyor...';
         formMessage.textContent = '';
         formMessage.className = 'form-message';
 
         try {
-            // API key'i config.js'den al
-            if (!window.API_CONFIG || !window.API_CONFIG.web3forms_access_key) {
-                throw new Error('API key bulunamadı. config.js dosyasını kontrol edin.');
-            }
-
-            // Form verileri
-            const formData = new FormData(contactForm);
-            
-            // Web3Forms için gerekli parametreler
-            formData.append('access_key', window.API_CONFIG.web3forms_access_key);
-            formData.append('subject', `Yeni İletişim Formu: ${formData.get('subject')}`);
-            formData.append('from_name', formData.get('name'));
-            formData.append('reply_to', formData.get('email'));
-
-            // Web3Forms API'ye POST isteği gönder
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
                 body: formData
             });
 
-            const responseData = await response.json();
+            const data = await response.json();
 
-            if (response.ok && responseData.success) {
+            if (response.ok && data.success) {
                 formMessage.textContent = 'Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓';
                 formMessage.className = 'form-message success';
                 contactForm.reset();
             } else {
-                throw new Error(responseData.message || 'Form gönderme hatası');
+                throw new Error(data.message || 'Form gönderme hatası');
             }
         } catch (error) {
             console.error('Form gönderme hatası:', error);
-            let errorMsg = 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.';
-            
-            if (error.message) {
-                errorMsg = error.message;
-            }
-            
-            // config.js eksikse özel mesaj göster
-            if (errorMsg.includes('API key')) {
-                errorMsg = '⚠️ API key yapılandırılmamış. config.js dosyasını kontrol edin.';
-            }
-            
-            formMessage.textContent = errorMsg + ' ✗';
+            formMessage.textContent = (error.message || 'Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.') + ' ✗';
             formMessage.className = 'form-message error';
         } finally {
+            submitBtn.textContent = originalText;
             submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
+        }
+    });
+}
         }
     });
 }
