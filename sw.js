@@ -7,7 +7,7 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/css/style.css',
-  '/js/script.js',
+  '/js/script.js',   
   '/images/profile_placeholder.png', // Profil resmi (gerçek dosya adını yaz)
   '/images/icons/icon-192x192.png', // PWA ikonu (gerçek yolu yaz)
   '/images/icons/icon-512x512.png', // PWA ikonu (gerçek yolu yaz)

@@ -148,7 +148,7 @@ const translations = {
         "edu_uni1_name": "Ankara University",
         "edu_uni1_major": "Associate Degree, Computer Programming",
         "edu_uni1_date_prefix": "October 2024",
-        "edu_status_ongoing": "Ongoing",
+        "edu_status_ongoing": "Ongoing", 
         "edu_uni2_name": "Atatürk University",
         "edu_uni2_major": "Associate Degree, Web Design and Coding",
         "edu_uni2_date_prefix": "October 2024",

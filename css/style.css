@@ -960,7 +960,7 @@ body[data-theme='light'] .language-details span[data-key^="lang_level_"] {
 /* Yukarı çık butonu ikonu */
 .scroll-to-top i { font-size: 1.4em; line-height: 1; color: #111827 !important; /* İkon boyutu, hizalaması ve görünür renk */ }
 /* Yukarı çık butonu tıklama anı (active) */
-.scroll-to-top:active {
+.scroll-to-top:active {     
     transform: scale(1.0) translateY(0) rotate(0deg); /* Hover efektini anlık olarak sıfırlar */
     box-shadow: 0 3px 10px rgba(8, 145, 178, 0.4); /* Gölgeyi hafifletir */
 }
