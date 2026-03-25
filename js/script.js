@@ -130,7 +130,8 @@ const translations = {
         "contact_submit_btn": "Gönder",
         "contact_success_msg": "Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓",
         "contact_error_msg": "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin. ✗",
-        "contact_captcha_error": "Lütfen captcha doğrulamasını tamamlayın."
+        "contact_captcha_error": "Lütfen captcha doğrulamasını tamamlayın.",
+        "sponsor_btn_text": "cyberQbit'e Sponsor Ol"
     },
     "en": { // İngilizce
         "portfolio_title": "Aydın Aydemir's Portfolio",
@@ -242,7 +243,8 @@ const translations = {
         "contact_submit_btn": "Send",
         "contact_success_msg": "Message sent successfully! Thank you. ✓",
         "contact_error_msg": "An error occurred while sending your message. Please try again. ✗",
-        "contact_captcha_error": "Please complete the captcha verification."
+        "contact_captcha_error": "Please complete the captcha verification.",
+        "sponsor_btn_text": "Sponsor cyberQbit"
     },
     "es": { // İspanyolca
         "portfolio_title": "Portafolio de Aydın Aydemir",
@@ -354,7 +356,8 @@ const translations = {
         "contact_submit_btn": "Enviar",
         "contact_success_msg": "¡Tu mensaje se envió exitosamente! Gracias. ✓",
         "contact_error_msg": "Ocurrió un error al enviar tu mensaje. Por favor, intenta de nuevo. ✗",
-        "contact_captcha_error": "Por favor, completa la verificación de captcha."
+        "contact_captcha_error": "Por favor, completa la verificación de captcha.",
+        "sponsor_btn_text": "Patrocinar a cyberQbit"
     }
 };
 

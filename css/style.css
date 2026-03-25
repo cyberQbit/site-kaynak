@@ -1852,13 +1852,62 @@ body[data-theme='light'] .form-group textarea:focus {
     box-shadow: 0 5px 15px rgba(34, 211, 238, 0.4);
     color: #111827;
 }
-.sponsor-container {
-    margin-top: 30px; /* Sosyal ikonlarla arasına mesafe koyar */
+
+/* =========================================
+   Kusursuz Modern Sponsor Butonu Tasarımı
+   ========================================= */
+.sponsor-section {
+    margin-top: 40px; /* Sosyal ikonlardan güçlü bir ayrışma */
     display: flex;
     justify-content: center;
-    transition: transform var(--transition-speed-fast) ease;
+    width: 100%;
+    padding: 0 15px; /* Mobilde kenarlara taşmayı önler */
 }
 
-.sponsor-container:hover {
-    transform: scale(1.05); /* Üzerine gelince hafifçe büyür */
+.modern-sponsor-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+    padding: 16px 28px;
+    
+    /* Premium Gradinet ve Şekil */
+    background: linear-gradient(135deg, #111827 0%, #0369a1 100%); /* Derin lacivert gradyan */
+    color: #ffffff;
+    border: 2px solid var(--accent-primary); /* Sitenin cyan rengiyle vurgu */
+    border-radius: 50px; /* Tam yuvarlak, modern "pill" şekli */
+    
+    /* Typography */
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none; /* Link çizgisini kaldır */
+    
+    /* Kusursuz Geçiş Efektleri */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylı (spring) efektli geçiş */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hover Mikromimikleri */
+.modern-sponsor-btn:hover {
+    background: var(--accent-primary); /* Hoverda sitenin cyan rengine dönüşür */
+    color: #111827; /* Kontrast için koyu yazı rengi */
+    transform: translateY(-5px); /* Hafifçe yukarı kalkar */
+    box-shadow: 0 15px 30px rgba(34, 211, 238, 0.6); /* Canlı cyan parlaması (glow) */
+}
+
+/* Kalp İkonu Efekti */
+.modern-sponsor-btn .icon {
+    font-size: 1.3rem;
+    color: #ef4444; /* Standart kırmızı kalp, anında tanınır */
+    transition: color 0.4s ease;
+}
+
+.modern-sponsor-btn:hover .icon {
+    color: #ffffff; /* Hoverda kalp cyan arka plan üzerinde beyazlaşır */
 }
