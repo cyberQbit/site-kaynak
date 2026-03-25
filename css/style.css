@@ -1823,3 +1823,32 @@ body[data-theme='light'] .form-group textarea:focus {
     /* Dil butonlarını küçültür */
     .language-switcher button { font-size: 0.7em; padding: 3px 5px; }
 }
+
+/* ===================================
+   PROJEKTLERİN YENI STİLLERİ (no-image ve project-repo-btn)
+   =================================== */
+
+.project-card.no-image {
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-repo-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--accent-primary);
+    color: #111827;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-repo-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(34, 211, 238, 0.4);
+    color: #111827;
+}
