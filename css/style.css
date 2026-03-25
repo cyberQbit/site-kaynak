@@ -1852,3 +1852,13 @@ body[data-theme='light'] .form-group textarea:focus {
     box-shadow: 0 5px 15px rgba(34, 211, 238, 0.4);
     color: #111827;
 }
+.sponsor-container {
+    margin-top: 30px; /* Sosyal ikonlarla arasına mesafe koyar */
+    display: flex;
+    justify-content: center;
+    transition: transform var(--transition-speed-fast) ease;
+}
+
+.sponsor-container:hover {
+    transform: scale(1.05); /* Üzerine gelince hafifçe büyür */
+}
