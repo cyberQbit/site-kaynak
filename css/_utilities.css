@@ -1,0 +1,295 @@
+/* =================================
+   _utilities.css
+   Animasyonlar, Partiküller, Glitch,
+   Terminal, Radar, Scroll Progress
+   ================================= */
+
+/* Typing Effect */
+.typing-effect {
+    overflow: visible;
+    white-space: normal;
+    min-height: 1.2em;
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;
+    display: block;
+}
+
+.typing-effect .cursor {
+    display: inline;
+    border-right: 3px solid var(--accent-primary);
+    animation: blink-caret 0.75s step-end infinite;
+    padding-right: 2px;
+}
+
+@keyframes blink-caret {
+    from, to { border-right-color: var(--accent-primary); opacity: 1; }
+    50% { border-right-color: transparent; opacity: 0.8; }
+}
+
+/* Partiküller */
+.particle-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float-up 15s infinite;
+    opacity: 0.6;
+    background-color: rgba(34, 211, 238, 0.4);
+}
+
+.particle.small  { width: 5px;  height: 5px;  }
+.particle.medium { width: 10px; height: 10px; background-color: rgba(34, 211, 238, 0.3); }
+.particle.large  { width: 15px; height: 15px; background-color: rgba(34, 211, 238, 0.2); }
+
+@keyframes float-up {
+    0%   { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+}
+
+body[data-theme='light'] .particle        { background-color: rgba(0, 98, 204, 0.3); }
+body[data-theme='light'] .particle.medium { background-color: rgba(0, 98, 204, 0.25); }
+body[data-theme='light'] .particle.large  { background-color: rgba(0, 98, 204, 0.2); }
+
+/* Arka plan parlaması */
+body::before {
+    content: '';
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: pulse 8s ease-in-out infinite;
+    transform: translateX(-50%);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50%       { transform: translateX(-50%) scale(1.1); }
+}
+
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(to right, var(--accent-primary), var(--accent-primary-darker));
+    width: 0%;
+    z-index: 999;
+    transition: width 0.1s ease;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+}
+
+body[data-theme='light'] .scroll-progress-bar {
+    background: linear-gradient(to right, #0062cc, #004c9e);
+    box-shadow: 0 0 8px rgba(0, 98, 204, 0.4);
+}
+
+/* =====================
+   GLİTCH EFFECT
+   ===================== */
+.glitch {
+    animation: glitch-main 6s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.glitch::before {
+    animation: glitch-clip-1 6s infinite;
+    color: #ff0080;
+    clip-path: polygon(0 20%, 100% 20%, 100% 45%, 0 45%);
+    transform: translate(-2px);
+}
+
+.glitch::after {
+    animation: glitch-clip-2 6s infinite;
+    color: #00ffff;
+    clip-path: polygon(0 55%, 100% 55%, 100% 80%, 0 80%);
+    transform: translate(2px);
+}
+
+@keyframes glitch-main {
+    0%, 88%, 100% { transform: translate(0); }
+    89% { transform: translate(-1px, 1px); }
+    90% { transform: translate(1px, -1px); }
+    91% { transform: translate(-1px, 0); }
+    92% { transform: translate(0); }
+}
+
+@keyframes glitch-clip-1 {
+    0%, 88%, 100% { opacity: 0; transform: translate(-2px); }
+    89%, 92% { opacity: 0.9; transform: translate(-4px); }
+}
+
+@keyframes glitch-clip-2 {
+    0%, 90%, 100% { opacity: 0; transform: translate(2px); }
+    91%, 93% { opacity: 0.9; transform: translate(4px); }
+}
+
+/* =====================
+   TERMINAL EASTER EGG
+   ===================== */
+.terminal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.terminal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.terminal-window {
+    width: min(700px, 90vw);
+    height: 420px;
+    background: var(--terminal-bg);
+    border: 1px solid var(--terminal-border);
+    border-radius: 12px;
+    box-shadow: 0 0 50px rgba(34, 211, 238, 0.25),
+                0 0 100px rgba(34, 211, 238, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: terminal-open 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes terminal-open {
+    from { transform: scale(0.85) translateY(20px); opacity: 0; }
+    to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(34, 211, 238, 0.07);
+    border-bottom: 1px solid var(--terminal-border);
+    flex-shrink: 0;
+}
+
+.terminal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-dot.red    { background: #ff5f57; }
+.terminal-dot.yellow { background: #febc2e; }
+.terminal-dot.green  { background: #28c840; }
+
+.terminal-title {
+    color: var(--terminal-cyan);
+    font-family: 'Courier New', monospace;
+    font-size: 0.82em;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.terminal-close-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0 4px;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.terminal-close-btn:hover { color: #ff5f57; }
+
+.terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--terminal-border) transparent;
+}
+
+.terminal-body::-webkit-scrollbar { width: 4px; }
+.terminal-body::-webkit-scrollbar-thumb { background: var(--terminal-border); border-radius: 2px; }
+
+.terminal-line {
+    color: var(--terminal-green);
+    font-family: 'Courier New', monospace;
+    font-size: 0.84em;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.terminal-line.prompt  { color: var(--terminal-cyan); }
+.terminal-line.error   { color: #ff5f57; }
+.terminal-line.info    { color: #febc2e; }
+.terminal-line.success { color: #28c840; }
+.terminal-line.dim     { color: rgba(0, 255, 65, 0.45); }
+
+.terminal-input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--terminal-border);
+    background: rgba(34, 211, 238, 0.03);
+    flex-shrink: 0;
+}
+
+.terminal-prompt-symbol {
+    color: var(--terminal-cyan);
+    font-family: 'Courier New', monospace;
+    font-size: 0.84em;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--terminal-green);
+    font-family: 'Courier New', monospace;
+    font-size: 0.84em;
+    caret-color: var(--terminal-green);
+}

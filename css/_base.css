@@ -1,0 +1,110 @@
+/* =================================
+   _base.css
+   Sıfırlama, Temel Stiller, Konteyner
+   ================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    transition: background-color var(--transition-speed-slow) ease,
+                color var(--transition-speed-slow) ease,
+                border-color var(--transition-speed-slow) ease,
+                box-shadow var(--transition-speed-slow) ease;
+}
+
+html { font-size: 100%; }
+
+@keyframes subtleGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    letter-spacing: 0.5px;
+    overflow-x: hidden;
+    background: linear-gradient(-45deg, var(--bg-primary), var(--bg-secondary), var(--bg-primary), var(--bg-tertiary));
+    background-size: 400% 400%;
+    animation: subtleGradient 30s ease infinite;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    overflow: visible;
+    margin: 50px 20px 0 20px;
+    position: relative;
+    box-shadow: var(--shadow-medium);
+    flex-grow: 1;
+    transition: border-color var(--transition-speed-fast) ease,
+                box-shadow var(--transition-speed-fast) ease,
+                background-color var(--transition-speed-slow) ease;
+}
+
+/* Başlıklar */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+h1 { font-size: clamp(2.1em, 5vw, 3em); line-height: 1.2; margin-bottom: 20px; }
+h2 { font-size: clamp(1.6em, 4vw, 2em); margin-bottom: 30px; }
+h3 { font-size: clamp(1.3em, 3.5vw, 1.4em); margin-bottom: 15px; font-weight: 600; }
+h4 { font-size: 1.1em; margin-bottom: 12px; font-weight: 600; }
+
+/* Linkler */
+a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color var(--transition-speed-fast) ease-in-out,
+                text-shadow var(--transition-speed-fast) ease,
+                transform var(--transition-speed-fast) ease;
+    border-radius: 2px;
+}
+
+a:hover {
+    color: var(--accent-primary-darker);
+    text-shadow: 0 0 8px var(--accent-primary);
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+a:active { transform: translateY(0); }
+
+a:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Resimler */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Lucide SVG Global */
+svg.lucide {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}

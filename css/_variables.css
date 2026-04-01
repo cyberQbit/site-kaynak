@@ -1,0 +1,81 @@
+/* =================================
+   _variables.css
+   CSS Değişkenleri: Karanlık & Aydınlık Tema
+   ================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    /* === Karanlık Tema (Varsayılan) === */
+    --bg-primary: #111827;
+    --bg-secondary: #1F2937;
+    --bg-tertiary: #374151;
+    --text-primary: #F3F4F6;
+    --text-secondary: #9CA3AF;
+    --accent-primary: #22D3EE;
+    --accent-primary-darker: #0BC5EA;
+    --border-color: #4B5563;
+    --footer-bg: #1F2937;
+    --footer-text: #9CA3AF;
+    --shadow-glow: 0 0 15px rgba(34, 211, 238, 0.15);
+    --shadow-soft: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.25);
+    --shadow-strong: 0 12px 35px rgba(0, 0, 0, 0.3);
+    --inset-glow-shadow: inset 10px 0 25px -5px rgba(34, 211, 238, 0.18);
+    --highlight-bg: rgba(34, 211, 238, 0.05);
+    --table-header-bg: rgba(55, 65, 81, 0.7);
+    --table-row-hover-bg: #374151;
+    --quote-icon-color: var(--accent-primary);
+    --control-text: var(--text-secondary);
+    --control-hover-text: var(--text-primary);
+    --control-hover-bg: rgba(55, 65, 81, 0.5);
+    --control-active-text: var(--accent-primary);
+    --scrolltop-color: var(--bg-primary);
+    --transition-speed: 0.3s;
+    --transition-speed-fast: 0.2s;
+    --transition-speed-slow: 0.5s;
+    /* Terminal Renkleri */
+    --terminal-bg: #0d0d0d;
+    --terminal-green: #00ff41;
+    --terminal-cyan: #22D3EE;
+    --terminal-border: rgba(34, 211, 238, 0.4);
+    /* Radar Renkleri */
+    --radar-fill: rgba(34, 211, 238, 0.15);
+    --radar-stroke: var(--accent-primary);
+}
+
+body[data-theme='light'] {
+    /* === Aydınlık Tema === */
+    --bg-primary: #FDFDFD;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #F0F0F0;
+    --text-primary: #1A202C;
+    --text-secondary: #4A5568;
+    --accent-primary: #0062cc;
+    --accent-primary-darker: #004c9e;
+    --border-color: #E2E8F0;
+    --footer-bg: #F8F9FA;
+    --footer-text: #6C757D;
+    --shadow-glow: 0 0 15px rgba(0, 98, 204, 0.15);
+    --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-strong: 0 8px 20px rgba(0, 0, 0, 0.1);
+    --inset-glow-shadow: inset 10px 0 25px -5px rgba(0, 98, 204, 0.15);
+    --highlight-bg: rgba(0, 98, 204, 0.1);
+    --table-header-bg: #F1F3F5;
+    --table-row-hover-bg: #F8F9FA;
+    --quote-icon-color: var(--accent-primary);
+    --control-text: var(--text-secondary);
+    --control-hover-text: var(--text-primary);
+    --control-hover-bg: rgba(222, 226, 230, 0.5);
+    --control-active-text: var(--accent-primary);
+    --scrolltop-color: #FFFFFF;
+    /* Terminal Renkleri */
+    --terminal-bg: #1a1a2e;
+    --terminal-green: #00ff41;
+    --terminal-cyan: #22D3EE;
+    --terminal-border: rgba(0, 98, 204, 0.4);
+    /* Radar Renkleri */
+    --radar-fill: rgba(0, 98, 204, 0.1);
+    --radar-stroke: var(--accent-primary);
+}

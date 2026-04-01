@@ -6,13 +6,11 @@
     <title data-key="portfolio_title">Aydın Aydemir'in Portföyü</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="./A.ico" type="image/x-icon">
     <meta name="theme-color" content="#1F2937">
     
-    <!-- Open Graph Meta Tags (Social Media Preview) -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aydinaydmr.com.tr">
     <meta property="og:title" content="Aydın Aydemir - Yazılım Geliştirici Portfolio">
@@ -29,146 +27,144 @@
     <meta name="twitter:image" content="https://aydinaydmr.com.tr/images/profile_placeholder.webp">
     <meta name="twitter:creator" content="@aydinaydmr">
     
-    <!-- Additional SEO Meta Tags -->
+    <!-- SEO Meta Tags -->
     <meta name="description" content="Aydın Aydemir'in kişisel portfolio sitesi. Yazılım geliştirme, web tasarımı ve siber güvenlik konularında deneyimli.">
     <meta name="keywords" content="Portfolio, Yazılımcı, Developer, Web Developer, Python, JavaScript, Flutter, Ankara">
     <meta name="author" content="Aydın Aydemir">
     <meta name="robots" content="index, follow">
     <meta name="canonical" content="https://aydinaydmr.com.tr">
-    
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
-    
-    <!-- Google Analytics (Optional - Replace with your Measurement ID) -->
-    <!-- Uncomment and replace 'G-XXXXXXXXXX' with your Google Analytics Measurement ID -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
 
-    <!-- Varsayılan Koyu Tema (FOUC önleme) -->
+    <!-- FOUC Prevention -->
     <style> 
-        html:not([data-theme="light"]) {
-            color-scheme: dark;
-        }
+        html:not([data-theme="light"]) { color-scheme: dark; }
     </style>
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+
     <!-- Particle Animation Container -->
     <div class="particle-container"></div>
 
     <div class="container">
         <aside class="left-column">
             <div class="personal-info">
-                <img src="images/profile_placeholder.webp" alt="Aydın Aydemir" class="profile-picture" loading="lazy">
+                <img src="images/profile_placeholder.webp" alt="Aydın Aydemir" class="profile-picture" loading="lazy" title="Çift tıkla için terminal aç">
+                <p class="terminal-hint">[ çift tıkla ]</p>
                 <h1 class="typing-effect"></h1>
+                <p class="cyber-tag glitch" data-text="@cyberQbit">@cyberQbit</p>
                 <p class="bio" data-key="bio">
                     Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim.
                 </p>
                 <div class="social-icons">
                     <a href="https://www.linkedin.com/in/aydinaydmr" target="_blank" rel="noopener noreferrer" aria-label="Linkedin" data-key="linkedin_label">
-                        <i class="fab fa-linkedin" aria-hidden="true"></i>
+                        <i data-lucide="linkedin" aria-hidden="true"></i>
                     </a>
                     <a href="mailto:aydinaydmr@proton.me" target="_blank" rel="noopener noreferrer" aria-label="Email" data-key="email_label">
-                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <i data-lucide="mail" aria-hidden="true"></i>
                     </a>
                     <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-key="github_label">
-                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <i data-lucide="github" aria-hidden="true"></i>
                     </a>
                 </div>
                 <div class="sponsor-section">
                     <a href="https://github.com/sponsors/cyberQbit" target="_blank" rel="noopener noreferrer" class="modern-sponsor-btn">
-                        <i class="fas fa-heart icon"></i> <span data-key="sponsor_btn_text">cyberQbit'e Sponsor Ol</span>
+                        <i data-lucide="heart" class="icon" aria-hidden="true"></i>
+                        <span data-key="sponsor_btn_text">cyberQbit'e Sponsor Ol</span>
                     </a>
                 </div>
             </div>
         </aside>
 
         <main class="right-column">
+            <!-- Hakkımda -->
             <section class="content-block about-me">
                 <h2 class="block-title">
-                    <i class="fas fa-user icon"></i> <span data-key="about_title">Hakkımda</span>
+                    <i data-lucide="user" class="icon" aria-hidden="true"></i>
+                    <span data-key="about_title">Hakkımda</span>
                 </h2>
                 <div class="block-description" data-key="about_desc_html">
                     <p>Merhaba! Ben Aydın Aydemir. Teknolojiye olan tutkum ve öğrenme azmimle, hem <strong>Ankara Üniversitesi</strong>'nde <em>Bilgisayar Programcılığı</em> hem de <strong>Atatürk Üniversitesi</strong>'nde <em>Web Tasarım ve Kodlama</em> alanlarında çift önlisans eğitimi alıyorum. Web tasarımı, yazılım geliştirme ve problem çözme konularında kendimi sürekli geliştiriyorum. <span class="highlight">HTML5</span>, <span class="highlight">CSS</span>, <span class="highlight">SQL</span> ve <span class="highlight">Microsoft SQL Server</span> gibi teknik becerilere sahibim. Ayrıca, araştırma yapma, öğrenmeye açıklık ve analitik düşünme gibi güçlü yönlerimle projelerime değer katıyorum. Daha fazla bilgi için <a href="https://www.linkedin.com/in/aydinaydmr" target="_blank" rel="noopener noreferrer"><strong>LinkedIn profilimi</strong></a> ziyaret edebilirsiniz.</p>
                 </div>
             </section>
 
+            <!-- Projeler -->
             <section class="content-block portfolio">
-    <h2 class="block-title">
-        <i class="fas fa-briefcase icon"></i> <span data-key="portfolio_title_section">Projelerim</span>
-    </h2>
-    <div class="portfolio-grid">
-        <div class="project-card no-image">
-            <div class="project-content">
-                <h3 class="project-title" data-key="project_mooweather_mobile_name">MooWeather-Mobile</h3>
-                <p class="project-description" data-key="project_mooweather_mobile_desc">Premium, tam yığın hava durumu uygulaması.</p>
-                <div class="project-tags">
-                    <span class="project-tag">Flutter</span>
-                    <span class="project-tag">Dart</span>
-                </div>
-                <a href="https://github.com/cyberQbit/MooWeather-Mobile" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
-                    <i class="fab fa-github"></i> <span data-key="portfolio_view_repo">Repoya Git</span>
-                </a>
-            </div>
-        </div>
+                <h2 class="block-title">
+                    <i data-lucide="briefcase" class="icon" aria-hidden="true"></i>
+                    <span data-key="portfolio_title_section">Projelerim</span>
+                </h2>
+                <div class="portfolio-grid">
+                    <div class="project-card no-image">
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_mooweather_mobile_name">MooWeather-Mobile</h3>
+                            <p class="project-description" data-key="project_mooweather_mobile_desc">Premium, tam yığın hava durumu uygulaması.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Flutter</span>
+                                <span class="project-tag">Dart</span>
+                            </div>
+                            <a href="https://github.com/cyberQbit/MooWeather-Mobile" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
+                                <i data-lucide="github" aria-hidden="true"></i>
+                                <span data-key="portfolio_view_repo">Repoya Git</span>
+                            </a>
+                        </div>
+                    </div>
 
-        <div class="project-card no-image">
-            <div class="project-content">
-                <h3 class="project-title" data-key="project_mooweather_backend_name">MooWeather-BackEnd</h3>
-                <p class="project-description" data-key="project_mooweather_backend_desc">C# .NET Backend REST API servisi.</p>
-                <div class="project-tags">
-                    <span class="project-tag">C#</span>
-                    <span class="project-tag">.NET Core</span>
-                </div>
-                <a href="https://github.com/cyberQbit/MooWeather-BackEnd" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
-                    <i class="fab fa-github"></i> <span data-key="portfolio_view_repo">Repoya Git</span>
-                </a>
-            </div>
-        </div>
+                    <div class="project-card no-image">
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_mooweather_backend_name">MooWeather-BackEnd</h3>
+                            <p class="project-description" data-key="project_mooweather_backend_desc">C# .NET Backend REST API servisi.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">C#</span>
+                                <span class="project-tag">.NET Core</span>
+                            </div>
+                            <a href="https://github.com/cyberQbit/MooWeather-BackEnd" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
+                                <i data-lucide="github" aria-hidden="true"></i>
+                                <span data-key="portfolio_view_repo">Repoya Git</span>
+                            </a>
+                        </div>
+                    </div>
 
-        <div class="project-card no-image">
-            <div class="project-content">
-                <h3 class="project-title" data-key="project_swifthub_name">SwiftHub</h3>
-                <p class="project-description" data-key="project_swifthub_desc">Geliştiriciler için modern ve hızlı uygulama yönetim platformu. Hızlı ve kolay kullanım için Powershell'de "irm aydinaydmr.com.tr/core | iex" komutunu çalıştırınız!</p>
-                <div class="project-tags">
-                    <span class="project-tag">Web</span>
-                    <span class="project-tag">Tool</span>
-                    <span class="project-tag">Open Source</span>
-                </div>
-                <a href="https://github.com/cyberQbit/SwiftHub" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
-                    <i class="fab fa-github"></i> <span data-key="portfolio_view_repo">Repoya Git</span>
-                </a>
-            </div>
-        </div>
+                    <div class="project-card no-image">
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_swifthub_name">SwiftHub</h3>
+                            <p class="project-description" data-key="project_swifthub_desc">Geliştiriciler için modern ve hızlı uygulama yönetim platformu. Hızlı ve kolay kullanım için Powershell'de "irm aydinaydmr.com.tr/core | iex" komutunu çalıştırınız!</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Web</span>
+                                <span class="project-tag">Tool</span>
+                                <span class="project-tag">Open Source</span>
+                            </div>
+                            <a href="https://github.com/cyberQbit/SwiftHub" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
+                                <i data-lucide="github" aria-hidden="true"></i>
+                                <span data-key="portfolio_view_repo">Repoya Git</span>
+                            </a>
+                        </div>
+                    </div>
 
-        <div class="project-card no-image">
-            <div class="project-content">
-                <h3 class="project-title" data-key="project_discord_bot_name">Discord RP Bot</h3>
-                <p class="project-description" data-key="project_discord_bot_desc">Topluluk yönetimi ve moderasyon botu.</p>
-                <div class="project-tags">
-                    <span class="project-tag">Node.js</span>
-                    <span class="project-tag">Discord.js</span>
+                    <div class="project-card no-image">
+                        <div class="project-content">
+                            <h3 class="project-title" data-key="project_discord_bot_name">Discord RP Bot</h3>
+                            <p class="project-description" data-key="project_discord_bot_desc">Topluluk yönetimi ve moderasyon botu.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Node.js</span>
+                                <span class="project-tag">Discord.js</span>
+                            </div>
+                            <a href="https://github.com/cyberQbit/gokturk-ordusu-bot" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
+                                <i data-lucide="github" aria-hidden="true"></i>
+                                <span data-key="portfolio_view_repo">Repoya Git</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <a href="https://github.com/cyberQbit/gokturk-ordusu-bot" target="_blank" rel="noopener noreferrer" class="project-repo-btn">
-                    <i class="fab fa-github"></i> <span data-key="portfolio_view_repo">Repoya Git</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
 
+            <!-- İş Deneyimi -->
             <section class="content-block experience">
                 <h2 class="block-title">
-                    <i class="fas fa-briefcase icon"></i> <span data-key="experience_title">İş Deneyimi</span>
+                    <i data-lucide="briefcase" class="icon" aria-hidden="true"></i>
+                    <span data-key="experience_title">İş Deneyimi</span>
                 </h2>
                 <div class="timeline-container">
-                    <!-- Experience Item 1 -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
@@ -181,7 +177,6 @@
                         </div>
                     </div>
 
-                    <!-- Experience Item 2 (Opsiyonel - gelecek için) -->
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
@@ -194,9 +189,11 @@
                 </div>
             </section>
 
+            <!-- Eğitim -->
             <section class="content-block education">
                 <h2 class="block-title">
-                    <i class="fas fa-graduation-cap icon"></i> <span data-key="education_title">Eğitim Geçmişim</span>
+                    <i data-lucide="graduation-cap" class="icon" aria-hidden="true"></i>
+                    <span data-key="education_title">Eğitim Geçmişim</span>
                 </h2>
                 <table class="education-table">
                     <thead>
@@ -226,14 +223,16 @@
                 </table>
             </section>
 
+            <!-- Yetenekler -->
             <section class="content-block skills">
                 <h2 class="block-title">
-                    <i class="fas fa-code icon"></i> <span data-key="skills_title">Yeteneklerim</span>
+                    <i data-lucide="code" class="icon" aria-hidden="true"></i>
+                    <span data-key="skills_title">Yeteneklerim</span>
                 </h2>
             
                 <div>
                     <h3 data-key="skills_tech_title">
-                        <i class="fas fa-laptop-code icon-h3" aria-hidden="true"></i>
+                        <i data-lucide="laptop" class="icon-h3" aria-hidden="true"></i>
                         Teknik Beceriler:
                     </h3>
                     <div class="skills-tags-container">
@@ -263,15 +262,62 @@
                          <span class="skill-tag" data-key="skill_sw_arch">Yazılım Mimarisi</span>
                     </div>
                 </div>
+
+                <!-- Radar Chart -->
+                <div class="radar-section">
+                    <h3>
+                        <i data-lucide="activity" class="icon-h3" aria-hidden="true"></i>
+                        Yetenek Radar Haritası
+                    </h3>
+                    <div class="radar-container">
+                        <div class="radar-svg-wrapper">
+                            <svg class="radar-svg" width="300" height="300" viewBox="0 0 300 300"></svg>
+                        </div>
+                        <div class="radar-legend">
+                            <div class="radar-legend-item">
+                                <span class="radar-legend-name">HTML/CSS</span>
+                                <div class="radar-legend-bar"><div class="radar-legend-fill" data-value="85"></div></div>
+                                <span class="radar-legend-value">85%</span>
+                            </div>
+                            <div class="radar-legend-item">
+                                <span class="radar-legend-name">JavaScript</span>
+                                <div class="radar-legend-bar"><div class="radar-legend-fill" data-value="70"></div></div>
+                                <span class="radar-legend-value">70%</span>
+                            </div>
+                            <div class="radar-legend-item">
+                                <span class="radar-legend-name">Python</span>
+                                <div class="radar-legend-bar"><div class="radar-legend-fill" data-value="65"></div></div>
+                                <span class="radar-legend-value">65%</span>
+                            </div>
+                            <div class="radar-legend-item">
+                                <span class="radar-legend-name">SQL</span>
+                                <div class="radar-legend-bar"><div class="radar-legend-fill" data-value="80"></div></div>
+                                <span class="radar-legend-value">80%</span>
+                            </div>
+                            <div class="radar-legend-item">
+                                <span class="radar-legend-name">Siber Güv.</span>
+                                <div class="radar-legend-bar"><div class="radar-legend-fill" data-value="70"></div></div>
+                                <span class="radar-legend-value">70%</span>
+                            </div>
+                            <div class="radar-legend-item">
+                                <span class="radar-legend-name">Cloud</span>
+                                <div class="radar-legend-bar"><div class="radar-legend-fill" data-value="65"></div></div>
+                                <span class="radar-legend-value">65%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             
-                <div style="margin-top: 40px;"> <h3 data-key="skills_certs_langs_title">
-                         <i class="fas fa-certificate icon-h3" aria-hidden="true"></i>
+                <div style="margin-top: 40px;">
+                    <h3 data-key="skills_certs_langs_title">
+                        <i data-lucide="award" class="icon-h3" aria-hidden="true"></i>
                         Sertifikalar ve Diller
                     </h3>
                     <div class="certificate-cards-container">
                         <div class="certificate-card-v3">
                             <div class="cert-header">
-                               <i class="fas fa-award cert-icon-v3 meb-color"></i> <span class="cert-issuer" data-issuer="MEB">MEB</span>
+                               <i data-lucide="award" class="cert-icon-v3 meb-color" aria-hidden="true"></i>
+                               <span class="cert-issuer" data-issuer="MEB">MEB</span>
                            </div>
                            <div class="cert-body">
                                <span class="cert-name" data-key="cert_comp_op_meb">Bilgisayar İşletmenliği (Operatörlüğü)</span>
@@ -279,7 +325,8 @@
                         </div>
                         <div class="certificate-card-v3">
                             <div class="cert-header">
-                               <i class="fas fa-keyboard cert-icon-v3 meb-color"></i> <span class="cert-issuer" data-issuer="MEB">MEB</span>
+                               <i data-lucide="keyboard" class="cert-icon-v3 meb-color" aria-hidden="true"></i>
+                               <span class="cert-issuer" data-issuer="MEB">MEB</span>
                            </div>
                            <div class="cert-body">
                                <span class="cert-name" data-key="cert_fast_keyboard_meb">Bilgisayarda Hızlı Klavye Kullanımı</span>
@@ -287,14 +334,16 @@
                         </div>
                         <div class="certificate-card-v3">
                             <div class="cert-header">
-                                <i class="fas fa-cloud cert-icon-v3"></i> <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span> </div>
+                                <i data-lucide="cloud" class="cert-icon-v3" aria-hidden="true"></i>
+                                <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
+                            </div>
                             <div class="cert-body">
                                 <span class="cert-name" data-key="cert_cloud_platforms">Bulut Bilişimi Öğrenmek: Herkese Açık Bulut Platformları</span>
                             </div>
                         </div>
                         <div class="certificate-card-v3">
                             <div class="cert-header">
-                                <i class="fas fa-cloud cert-icon-v3"></i>
+                                <i data-lucide="cloud" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -303,7 +352,7 @@
                          </div>
                          <div class="certificate-card-v3">
                             <div class="cert-header">
-                                <i class="fas fa-database cert-icon-v3"></i>
+                                <i data-lucide="database" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -312,7 +361,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fab fa-microsoft cert-icon-v3"></i>
+                                <i data-lucide="layers" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -321,7 +370,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fab fa-html5 cert-icon-v3"></i>
+                                <i data-lucide="file-code" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -330,7 +379,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fas fa-handshake cert-icon-v3"></i>
+                                <i data-lucide="handshake" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -339,7 +388,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fab fa-js-square cert-icon-v3"></i>
+                                <i data-lucide="file-json" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -348,7 +397,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fas fa-cogs cert-icon-v3"></i>
+                                <i data-lucide="settings" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -357,7 +406,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fab fa-python cert-icon-v3"></i>
+                                <i data-lucide="terminal" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -366,7 +415,7 @@
                          </div>
                          <div class="certificate-card-v3">
                             <div class="cert-header">
-                                <i class="fas fa-shield-alt cert-icon-v3"></i>
+                                <i data-lucide="shield" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -375,7 +424,7 @@
                          </div>
                          <div class="certificate-card-v3">
                             <div class="cert-header">
-                                <i class="fas fa-cloud-upload-alt cert-icon-v3"></i>
+                                <i data-lucide="cloud-upload" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -384,7 +433,7 @@
                          </div>
                          <div class="certificate-card-v3">
                             <div class="cert-header">
-                               <i class="fas fa-chart-line cert-icon-v3"></i>
+                               <i data-lucide="trending-up" class="cert-icon-v3" aria-hidden="true"></i>
                                <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -393,7 +442,7 @@
                          </div>
                          <div class="certificate-card-v3">
                              <div class="cert-header">
-                                <i class="fas fa-sitemap cert-icon-v3"></i>
+                                <i data-lucide="network" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
@@ -402,48 +451,53 @@
                          </div>
                          <div class="certificate-card-v3">
                             <div class="cert-header">
-                                <i class="fas fa-user-shield cert-icon-v3"></i>
+                                <i data-lucide="user-check" class="cert-icon-v3" aria-hidden="true"></i>
                                 <span class="cert-issuer" data-issuer="LinkedIn">LinkedIn</span>
                             </div>
                             <div class="cert-body">
                                 <span class="cert-name" data-key="cert_cybersec_workplace">İş Yerinde Siber Güvenlik</span>
                             </div>
                          </div>
-                    </div> <div class="language-list">
+                    </div>
+                    <div class="language-list">
                          <div class="language-item">
-                            <i class="fas fa-language lang-icon"></i>
+                            <i data-lucide="languages" class="lang-icon" aria-hidden="true"></i>
                             <div class="language-details">
                                 <span data-key="lang_tr">Türkçe</span> (<span data-key="lang_level_native">Ana Dil</span>)
                             </div>
                         </div>
                         <div class="language-item">
-                            <i class="fas fa-language lang-icon"></i>
+                            <i data-lucide="languages" class="lang-icon" aria-hidden="true"></i>
                             <div class="language-details">
                                <span data-key="lang_en">İngilizce</span> (<span data-key="lang_level_limited">Sınırlı Çalışma Yetkinliği</span>)
                             </div>
                         </div>
                         <div class="language-item">
-                            <i class="fas fa-language lang-icon"></i>
+                            <i data-lucide="languages" class="lang-icon" aria-hidden="true"></i>
                             <div class="language-details">
                                 <span data-key="lang_ot">Osmanlıca (1500-1928)</span> (<span data-key="lang_level_limited">Sınırlı Çalışma Yetkinliği</span>)
                             </div>
                         </div>
-                    </div> </div> </section>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Gönüllü -->
             <section class="content-block volunteer">
                 <h2 class="block-title">
-                    <i class="fas fa-hands-helping icon"></i> <span data-key="volunteer_title">Gönüllü Çalışmalarım</span>
+                    <i data-lucide="heart" class="icon" aria-hidden="true"></i>
+                    <span data-key="volunteer_title">Gönüllü Çalışmalarım</span>
                 </h2>
                 <div class="block-description">
                      <ul>
                         <li>
-                            <strong data-key="volunteer_afad_title">AFAD Gönüllüsü</strong><br>
-                            <span data-key="volunteer_afad_org">T.C. İçişleri Bakanlığı Afet ve Acil Durum Yönetimi Başkanlığı (AFAD)</span><br>
+                            <strong data-key="volunteer_afad_title">AFAD Gönüllüsü</strong>
+                            <span data-key="volunteer_afad_org">T.C. İçişleri Bakanlığı Afet ve Acil Durum Yönetimi Başkanlığı (AFAD)</span>
                             <span style="color: var(--text-secondary); font-size: 0.9em;" data-key="volunteer_date">Şubat 2023 - Halen</span>
                         </li>
                         <li style="margin-top: 10px;">
-                            <strong data-key="volunteer_ihh_title">İHH Gönüllüsü</strong><br>
-                            <span data-key="volunteer_ihh_org">İHH İnsani Yardım Vakfı</span><br>
+                            <strong data-key="volunteer_ihh_title">İHH Gönüllüsü</strong>
+                            <span data-key="volunteer_ihh_org">İHH İnsani Yardım Vakfı</span>
                             <span style="color: var(--text-secondary); font-size: 0.9em;" data-key="volunteer_date">Şubat 2023 - Halen</span>
                         </li>
                     </ul>
@@ -453,35 +507,30 @@
                 </div>
             </section>
 
-            <!-- Contact Form Section -->
+            <!-- İletişim -->
             <section class="content-block contact">
                 <h2 class="block-title">
-                    <i class="fas fa-envelope icon"></i> <span data-key="contact_title">Bana Ulaşın</span>
+                    <i data-lucide="mail" class="icon" aria-hidden="true"></i>
+                    <span data-key="contact_title">Bana Ulaşın</span>
                 </h2>
                 <form id="contact-form" class="contact-form">
                     <div class="form-group">
                         <label for="contact-name" data-key="contact_name_label">İsim</label>
                         <input type="text" id="contact-name" name="name" required placeholder="Adınız">
                     </div>
-
                     <div class="form-group">
                         <label for="contact-email" data-key="contact_email_label">E-posta</label>
                         <input type="email" id="contact-email" name="email" required placeholder="E-posta adresiniz">
                     </div>
-
                     <div class="form-group">
                         <label for="contact-subject" data-key="contact_subject_label">Konu</label>
                         <input type="text" id="contact-subject" name="subject" required placeholder="Konu">
                     </div>
-
                     <div class="form-group">
                         <label for="contact-message" data-key="contact_message_label">Mesaj</label>
                         <textarea id="contact-message" name="message" rows="5" required placeholder="Mesajınız..."></textarea>
                     </div>
-
-                    <!-- hCaptcha Entegrasyonu -->
                     <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
-
                     <button type="submit" class="submit-btn" data-key="contact_submit_btn">Gönder</button>
                     <div id="form-message" class="form-message"></div>
                 </form>
@@ -495,28 +544,61 @@
                 <button data-lang="es">ES</button>
             </div>
             <button id="theme-toggle" aria-label="Toggle theme">
-                <i class="fas fa-sun"></i>
-            </button> 
+                <span id="theme-icon-wrapper"><i data-lucide="sun"></i></span>
+            </button>
         </div>
     </div>
 
     <footer class="site-footer">
         <p data-key="footer_copyright">&copy; 2026 Aydın Aydemir. Tüm hakları saklıdır.</p>
         <div class="footer-social-icons">
-             <a href="https://www.linkedin.com/in/aydinaydmr" target="_blank" rel="noopener noreferrer" aria-label="Linkedin" data-key="linkedin_label"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-             <a href="mailto:aydinaydmr@proton.me" target="_blank" rel="noopener noreferrer" aria-label="Email" data-key="email_label"><i class="fas fa-envelope" aria-hidden="true"></i></a>
-             <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-key="github_label"><i class="fab fa-github" aria-hidden="true"></i></a>
+             <a href="https://www.linkedin.com/in/aydinaydmr" target="_blank" rel="noopener noreferrer" aria-label="Linkedin" data-key="linkedin_label">
+                 <i data-lucide="linkedin" aria-hidden="true"></i>
+             </a>
+             <a href="mailto:aydinaydmr@proton.me" target="_blank" rel="noopener noreferrer" aria-label="Email" data-key="email_label">
+                 <i data-lucide="mail" aria-hidden="true"></i>
+             </a>
+             <a href="https://github.com/cyberQbit" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-key="github_label">
+                 <i data-lucide="github" aria-hidden="true"></i>
+             </a>
         </div>
     </footer>
 
-    <div id="scrollToTop" class="scroll-to-top" onclick="scrollToTop()" style="display: none;">
-        <i class="fas fa-arrow-up"></i>
+    <!-- Scroll To Top (Progress Circle) -->
+    <div id="scrollToTop" class="scroll-to-top" onclick="scrollToTop()">
+        <svg class="progress-ring" width="55" height="55" viewBox="0 0 55 55">
+            <circle class="progress-ring__track" cx="27.5" cy="27.5" r="22"/>
+            <circle class="progress-ring__circle" cx="27.5" cy="27.5" r="22"/>
+        </svg>
+        <i data-lucide="arrow-up" class="scroll-icon" aria-hidden="true"></i>
     </div>
 
+    <!-- Terminal Easter Egg -->
+    <div id="terminal-overlay" class="terminal-overlay" role="dialog" aria-modal="true" aria-label="Terminal">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                </div>
+                <span class="terminal-title">cyberQbit@portfolio:~$</span>
+                <button class="terminal-close-btn" aria-label="Terminali kapat">✕</button>
+            </div>
+            <div class="terminal-body" id="terminal-body"></div>
+            <div class="terminal-input-area">
+                <span class="terminal-prompt-symbol">$&nbsp;</span>
+                <input type="text" class="terminal-input" id="terminal-input"
+                       placeholder="komut girin... ('help' yazın)" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <!-- Main Script -->
     <script src="js/script.js"></script>
-
-    <!-- hCaptcha Script (Web3Forms Integration) -->
+    <!-- hCaptcha -->
     <script src="https://web3forms.com/client/script.js" async defer></script>
 </body>
-</html>   
+</html>

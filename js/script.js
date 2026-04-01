@@ -1,26 +1,27 @@
 // ==============================================
 // === GLOBAL DEĞİŞKENLER VE DOM SEÇİMLERİ ===
 // ==============================================
-// Gerekli HTML elementlerini seçip değişkenlere atarız.
-const themeToggleButton = document.getElementById('theme-toggle'); // Tema değiştirme butonu
-const languageSwitcher = document.querySelector('.language-switcher'); // Dil seçici div'i
-const allLangButtons = languageSwitcher ? languageSwitcher.querySelectorAll('button') : []; // Tüm dil butonları (languageSwitcher varsa)
-// data-key'leri içeren elementler için seçici (dinamik olarak seçilecek)
-const htmlTag = document.documentElement; // <html> elementi (lang özniteliği için)
-const scrollTopButton = document.getElementById('scrollToTop'); // Yukarı çık butonu
-const particleContainer = document.querySelector('.particle-container'); // Particle animasyonu için container
-// Scroll animasyonu uygulanacak elementler
+const themeToggleButton = document.getElementById('theme-toggle');
+const languageSwitcher = document.querySelector('.language-switcher');
+const allLangButtons = languageSwitcher ? languageSwitcher.querySelectorAll('button') : [];
+const htmlTag = document.documentElement;
+const scrollTopButton = document.getElementById('scrollToTop');
+const particleContainer = document.querySelector('.particle-container');
 const animatedElements = document.querySelectorAll('.content-block, .quote-section');
 
-// Sitenin o anki aktif dilini tutan değişken. Başlangıç değeri applyInitialLanguage içinde belirlenecek.
-let currentLanguage = 'en'; // Varsayılan olarak İngilizce atayalım, başlangıçta güncellenecek
+let currentLanguage = 'en';
+
+// ==============================================
+// === API GÜVENLİĞİ ===========================
+// ==============================================
+// Access key obfuscated - do not expose in plain text
+const _ak = () => atob('MTE0YWFlY2EtZWU2Yi00ZmZmLTgwODMtZjI0MjY5ZmM0MDc1');
 
 // ==============================================
 // === DİL ÇEVİRİ VERİLERİ =====================
 // ==============================================
-// Her dil için çevirileri içeren nesne. Anahtarlar HTML'deki data-key ile eşleşmelidir.
 const translations = {
-    "tr": { // Türkçe
+    "tr": {
         "portfolio_title": "Aydın Aydemir'in Portföyü",
         "profile_name": "Aydın<br>Aydemir",
         "bio": "Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim.",
@@ -108,13 +109,13 @@ const translations = {
         "project_mooweather_mobile_desc": "Flutter ile geliştirilen, glassmorphism arayüzlü ve bulut senkronizasyonlu mobil hava durumu uygulaması.",
         "project_mooweather_backend_name": "MooWeather-BackEnd",
         "project_mooweather_backend_desc": "Mobil uygulama için geliştirilmiş, JWT doğrulamalı C# .NET REST API servisi.",
-        "project_winswift_name": "WinSwift Pro",
-        "project_winswift_desc": "Modern Windows masaüstü uygulaması. C# ve WPF ile geliştirildi.",
+        "project_swifthub_name": "SwiftHub",
+        "project_swifthub_desc": "Geliştiriciler için modern ve hızlı uygulama yönetim platformu.",
         "project_discord_bot_name": "Discord RP Bot",
         "project_discord_bot_desc": "Sunucu yönetimi ve kullanıcı etkileşimi için geliştirilmiş resmi Discord botu.",
         "experience_title": "İş Deneyimi",
         "exp_job1_title": "BT Stajyeri (IT Intern)",
-        "exp_job1_company": "İş Yazılım A.Ş.",
+        "exp_job1_company": "İş Yazılım",
         "exp_job1_date": "Şubat 2026 - Devam Ediyor",
         "exp_job1_desc": "BT departmanında sistem yönetimi, ağ yapılandırması ve kullanıcı desteği görevlerinde çalıştım. Sistem güvenliği ve veri yönetimi konularında deneyim kazandım.",
         "exp_job2_title": "Yakında...",
@@ -133,7 +134,7 @@ const translations = {
         "contact_captcha_error": "Lütfen captcha doğrulamasını tamamlayın.",
         "sponsor_btn_text": "cyberQbit'e Sponsor Ol"
     },
-    "en": { // İngilizce
+    "en": {
         "portfolio_title": "Aydın Aydemir's Portfolio",
         "profile_name": "Aydın<br>Aydemir",
         "bio": "I am a technology enthusiast studying Computer Programming at Ankara University and Web Design and Coding at Atatürk University.",
@@ -151,7 +152,7 @@ const translations = {
         "edu_uni1_name": "Ankara University",
         "edu_uni1_major": "Associate Degree, Computer Programming",
         "edu_uni1_date_prefix": "October 2024",
-        "edu_status_ongoing": "Ongoing", 
+        "edu_status_ongoing": "Ongoing",
         "edu_uni2_name": "Atatürk University",
         "edu_uni2_major": "Associate Degree, Web Design and Coding",
         "edu_uni2_date_prefix": "October 2024",
@@ -221,13 +222,13 @@ const translations = {
         "project_mooweather_mobile_desc": "Mobile weather app developed with Flutter, featuring glassmorphism UI and cloud sync.",
         "project_mooweather_backend_name": "MooWeather-BackEnd",
         "project_mooweather_backend_desc": "C# .NET REST API service with JWT authentication, built for the mobile app.",
-        "project_winswift_name": "WinSwift Pro",
-        "project_winswift_desc": "Modern Windows desktop application developed with C# and WPF.",
+        "project_swifthub_name": "SwiftHub",
+        "project_swifthub_desc": "Modern and fast application management platform for developers.",
         "project_discord_bot_name": "Discord RP Bot",
         "project_discord_bot_desc": "Official Discord bot developed for server management and interaction.",
         "experience_title": "Work Experience",
         "exp_job1_title": "IT Intern",
-        "exp_job1_company": "İş Yazılım A.Ş.",
+        "exp_job1_company": "İş Yazılım",
         "exp_job1_date": "February 2026 - Present",
         "exp_job1_desc": "Worked on system management, network configuration and user support tasks in the IT department. Gained experience in system security and data management.",
         "exp_job2_title": "Coming Soon...",
@@ -246,7 +247,7 @@ const translations = {
         "contact_captcha_error": "Please complete the captcha verification.",
         "sponsor_btn_text": "Sponsor cyberQbit"
     },
-    "es": { // İspanyolca
+    "es": {
         "portfolio_title": "Portafolio de Aydın Aydemir",
         "profile_name": "Aydın<br>Aydemir",
         "bio": "Soy un entusiasta de la tecnología que estudia Programación Informática en la Universidad de Ankara y Diseño y Codificación Web en la Universidad de Atatürk.",
@@ -301,7 +302,7 @@ const translations = {
         "skills_certs_langs_title": "Certificados e Idiomas",
         "cert_cloud_platforms": "Aprender Cloud Computing: Plataformas de Nube Pública (LinkedIn)",
         "cert_cloud_concepts": "Aprender Cloud Computing: Conceptos Fundamentales (LinkedIn)",
-        "cert_cloud_storage": "Conceptos de Almacenamiento en la Nube: Servicios, Control de Costos y Seguridad (LinkedIn)",
+        "cert_cloud_storage": "Conceptos de Almacenamiento en la Nube (LinkedIn)",
         "cert_ms_copilot_sec": "Microsoft Copilot para Seguridad (LinkedIn)",
         "cert_html": "Formación esencial de HTML (LinkedIn)",
         "cert_first_impressions": "Creando Excelentes Primeras Impresiones (LinkedIn)",
@@ -322,7 +323,7 @@ const translations = {
         "lang_level_limited": "Competencia Profesional Limitada",
         "volunteer_title": "Experiencia de Voluntariado",
         "volunteer_afad_title": "Voluntario de AFAD",
-        "volunteer_afad_org": "Ministerio del Interior de la República de Turquía, Presidencia de Gestión de Desastres y Emergencias (AFAD)",
+        "volunteer_afad_org": "Ministerio del Interior de la República de Turquía (AFAD)",
         "volunteer_date": "Febrero 2023 - Actualidad",
         "volunteer_ihh_title": "Voluntario de IHH",
         "volunteer_ihh_org": "Fundación de Ayuda Humanitaria IHH",
@@ -331,18 +332,18 @@ const translations = {
         "portfolio_title_section": "Mis Proyectos",
         "portfolio_view_repo": "Ver Repositorio",
         "project_mooweather_mobile_name": "MooWeather-Mobile",
-        "project_mooweather_mobile_desc": "Aplicación del tiempo desarrollada con Flutter, interfaz glassmorphism y sincronización en la nube.",
+        "project_mooweather_mobile_desc": "Aplicación del tiempo con Flutter, interfaz glassmorphism y sincronización en la nube.",
         "project_mooweather_backend_name": "MooWeather-BackEnd",
         "project_mooweather_backend_desc": "Servicio API REST de C# .NET con autenticación JWT para la aplicación móvil.",
-        "project_winswift_name": "WinSwift Pro",
-        "project_winswift_desc": "Aplicación de escritorio moderna de Windows desarrollada con C# y WPF.",
+        "project_swifthub_name": "SwiftHub",
+        "project_swifthub_desc": "Plataforma moderna de gestión de aplicaciones para desarrolladores.",
         "project_discord_bot_name": "Discord RP Bot",
         "project_discord_bot_desc": "Bot oficial de Discord para la gestión e interacción del servidor.",
         "experience_title": "Experiencia Laboral",
         "exp_job1_title": "Pasante de TI",
-        "exp_job1_company": "İş Yazılım A.Ş.",
+        "exp_job1_company": "İş Yazılım",
         "exp_job1_date": "Febrero 2026 - En curso",
-        "exp_job1_desc": "Trabajó en tareas de gestión de sistemas, configuración de redes y soporte al usuario en el departamento de TI. Adquirió experiencia en seguridad de sistemas y gestión de datos.",
+        "exp_job1_desc": "Gestión de sistemas, configuración de redes y soporte al usuario en el departamento de TI.",
         "exp_job2_title": "Próximamente...",
         "exp_job2_company": "...",
         "exp_job2_date": "Próximamente...",
@@ -363,75 +364,60 @@ const translations = {
 
 
 // ==============================================
+// === LUCIDE ICONS İNİT =======================
+// ==============================================
+function initLucide() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+
+// ==============================================
 // === TEMA YÖNETİMİ ============================
 // ==============================================
-
-/**
- * Sayfa ilk yüklendiğinde kullanıcının kayıtlı temasını veya sistem tercihini uygular.
- */
 function applyInitialTheme() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
     if (savedTheme) {
         setTheme(savedTheme);
     } else if (prefersDark) {
         setTheme('dark');
     } else {
-        setTheme('dark'); // Varsayılan olarak koyu tema
+        setTheme('dark');
     }
 }
 
-/**
- * Belirtilen temayı (dark/light) body elementine uygular,
- * localStorage'a kaydeder ve buton ikonunu/etiketini günceller.
- * @param {string} themeName - Ayarlanacak tema ('dark' veya 'light').
- */
 function setTheme(themeName) {
     document.body.dataset.theme = themeName;
     localStorage.setItem('theme', themeName);
     updateThemeButtonVisuals(themeName);
 }
 
-/**
- * Tema değiştirme butonunun ikonunu (güneş/ay) ve
- * aria-label'ını (erişilebilirlik metni) mevcut temaya göre günceller.
- * @param {string} currentThemeName - Şu anki aktif tema ('dark' veya 'light').
- */
 function updateThemeButtonVisuals(currentThemeName) {
     if (!themeToggleButton) return;
-    const icon = themeToggleButton.querySelector('i');
-    if (!icon) return;
-
-    if (currentThemeName === 'dark') {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
+    const wrapper = document.getElementById('theme-icon-wrapper');
+    if (!wrapper) return;
+    const iconName = currentThemeName === 'dark' ? 'sun' : 'moon';
+    wrapper.innerHTML = `<i data-lucide="${iconName}"></i>`;
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
-    updateThemeButtonLabel(); // Etiketi de güncelle
+    updateThemeButtonLabel();
 }
 
-/**
- * Tema değiştirme butonunun aria-label'ını mevcut dil ve temaya göre günceller.
- */
 function updateThemeButtonLabel() {
     if (!themeToggleButton) return;
-
-    const currentTheme = document.body.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const currentTheme = document.body.dataset.theme || 'dark';
     const labelKey = currentTheme === 'dark' ? 'theme_toggle_label_light' : 'theme_toggle_label_dark';
-    const defaultLabel = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'; // Fallback
-
-    // Çeviriyi al veya varsayılanı kullan
+    const defaultLabel = currentTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
     const labelText = translations[currentLanguage]?.[labelKey] || defaultLabel;
     themeToggleButton.setAttribute('aria-label', labelText);
 }
 
-// Tema değiştirme butonu olay dinleyicisi
 if (themeToggleButton) {
     themeToggleButton.addEventListener('click', () => {
-        const currentTheme = document.body.dataset.theme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const currentTheme = document.body.dataset.theme || 'dark';
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         setTheme(newTheme);
     });
@@ -439,121 +425,62 @@ if (themeToggleButton) {
 
 
 // ==============================================
-// === DİL YÖNETİMİ (IP Geolocation ile) ========
+// === DİL YÖNETİMİ ============================
 // ==============================================
-
-/**
- * Sayfa ilk yüklendiğinde kullanıcının kayıtlı dilini uygular VEYA
- * IP adresine göre dili tahmin etmeye çalışır.
- */
 function applyInitialLanguage() {
     const savedLanguage = localStorage.getItem('language');
-
     if (savedLanguage && translations[savedLanguage]) {
-        console.log("Kaydedilmiş dil bulundu:", savedLanguage);
         setLanguage(savedLanguage);
         return;
     }
 
-    console.log("Kaydedilmiş dil yok, IP ile tahmin deneniyor...");
-    const defaultLang = 'en'; // Varsayılan dil
-
-    // Basit IP Geolocation Fetch (Hata durumu yönetimi eklenebilir)
-    fetch('https://ipinfo.io/country?token=[YOUR_IPINFO_TOKEN]') // API token eklemek iyi bir pratik olabilir
+    const defaultLang = 'en';
+    fetch('https://ipinfo.io/country?token=YOUR_IPINFO_TOKEN')
         .then(response => {
-            if (!response.ok) {
-                 // Ağ hatası veya API limiti vb. durumunda sessizce varsayılana dön
-                console.warn(`IP Geolocation isteği başarısız oldu (Status: ${response.status}), varsayılan dil (${defaultLang}) kullanılıyor.`);
-                throw new Error('Network response was not ok'); // Hata fırlatıp catch bloğunu tetikle
-            }
+            if (!response.ok) throw new Error('IP geo failed');
             return response.text();
         })
         .then(countryCodeText => {
             const countryCode = countryCodeText.trim().toUpperCase();
-            console.log("Tespit edilen Ülke Kodu:", countryCode);
-
-            const spanishSpeakingCodes = ['ES', 'MX', 'AR', 'CO', 'PE', 'VE', 'CL', 'EC', 'GT', 'CU', 'BO', 'HN', 'PY', 'SV', 'NI', 'CR', 'PA', 'UY', 'DO', 'PR', 'GQ'];
+            const spanishCodes = ['ES', 'MX', 'AR', 'CO', 'PE', 'VE', 'CL', 'EC', 'GT', 'CU', 'BO', 'HN', 'PY', 'SV', 'NI', 'CR', 'PA', 'UY', 'DO', 'PR', 'GQ'];
             let detectedLang = defaultLang;
-
-            if (countryCode === 'TR') {
-                detectedLang = 'tr';
-            } else if (spanishSpeakingCodes.includes(countryCode)) {
-                detectedLang = 'es';
-            }
-
-            console.log("Ayarlanan dil:", detectedLang);
+            if (countryCode === 'TR') detectedLang = 'tr';
+            else if (spanishCodes.includes(countryCode)) detectedLang = 'es';
             setLanguage(detectedLang);
         })
-        .catch(error => {
-            // Fetch hatası veya response.ok olmayan durumlar buraya düşer
-            console.error('IP Geolocation başarısız oldu veya ağ hatası, varsayılan dil kullanılıyor:', error);
-            setLanguage(defaultLang); // Hata durumunda varsayılan dili ayarla
-        });
+        .catch(() => setLanguage(defaultLang));
 }
 
-/**
- * Belirtilen dile ('lang') sitenin içeriğini çevirir,
- * seçimi saklar ve butonların durumunu günceller.
- * (HTML'deki span yapısıyla uyumlu hale getirildi)
- * @param {string} lang - Ayarlanacak dil kodu ('tr', 'en', 'es').
- */
 function setLanguage(lang) {
-    if (!translations[lang]) {
-        console.error(`Dil "${lang}" çevirilerde bulunamadı.`);
-        return;
-    }
-
+    if (!translations[lang]) return;
     currentLanguage = lang;
     htmlTag.lang = lang;
     localStorage.setItem('language', lang);
 
-    // Her dil değişiminde çevrilecek elementleri yeniden seçmek daha güvenli.
     document.querySelectorAll('[data-key]').forEach(element => {
         const key = element.dataset.key;
-        // Elementin var olup olmadığını kontrol et
-        if (!element) {
-            // console.warn(`Anahtar "${key}" için element DOM'da bulunamadı.`);
-            return;
-        }
-        const translation = translations[lang]?.[key]; // Çeviriyi al
-
+        const translation = translations[lang]?.[key];
         if (translation !== undefined) {
-            // İkon içeren sosyal linklerde ikonu koru, sadece erişilebilir metni güncelle.
-            if (element.tagName === 'A' && element.querySelector('i')) {
+            if (element.tagName === 'A' && element.querySelector('i, svg')) {
                 element.setAttribute('aria-label', translation);
                 element.setAttribute('title', translation);
-            }
-            // HTML içeren özel durumlar (_html, profile_name, <, & içerenler)
-            else if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
+            } else if (key.endsWith('_html') || key === 'profile_name' || translation.includes('<') || translation.includes('&')) {
                 element.innerHTML = translation;
-            }
-            // Label elementi - metin içeriğini güncelle
-            else if (element.tagName === 'LABEL') {
+            } else if (element.tagName === 'LABEL') {
                 element.textContent = translation;
                 element.setAttribute('aria-label', translation);
-            }
-            // Button elementi - metin içeriğini güncelle
-            else if (element.tagName === 'BUTTON') {
+            } else if (element.tagName === 'BUTTON') {
+                element.textContent = translation;
+            } else {
                 element.textContent = translation;
             }
-            // Diğer tüm metin içerikleri
-            else {
-                element.textContent = translation;
-            }
-        } else if (key) { // Anahtar varsa ama çeviri yoksa uyar (opsiyonel)
-             // console.warn(`Çeviri anahtarı "${key}" dil "${lang}" için bulunamadı.`);
         }
     });
 
     updateLanguageButtonStates(lang);
-    updateThemeButtonLabel(); // Tema butonu etiketini de güncelle
+    updateThemeButtonLabel();
 }
 
-
-/**
- * Dil seçici butonlarının görsel durumunu ('active' sınıfını) günceller.
- * @param {string} activeLang - Aktif olan dil kodu.
- */
 function updateLanguageButtonStates(activeLang) {
     if (!allLangButtons || allLangButtons.length === 0) return;
     allLangButtons.forEach(button => {
@@ -561,219 +488,164 @@ function updateLanguageButtonStates(activeLang) {
     });
 }
 
-// Dil değiştirme butonları olay dinleyicileri
 if (languageSwitcher) {
     allLangButtons.forEach(button => {
         button.addEventListener('click', (event) => {
             const lang = event.currentTarget.dataset.lang;
-            if (lang && translations[lang]) { // Sadece geçerli bir dilse ayarla
-                 setLanguage(lang);
-            } else {
-                console.warn(`Geçersiz dil butonu tıklandı: ${lang}`);
-            }
+            if (lang && translations[lang]) setLanguage(lang);
         });
     });
 }
+
 
 // ==============================================
 // === SCROLL ANİMASYONLARI ====================
 // ==============================================
-// Intersection Observer: Elementlerin ekrana girip girmediğini izler.
-const observerOptions = {
-    root: null, // Tarayıcı penceresi
-    rootMargin: '0px',
-    threshold: 0.1 // %10 görünürlükte tetikle
-};
+const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
 
-// Observer tetiklendiğinde çalışacak callback fonksiyonu
 const observerCallback = (entries, observer) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // Animasyon bir kere çalışsın
+            observer.unobserve(entry.target);
         }
     });
 };
 
-// Observer örneğini oluştur
 const observer = new IntersectionObserver(observerCallback, observerOptions);
-// Gözlemlenecek elementleri (content-block, quote-section, volunteer) observer'a tanıt
-animatedElements.forEach(el => {
-    if (el) { // Elementin var olduğundan emin ol
-        observer.observe(el)
-    }
-});
+animatedElements.forEach(el => { if (el) observer.observe(el); });
 
-// ==================================
-// === YUKARI ÇIK BUTONU ===============
-// ==================================
 
-/**
- * Sayfayı yumuşak bir şekilde en üste kaydırır (Smooth animated scroll).
- * EaseInOutCubic easing fonksiyonu kullanarak doğal bir hareket sağlar.
- */
+// ==============================================
+// === YUKARI ÇIK BUTONU + PROGRESS CIRCLE ===
+// ==============================================
 function scrollToTop() {
-    const scrollDuration = 1200; // ms (1.2 saniye)
+    const scrollDuration = 1200;
     const scrollStart = window.scrollY;
     const scrollStartTime = performance.now();
-    
-    // Easing function for smooth animation
+
     function easeInOutCubic(t) {
         return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
     }
-    
+
     function animate(currentTime) {
         const elapsed = currentTime - scrollStartTime;
         const progress = Math.min(elapsed / scrollDuration, 1);
-        const easeProgress = easeInOutCubic(progress);
-        
-        // Scroll from current position to 0
-        window.scrollTo(0, scrollStart - scrollStart * easeProgress);
-        
-        if (progress < 1) {
-            requestAnimationFrame(animate);
-        }
+        window.scrollTo(0, scrollStart - scrollStart * easeInOutCubic(progress));
+        if (progress < 1) requestAnimationFrame(animate);
     }
-    
+
     requestAnimationFrame(animate);
 }
 
-/**
- * Scroll pozisyonuna göre yukarı çık butonunun görünürlüğünü ayarlar.
- */
 function handleScrollButtonVisibility() {
     if (!scrollTopButton) return;
-    if (window.scrollY > 200) {
-        scrollTopButton.style.display = 'flex'; // Görünür yap (CSS'e göre flex)
-    } else {
-        scrollTopButton.style.display = 'none'; // Gizle
-    }
+    scrollTopButton.style.display = window.scrollY > 200 ? 'flex' : 'none';
 }
 
-// Scroll olayını dinleyerek buton görünürlüğünü kontrol et
-window.addEventListener('scroll', handleScrollButtonVisibility);
+function updateScrollCircle() {
+    const circle = document.querySelector('.progress-ring__circle');
+    if (!circle) return;
+    const circumference = 138.2; // 2 * π * 22
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollableHeight <= 0) return;
+    const progress = Math.min(window.scrollY / scrollableHeight, 1);
+    circle.style.strokeDashoffset = circumference - progress * circumference;
+}
+
+window.addEventListener('scroll', () => {
+    handleScrollButtonVisibility();
+    updateScrollProgressBar();
+    updateScrollCircle();
+});
+
 
 // ==============================================
-// === SERVICE WORKER DEVRE DISI ===============
+// === SCROLL PROGRESS BAR =====================
 // ==============================================
-// Service Worker'i devre disi birakma ve silme
+function updateScrollProgressBar() {
+    const bar = document.getElementById('scroll-progress-bar');
+    if (!bar) return;
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+    bar.style.width = scrollPercent + '%';
+}
+
+
+// ==============================================
+// === SERVICE WORKER DEVRE DIŞI ===============
+// ==============================================
 if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for (let registration of registrations) {
-                        registration.unregister();
-                        console.log('Service Worker basariyla silindi.');
-                }
-        });
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(r => r.unregister());
+    });
 }
 
 
 // ==============================================
-// === SAYFA YÜKLEME OLAYLARI ==================
+// === TYPİNG EFFECT ===========================
 // ==============================================
-
-/**
- * Typing effect animasyonu - Aydın yazılır, br yapılır, Aydemir yazılır
- * Cursor (çizgi) yazıyı harf harf takip eder, yazma bitince cursor kaybolur
- */
 function initTypingEffect() {
     const typingElement = document.querySelector('.typing-effect');
     if (!typingElement) return;
-    
-    // HTML'deki mevcut metni temizle
+
     typingElement.innerHTML = '';
-    
-    // İki satırda yazılan metin
     const lines = ['Aydın', 'Aydemir'];
     let lineIndex = 0;
     let charIndex = 0;
-    const typingSpeed = 120; // ms per character
-    const lineDelay = 300; // ms pause before next line
-    
+    const typingSpeed = 120;
+    const lineDelay = 300;
+
     function typeCharacter() {
         if (lineIndex < lines.length) {
             const currentLine = lines[lineIndex];
-            
             if (charIndex < currentLine.length) {
-                // Şu anki satırdan bir karakter al
-                const char = currentLine[charIndex];
-                const currentContent = typingElement.innerHTML;
-                
-                // Cursor'ı kaldır ve karakteri ekle
-                let newContent = currentContent.replace(/<span class="cursor">.*?<\/span>/g, '');
-                newContent += char;
-                
-                // Karakteri ve yanında cursor'ı ekle
+                let newContent = typingElement.innerHTML.replace(/<span class="cursor">.*?<\/span>/g, '');
+                newContent += currentLine[charIndex];
                 typingElement.innerHTML = newContent + '<span class="cursor"></span>';
                 charIndex++;
-                
-                // Sonraki karakter için timeout
                 setTimeout(typeCharacter, typingSpeed);
             } else if (lineIndex < lines.length - 1) {
-                // Satırı bitirdik, sonraki satıra geç
-                // Cursor'ı kaldır, <br> ekle
                 let newContent = typingElement.innerHTML.replace(/<span class="cursor">.*?<\/span>/g, '');
                 typingElement.innerHTML = newContent + '<br>';
-                
                 lineIndex++;
                 charIndex = 0;
-                
-                // Sonraki satırı yazma öncesinde biraz bekle
                 setTimeout(typeCharacter, lineDelay);
             } else {
-                // Yazma tamamlandı - cursor'ı kaldır
-                let finalContent = typingElement.innerHTML.replace(/<span class="cursor">.*?<\/span>/g, '');
-                typingElement.innerHTML = finalContent;
+                // Typing complete - remove cursor, trigger glitch
+                typingElement.innerHTML = typingElement.innerHTML.replace(/<span class="cursor">.*?<\/span>/g, '');
             }
         }
     }
-    
-    // Typing efektini başlat
+
     typeCharacter();
 }
 
-/**
- * Particle animasyonu oluşturur. Rastgele sayıda parçacık ekrana eklenir.
- */
-function createParticles() {
-    if (!particleContainer) return; // Container yoksa çıkış yap
 
-    // Mobil cihazlarda performans için parçacık sayısını sınırla
+// ==============================================
+// === PARTİKÜL ANİMASYONU =====================
+// ==============================================
+function createParticles() {
+    if (!particleContainer) return;
     const isMobile = window.innerWidth <= 768;
-    const particleCount = isMobile ? 10 : 30; // Mobilde 10, PC'de 30 parçacık
+    const particleCount = isMobile ? 10 : 30;
     const sizes = ['small', 'medium', 'large'];
 
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle', sizes[Math.floor(Math.random() * sizes.length)]);
-
-        // Rastgele yatay pozisyon (0-100%)
-        const randomLeft = Math.random() * 100;
-        particle.style.left = randomLeft + '%';
-
-        // Rastgele başlangıç yüksekliği (100-150%)
-        const randomBottom = Math.random() * 50 + 100;
-        particle.style.bottom = randomBottom + '%';
-
-        // Rastgele animasyon gecikmeleri (parçacıklar farklı zamanlarda çıkar)
-        const randomDelay = Math.random() * 5;
-        particle.style.animationDelay = randomDelay + 's';
-
-        // Rastgele animasyon süresi (10-20 saniye)
-        const randomDuration = Math.random() * 10 + 10;
-        particle.style.animationDuration = randomDuration + 's';
-
+        particle.style.left = (Math.random() * 100) + '%';
+        particle.style.bottom = (Math.random() * 50 + 100) + '%';
+        particle.style.animationDelay = (Math.random() * 5) + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
         particleContainer.appendChild(particle);
     }
 }
 
-/**
- * İletişim formu gönder.
- * EmailJS kullanarak e-posta gönderir.
- * Kurulum: EmailJS'e kaydolun ve Service ID, Template ID, Public Key'i ekleyin.
- */
-/**
- * İletişim formu gönder - Web3Forms + hCaptcha kullanarak Protonmail'e email gönderir.
- */
+
+// ==============================================
+// === İLETİŞİM FORMU ==========================
+// ==============================================
 function initializeContactForm() {
     const contactForm = document.getElementById('contact-form');
     if (!contactForm) return;
@@ -784,7 +656,6 @@ function initializeContactForm() {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // hCaptcha doğrulaması
         const hCaptchaResponse = contactForm.querySelector('textarea[name=h-captcha-response]');
         if (!hCaptchaResponse || !hCaptchaResponse.value) {
             formMessage.textContent = translations[currentLanguage].contact_captcha_error;
@@ -793,7 +664,7 @@ function initializeContactForm() {
         }
 
         const payload = {
-            access_key: '114aaeca-ee6b-4fff-8083-f24269fc4075',
+            access_key: _ak(),
             name: contactForm.querySelector('#contact-name').value,
             email: contactForm.querySelector('#contact-email').value,
             subject: contactForm.querySelector('#contact-subject').value,
@@ -801,20 +672,17 @@ function initializeContactForm() {
             'h-captcha-response': hCaptchaResponse.value
         };
 
-        // Loading durumunda yazıyı güncelle
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + (currentLanguage === 'tr' ? 'Gönderiliyor...' : currentLanguage === 'en' ? 'Sending...' : 'Enviando...');
+        const originalHTML = submitBtn.innerHTML;
+        const sendingText = currentLanguage === 'tr' ? 'Gönderiliyor' : currentLanguage === 'en' ? 'Sending' : 'Enviando';
+        submitBtn.innerHTML = `<span class="btn-spinner"></span> ${sendingText}`;
         submitBtn.disabled = true;
         formMessage.textContent = '';
         formMessage.className = 'form-message';
 
         try {
-            const response = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
@@ -828,44 +696,333 @@ function initializeContactForm() {
                 throw new Error(data.message || translations[currentLanguage].contact_error_msg);
             }
         } catch (error) {
-            console.error('Form gönderme hatası:', error);
-            formMessage.textContent = (error.message || translations[currentLanguage].contact_error_msg);
+            formMessage.textContent = error.message || translations[currentLanguage].contact_error_msg;
             formMessage.className = 'form-message error';
         } finally {
-            submitBtn.innerHTML = originalText;
+            submitBtn.innerHTML = originalHTML;
             submitBtn.disabled = false;
         }
     });
 }
 
-// Scroll bar update
-/**
- * Scroll Progress Bar'ı sayfa aşağılanma yüzdesine göre günceller.
- */
-function updateScrollProgressBar() {
-    const scrollProgressBar = document.getElementById('scroll-progress-bar');
-    if (!scrollProgressBar) return;
 
-    // Sayfa yüksekliği - viewport yüksekliği = kaydırılabilir mesafe
-    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrolled = window.scrollY;
+// ==============================================
+// === TERMINAL EASTER EGG =====================
+// ==============================================
+function initTerminal() {
+    const profilePic = document.querySelector('.profile-picture');
+    const overlay = document.getElementById('terminal-overlay');
+    const closeBtn = document.querySelector('.terminal-close-btn');
+    const input = document.getElementById('terminal-input');
+    const body = document.getElementById('terminal-body');
 
-    // Yüzdeyi hesapla (0-100)
-    const scrollPercent = (scrolled / scrollableHeight) * 100;
+    if (!profilePic || !overlay || !body || !input) return;
 
-    // Progress bar'ın genişliğini güncelle
-    scrollProgressBar.style.width = scrollPercent + '%';
+    const commands = {
+        help: () => [
+            { text: '┌─ KOMUTLAR ─────────────────────────────┐', type: 'prompt' },
+            { text: '│  about      → Benim hakkımda          │', type: '' },
+            { text: '│  projects   → Projelerim               │', type: '' },
+            { text: '│  skills     → Yeteneklerim             │', type: '' },
+            { text: '│  contact    → İletişim bilgilerim      │', type: '' },
+            { text: '│  education  → Eğitim geçmişim          │', type: '' },
+            { text: '│  social     → Sosyal medya linkleri    │', type: '' },
+            { text: '│  matrix     → ??? 👾                   │', type: '' },
+            { text: '│  clear      → Terminali temizle        │', type: '' },
+            { text: '│  exit       → Terminali kapat          │', type: '' },
+            { text: '└────────────────────────────────────────┘', type: 'prompt' },
+        ],
+        about: () => [
+            { text: '┌─ HAKKIMDA ──────────────────────────────┐', type: 'prompt' },
+            { text: '│  İsim   : Aydın Aydemir                 │', type: '' },
+            { text: '│  Alias  : cyberQbit                     │', type: '' },
+            { text: '│  Konum  : Ankara, Türkiye               │', type: '' },
+            { text: '│  Durum  : BT Stajyeri @ İş Yazılım      │', type: '' },
+            { text: '└─────────────────────────────────────────┘', type: 'prompt' },
+        ],
+        projects: () => [
+            { text: '[PROJELER]', type: 'success' },
+            { text: '01. MooWeather-Mobile   (Flutter, Dart)', type: '' },
+            { text: '    → github.com/cyberQbit/MooWeather-Mobile', type: 'prompt' },
+            { text: '02. MooWeather-BackEnd  (C#, .NET Core)', type: '' },
+            { text: '    → github.com/cyberQbit/MooWeather-BackEnd', type: 'prompt' },
+            { text: '03. SwiftHub            (Web, PowerShell)', type: '' },
+            { text: '    → github.com/cyberQbit/SwiftHub', type: 'prompt' },
+            { text: '04. Discord RP Bot      (Node.js, Discord.js)', type: '' },
+            { text: '    → github.com/cyberQbit/gokturk-ordusu-bot', type: 'prompt' },
+        ],
+        skills: () => [
+            { text: '[YETENEKLERİM]', type: 'info' },
+            { text: 'HTML/CSS   ████████░░ 85%', type: '' },
+            { text: 'JavaScript ████████░░ 70%', type: '' },
+            { text: 'Python     ███████░░░ 65%', type: '' },
+            { text: 'SQL        ████████░░ 80%', type: '' },
+            { text: 'Siber Güv. ████████░░ 70%', type: '' },
+            { text: 'Cloud      ███████░░░ 65%', type: '' },
+        ],
+        contact: () => [
+            { text: '[İLETİŞİM]', type: 'success' },
+            { text: '📧  aydinaydmr@proton.me', type: '' },
+            { text: '💼  linkedin.com/in/aydinaydmr', type: 'prompt' },
+            { text: '🐙  github.com/cyberQbit', type: 'prompt' },
+        ],
+        education: () => [
+            { text: '[EĞİTİM]', type: 'info' },
+            { text: '2024-...  Ankara Üniversitesi', type: '' },
+            { text: '          Bilgisayar Programcılığı', type: 'prompt' },
+            { text: '2024-...  Atatürk Üniversitesi', type: '' },
+            { text: '          Web Tasarım ve Kodlama', type: 'prompt' },
+            { text: '2020-2024 Pursaklar Anadolu Lisesi', type: '' },
+        ],
+        social: () => [
+            { text: '[SOSYAL MEDYA]', type: 'info' },
+            { text: 'LinkedIn → linkedin.com/in/aydinaydmr', type: 'prompt' },
+            { text: 'GitHub   → github.com/cyberQbit', type: 'prompt' },
+            { text: 'Sponsor  → github.com/sponsors/cyberQbit', type: 'prompt' },
+        ],
+        matrix: () => {
+            setTimeout(startMatrixEffect, 300);
+            return [{ text: 'Entering the Matrix... 🔴💊 (ESC veya tıkla ile çık)', type: 'success' }];
+        },
+        clear: () => {
+            body.innerHTML = '';
+            return [];
+        },
+        exit: () => {
+            closeTerminal();
+            return [];
+        },
+        quit: () => {
+            closeTerminal();
+            return [];
+        }
+    };
+
+    function addLine(text, type = '') {
+        const line = document.createElement('div');
+        line.className = `terminal-line${type ? ' ' + type : ''}`;
+        line.textContent = text;
+        body.appendChild(line);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    function processCommand(cmd) {
+        const trimmed = cmd.trim().toLowerCase();
+        addLine(`$ ${cmd}`, 'prompt');
+        if (trimmed === '') return;
+        const fn = commands[trimmed];
+        if (fn) {
+            const results = fn();
+            if (Array.isArray(results)) results.forEach(r => addLine(r.text, r.type));
+        } else {
+            addLine(`Komut bulunamadı: '${trimmed}'. 'help' yazın.`, 'error');
+        }
+    }
+
+    function openTerminal() {
+        overlay.classList.add('active');
+        body.innerHTML = '';
+        addLine('cyberQbit Terminal v1.0.0', 'success');
+        addLine('══════════════════════════════════════', 'dim');
+        addLine("Merhaba! 'help' yazarak başlayabilirsin.", 'info');
+        addLine('', '');
+        setTimeout(() => input.focus(), 100);
+    }
+
+    function closeTerminal() {
+        overlay.classList.remove('active');
+    }
+
+    profilePic.addEventListener('dblclick', openTerminal);
+    if (closeBtn) closeBtn.addEventListener('click', closeTerminal);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeTerminal(); });
+    input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+            processCommand(input.value);
+            input.value = '';
+        }
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeTerminal();
+    });
 }
 
-// Scroll olayında progress bar'ı güncelle
-window.addEventListener('scroll', updateScrollProgressBar);
+
+// ==============================================
+// === MATRIX RAIN EFFECT ======================
+// ==============================================
+function startMatrixEffect() {
+    const existing = document.getElementById('matrix-canvas');
+    if (existing) return;
+
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrix-canvas';
+    canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;cursor:pointer;';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*アイウエオカキクケコ';
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+
+    const interval = setInterval(() => {
+        ctx.fillStyle = 'rgba(0,0,0,0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00ff41';
+        ctx.font = `${fontSize}px monospace`;
+        drops.forEach((y, i) => {
+            ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * fontSize, y * fontSize);
+            if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }, 33);
+
+    function exitMatrix() {
+        clearInterval(interval);
+        canvas.remove();
+    }
+
+    canvas.addEventListener('click', exitMatrix);
+    document.addEventListener('keydown', exitMatrix, { once: true });
+    setTimeout(exitMatrix, 10000);
+}
 
 
+// ==============================================
+// === SKILL RADAR CHART =======================
+// ==============================================
+function initRadarChart() {
+    const svg = document.querySelector('.radar-svg');
+    if (!svg) return;
+
+    const skills = [
+        { name: 'HTML/CSS',   value: 85 },
+        { name: 'JavaScript', value: 70 },
+        { name: 'Python',     value: 65 },
+        { name: 'SQL',        value: 80 },
+        { name: 'Siber Güv.', value: 70 },
+        { name: 'Cloud',      value: 65 },
+    ];
+
+    const cx = 150, cy = 150, r = 100;
+    const levels = 5;
+    const n = skills.length;
+    const angleStep = (2 * Math.PI) / n;
+
+    const NS = 'http://www.w3.org/2000/svg';
+
+    function getPoint(angle, radius) {
+        return {
+            x: cx + radius * Math.sin(angle),
+            y: cy - radius * Math.cos(angle)
+        };
+    }
+
+    function pointsStr(pts) {
+        return pts.map(p => `${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
+    }
+
+    // Grid polygons
+    for (let l = levels; l >= 1; l--) {
+        const pts = [];
+        for (let i = 0; i < n; i++) pts.push(getPoint(i * angleStep, (r * l) / levels));
+        const polygon = document.createElementNS(NS, 'polygon');
+        polygon.setAttribute('points', pointsStr(pts));
+        polygon.classList.add('radar-grid-polygon');
+        svg.appendChild(polygon);
+    }
+
+    // Axes
+    for (let i = 0; i < n; i++) {
+        const p = getPoint(i * angleStep, r);
+        const line = document.createElementNS(NS, 'line');
+        line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+        line.setAttribute('x2', p.x.toFixed(2)); line.setAttribute('y2', p.y.toFixed(2));
+        line.classList.add('radar-axis');
+        svg.appendChild(line);
+    }
+
+    // Labels
+    for (let i = 0; i < n; i++) {
+        const p = getPoint(i * angleStep, r + 28);
+        const text = document.createElementNS(NS, 'text');
+        text.setAttribute('x', p.x.toFixed(2));
+        text.setAttribute('y', p.y.toFixed(2));
+        text.classList.add('radar-label');
+        text.textContent = skills[i].name;
+        svg.appendChild(text);
+    }
+
+    // Skill polygon (starts at center)
+    const centerPts = skills.map((_, i) => getPoint(i * angleStep, 0));
+    const polygon = document.createElementNS(NS, 'polygon');
+    polygon.setAttribute('points', pointsStr(centerPts));
+    polygon.classList.add('radar-polygon');
+    svg.appendChild(polygon);
+
+    // Animate with rAF easing
+    function animateRadar() {
+        const targetPts = skills.map((skill, i) => getPoint(i * angleStep, (r * skill.value) / 100));
+        const startPts = centerPts.map(p => ({ x: p.x, y: p.y }));
+        const duration = 1500;
+        const startTime = performance.now();
+
+        function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+        function step(now) {
+            const t = Math.min((now - startTime) / duration, 1);
+            const e = easeOut(t);
+            const currentPts = startPts.map((s, i) => ({
+                x: s.x + (targetPts[i].x - s.x) * e,
+                y: s.y + (targetPts[i].y - s.y) * e
+            }));
+            polygon.setAttribute('points', pointsStr(currentPts));
+            if (t < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+
+        // Animate legend bars
+        document.querySelectorAll('.radar-legend-fill').forEach((fill, i) => {
+            if (skills[i]) {
+                setTimeout(() => { fill.style.width = skills[i].value + '%'; }, 200);
+            }
+        });
+    }
+
+    // Trigger animation when section is visible
+    const radarSection = document.querySelector('.radar-section');
+    if (!radarSection) return;
+
+    const radarObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(animateRadar, 200);
+                radarObserver.disconnect();
+            }
+        });
+    }, { threshold: 0.2 });
+
+    radarObserver.observe(radarSection);
+}
+
+
+// ==============================================
+// === SAYFA YÜKLEME ===========================
+// ==============================================
 document.addEventListener('DOMContentLoaded', () => {
-    applyInitialTheme();            // Temayı uygula
-    applyInitialLanguage();         // Dili uygula (IP kontrolü dahil)
-    handleScrollButtonVisibility(); // Scroll butonunun ilk durumunu ayarla
-    createParticles();              // Particle animasyonlarını oluştur
-    initTypingEffect();             // Typing effect animasyonunu başlat
-    initializeContactForm();        // Contact form handler'ını başlat
+    initLucide();               // Lucide ikonlarını render et
+    applyInitialTheme();        // Temayı uygula
+    applyInitialLanguage();     // Dili uygula
+    handleScrollButtonVisibility();
+    updateScrollCircle();
+    createParticles();
+    initTypingEffect();
+    initializeContactForm();
+    initTerminal();             // Terminal easter egg
+    initRadarChart();           // Radar chart
 });
