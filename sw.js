@@ -6,6 +6,7 @@ const CACHE_NAME = 'aydin-portfolio-cache-v4'; // Sürüm v4 oldu
 const urlsToCache = [
   '/',
   '/index.html',
+  '/privacypolicy.html',
   '/css/style.css',
   '/js/script.js',   
   '/images/profile_placeholder.webp', // Profil resmi (gerçek dosya adını yaz)
