@@ -1026,3 +1026,17 @@ document.addEventListener('DOMContentLoaded', () => {
     initTerminal();             // Terminal easter egg
     initRadarChart();           // Radar chart
 });
+
+// Sayfa tamamen yüklendiğinde yükleme ekranını kaldır
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Yumuşak bir geçiş için fade-out sınıfını ekle
+        preloader.classList.add('fade-out');
+        
+        // Animasyon bittikten sonra elementi DOM'dan tamamen kaldır (performans için)
+        setTimeout(() => {
+            preloader.remove();
+        }, 600); // CSS transition süresiyle aynı olmalı (0.6s)
+    }
+});
