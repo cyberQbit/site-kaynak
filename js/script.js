@@ -1027,16 +1027,30 @@ document.addEventListener('DOMContentLoaded', () => {
     initRadarChart();           // Radar chart
 });
 
-// Sayfa tamamen yüklendiğinde yükleme ekranını kaldır
+// Sayfa yükleme yönetimi ve Minimum Preloader Süresi
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
-    if (preloader) {
-        // Yumuşak bir geçiş için fade-out sınıfını ekle
-        preloader.classList.add('fade-out');
-        
-        // Animasyon bittikten sonra elementi DOM'dan tamamen kaldır (performans için)
+    if (!preloader) return;
+
+    const minimumDisplayTime = 2500; // 2.5 saniye (İstediğin 2-3 saniye arası orta nokta)
+    const startTime = performance.now();
+
+    // Sayfa tamamen yüklendiğinde (load olayı tetiklendiğinde)
+    // Ne kadar süre geçtiğini hesapla ve gerekirse bekle
+    const hidePreloader = () => {
+        const currentTime = performance.now();
+        const elapsedTime = currentTime - startTime;
+        const remainingTime = Math.max(0, minimumDisplayTime - elapsedTime);
+
         setTimeout(() => {
-            preloader.remove();
-        }, 600); // CSS transition süresiyle aynı olmalı (0.6s)
-    }
+            preloader.classList.add('fade-out');
+            
+            // Animasyon bittikten sonra DOM'dan kaldır
+            setTimeout(() => {
+                preloader.remove();
+            }, 600); // style.css'deki transition süresiyle uyumlu
+        }, remainingTime);
+    };
+
+    hidePreloader();
 });
