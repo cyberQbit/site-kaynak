@@ -688,6 +688,77 @@ body[data-theme='light'] .language-details span[data-key^="lang_level_"] { color
     transform: translateY(0);
 }
 
+/* CV FAB Button */
+.cv-fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-primary-darker));
+    color: #111827;
+    text-decoration: none;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(34, 211, 238, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: cv-fab-pulse 2s ease-in-out infinite;
+}
+
+.cv-fab:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 25px rgba(34, 211, 238, 0.6);
+}
+
+.cv-fab svg.lucide {
+    width: 20px;
+    height: 20px;
+}
+
+.cv-fab-tooltip {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.8);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-soft);
+}
+
+.cv-fab:hover .cv-fab-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+}
+
+@keyframes cv-fab-pulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(34, 211, 238, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(34, 211, 238, 0.7); }
+}
+
+body[data-theme='light'] .cv-fab {
+    background: linear-gradient(135deg, #0062cc, #004c9e);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 98, 204, 0.4);
+}
+
+body[data-theme='light'] .cv-fab:hover {
+    box-shadow: 0 6px 25px rgba(0, 98, 204, 0.6);
+}
+
+body[data-theme='light'] @keyframes cv-fab-pulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(0, 98, 204, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(0, 98, 204, 0.7); }
+}
+
 .language-switcher button:active { transform: translateY(0); }
 .language-switcher button:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -1px; }
 

@@ -14,7 +14,14 @@ export function CVPreview({ data }: CVPreviewProps) {
   };
 
   return (
-    <div className="bg-white min-h-[297mm] w-full max-w-[210mm] mx-auto shadow-lg">
+    <div 
+      className="bg-white min-h-[297mm] w-full max-w-[210mm] mx-auto shadow-lg"
+      style={{ 
+        fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+        color: '#1a1a1a',
+        backgroundColor: '#ffffff'
+      }}
+    >
       {/* ATS-Optimized Single Column Layout */}
       <div className="p-8 md:p-12">
         {/* Header - Personal Info */}
