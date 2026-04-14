@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Code2, Trash2, Star, GitFork, ExternalLink, Check, RefreshCw } from 'lucide-react';
 import type { GitHubProject } from '../../types/cv';
+import { useTheme } from '../../context/ThemeContext';
 
 interface GitHubProjectsFormProps {
   githubUsername: string;
@@ -38,9 +39,12 @@ export function GitHubProjectsForm({
   const [error, setError] = useState<string | null>(null);
   const [selectedRepos, setSelectedRepos] = useState<Set<string>>(new Set());
 
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const fetchRepos = async () => {
     if (!username.trim()) {
-      setError('Lütfen GitHub kullanıcı adı girin');
+      setError('Lutfen GitHub kullanici adi girin');
       return;
     }
 
@@ -48,21 +52,20 @@ export function GitHubProjectsForm({
     setError(null);
 
     try {
-      // GitHub API'den repoları çek
       const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
       
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error('Kullanıcı bulunamadı');
+          throw new Error('Kullanici bulunamadi');
         }
-        throw new Error('GitHub API hatası');
+        throw new Error('GitHub API hatasi');
       }
 
       const data = await response.json();
       setRepos(data);
       onUsernameChange(username);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Bir hata oluştu');
+      setError(err instanceof Error ? err.message : 'Bir hata olustu');
       setRepos([]);
     } finally {
       setIsLoading(false);
@@ -74,14 +77,12 @@ export function GitHubProjectsForm({
     
     if (newSelected.has(repo.name)) {
       newSelected.delete(repo.name);
-      // Projeyi kaldır
       const projectToRemove = projects.find(p => p.repoName === repo.name);
       if (projectToRemove) {
         onRemoveProject(projectToRemove.id);
       }
     } else {
       newSelected.add(repo.name);
-      // Proje ekle
       onAddProject({
         repoName: repo.name,
         repoUrl: repo.html_url,
@@ -109,67 +110,84 @@ export function GitHubProjectsForm({
     });
   };
 
-  const inputClasses = "w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm";
-  const labelClasses = "block text-sm font-medium text-gray-700 mb-1.5";
+  const inputClasses = `w-full px-4 py-2.5 border rounded-lg focus:ring-2 transition-all text-sm ${
+    isDark
+      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE] focus:border-[#22D3EE]'
+      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc] focus:border-[#0062cc]'
+  }`;
+
+  const labelClasses = `block text-sm font-medium mb-1.5 ${
+    isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+  }`;
 
   return (
     <div className="space-y-5">
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-gray-900 rounded-lg">
+        <div className={`p-2 rounded-lg ${isDark ? 'bg-[#111827]' : 'bg-gray-900'}`}>
           <Code2 className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-900">GitHub Projeleri</h3>
-          <p className="text-sm text-gray-600">GitHub repolarınızı CV'nize ekleyin</p>
+          <h3 className={`font-semibold ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>GitHub Projeleri</h3>
+          <p className={`text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>GitHub repolarinizi CV'nize ekleyin</p>
         </div>
       </div>
 
-      {/* GitHub Username Input */}
-      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-        <label className={labelClasses}>GitHub Kullanıcı Adı</label>
+      <div className={`p-4 rounded-lg border ${
+        isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'
+      }`}>
+        <label className={labelClasses}>GitHub Kullanici Adi</label>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Code2 className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Code2 className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
+              isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
+            }`} />
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="ornek: torvalds"
+              placeholder="ornegin: torvalds"
               className={`${inputClasses} pl-10`}
             />
           </div>
           <button
             onClick={fetchRepos}
             disabled={isLoading}
-            className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            className={`px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 ${
+              isDark
+                ? 'bg-[#22D3EE] hover:bg-[#0BC5EA] text-[#111827]'
+                : 'bg-[#0062cc] hover:bg-[#004c9e]'
+            }`}
           >
             {isLoading ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                Yükleniyor...
+                Yukleniyor...
               </>
             ) : (
               <>
                 <Code2 className="w-4 h-4" />
-                Repoları Getir
+                Repolari Getir
               </>
             )}
           </button>
         </div>
 
         {error && (
-          <div className="mt-3 p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200">
+          <div className={`mt-3 p-3 text-sm rounded-lg border ${
+            isDark
+              ? 'bg-red-900/20 text-red-400 border-red-800'
+              : 'bg-red-50 text-red-700 border-red-200'
+          }`}>
             {error}
           </div>
         )}
       </div>
 
-      {/* Repo List */}
       {repos.length > 0 && (
         <div className="space-y-3">
-          <h4 className="font-medium text-gray-900">Repoları Seçin</h4>
-          <p className="text-sm text-gray-600">
-            CV'nize eklemek istediğiniz repoları seçin. Seçtiğiniz repoların açıklamalarını düzenleyebilirsiniz.
+          <h4 className={`font-medium ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>Repolari Secin</h4>
+          <p className={`text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+            CV'nize eklemek istediginiz repolari secin.
           </p>
           
           <div className="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto">
@@ -182,8 +200,12 @@ export function GitHubProjectsForm({
                   key={repo.id}
                   className={`border rounded-lg p-4 transition-all ${
                     isSelected
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? isDark
+                        ? 'border-[#22D3EE] bg-[#22D3EE]/10'
+                        : 'border-[#0062cc] bg-[#0062cc]/10'
+                      : isDark
+                        ? 'border-[#4B5563] hover:border-[#6B7280]'
+                        : 'border-[#E2E8F0] hover:border-[#A0AEC0]'
                   }`}
                 >
                   <div className="flex items-start gap-3">
@@ -191,8 +213,12 @@ export function GitHubProjectsForm({
                       onClick={() => toggleRepoSelection(repo)}
                       className={`mt-0.5 w-5 h-5 rounded border flex items-center justify-center transition-colors ${
                         isSelected
-                          ? 'bg-blue-600 border-blue-600 text-white'
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? isDark
+                            ? 'bg-[#22D3EE] border-[#22D3EE] text-[#111827]'
+                            : 'bg-[#0062cc] border-[#0062cc] text-white'
+                          : isDark
+                            ? 'border-[#4B5563] hover:border-[#6B7280]'
+                            : 'border-[#E2E8F0] hover:border-[#A0AEC0]'
                       }`}
                     >
                       {isSelected && <Check className="w-3.5 h-3.5" />}
@@ -200,22 +226,24 @@ export function GitHubProjectsForm({
                     
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900 truncate">{repo.name}</span>
+                        <span className={`font-medium truncate ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>{repo.name}</span>
                         <a
                           href={repo.html_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-gray-600"
+                          className={isDark ? 'text-[#9CA3AF] hover:text-[#F3F4F6]' : 'text-[#A0AEC0] hover:text-[#1A202C]'}
                           onClick={(e) => e.stopPropagation()}
                         >
                           <ExternalLink className="w-4 h-4" />
                         </a>
                       </div>
                       
-                      <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                      <div className={`flex items-center gap-3 mt-1 text-xs ${
+                        isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'
+                      }`}>
                         {repo.language && (
                           <span className="flex items-center gap-1">
-                            <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                            <span className={`w-2 h-2 rounded-full ${isDark ? 'bg-[#22D3EE]' : 'bg-[#0062cc]'}`}></span>
                             {repo.language}
                           </span>
                         )}
@@ -231,25 +259,29 @@ export function GitHubProjectsForm({
 
                       {isSelected && selectedProject && (
                         <div className="mt-3 space-y-2">
-                          <label className="text-sm font-medium text-gray-700">Proje Açıklaması</label>
+                          <label className={`text-sm font-medium ${
+                            isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+                          }`}>Proje Aciklamasi</label>
                           <textarea
                             value={selectedProject.description}
                             onChange={(e) => handleDescriptionChange(selectedProject.id, e.target.value)}
-                            placeholder="Proje açıklaması..."
+                            placeholder="Proje aciklamasi..."
                             rows={3}
                             className={`${inputClasses} resize-none text-sm`}
                           />
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-500">
+                            <span className={`text-xs ${isDark ? 'text-[#9CA3AF]' : 'text-[#6C757D]'}`}>
                               {selectedProject.useOriginalDescription
-                                ? 'Orijinal açıklama kullanılıyor'
-                                : 'Özel açıklama kullanılıyor'}
+                                ? 'Orijinal aciklama kullaniliyor'
+                                : 'Ozel aciklama kullaniliyor'}
                             </span>
                             <button
                               onClick={() => handleResetDescription(selectedProject.id, repo.description || '')}
-                              className="text-xs text-blue-600 hover:text-blue-700"
+                              className={`text-xs ${
+                                isDark ? 'text-[#22D3EE] hover:text-[#0BC5EA]' : 'text-[#0062cc] hover:text-[#004c9e]'
+                              }`}
                             >
-                              Orijinale Sıfırla
+                              Orijinale Sifirla
                             </button>
                           </div>
                         </div>
@@ -263,14 +295,19 @@ export function GitHubProjectsForm({
         </div>
       )}
 
-      {/* Selected Projects Summary */}
       {projects.length > 0 && (
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-          <h4 className="font-medium text-blue-900 mb-2">CV'ye Eklenecek Projeler ({projects.length})</h4>
+        <div className={`p-4 rounded-lg border ${
+          isDark
+            ? 'bg-[#22D3EE]/10 border-[#22D3EE]/30'
+            : 'bg-[#0062cc]/10 border-[#0062cc]/30'
+        }`}>
+          <h4 className={`font-medium mb-2 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`}>
+            CV'ye Eklenecek Projeler ({projects.length})
+          </h4>
           <ul className="space-y-1">
             {projects.map((project) => (
               <li key={project.id} className="flex items-center justify-between text-sm">
-                <span className="text-blue-800">{project.repoName}</span>
+                <span className={isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}>{project.repoName}</span>
                 <button
                   onClick={() => {
                     onRemoveProject(project.id);
@@ -278,7 +315,7 @@ export function GitHubProjectsForm({
                     newSelected.delete(project.repoName);
                     setSelectedRepos(newSelected);
                   }}
-                  className="text-red-500 hover:text-red-700"
+                  className={isDark ? 'text-red-400 hover:text-red-300' : 'text-red-500 hover:text-red-700'}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -289,9 +326,9 @@ export function GitHubProjectsForm({
       )}
 
       {repos.length === 0 && !isLoading && !error && (
-        <div className="text-center py-8 text-gray-500">
-          <Code2 className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-          <p className="text-sm">GitHub kullanıcı adı girerek repolarınızı görüntüleyin</p>
+        <div className={`text-center py-8 ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+          <Code2 className={`w-12 h-12 mx-auto mb-3 ${isDark ? 'text-[#374151]' : 'text-[#E2E8F0]'}`} />
+          <p className="text-sm">GitHub kullanici adi girerek repolarinizi goruntuleyin</p>
         </div>
       )}
     </div>

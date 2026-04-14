@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Briefcase, Plus, Trash2, Calendar, Building2 } from 'lucide-react';
 import type { Experience } from '../../types/cv';
+import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface ExperienceFormProps {
   experience: Experience[];
@@ -20,6 +22,10 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
     description: '',
   });
 
+  const { theme } = useTheme();
+  const { t } = useLanguage();
+  const isDark = theme === 'dark';
+
   const handleAdd = () => {
     if (newExperience.company && newExperience.position) {
       onAdd(newExperience);
@@ -35,37 +41,54 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
     }
   };
 
-  const inputClasses = "w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm";
-  const labelClasses = "block text-sm font-medium text-gray-700 mb-1.5";
+  const inputClasses = `w-full px-4 py-2.5 border rounded-lg focus:ring-2 transition-all text-sm ${
+    isDark
+      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE] focus:border-[#22D3EE]'
+      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc] focus:border-[#0062cc]'
+  }`;
+
+  const labelClasses = `block text-sm font-medium mb-1.5 ${
+    isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+  }`;
 
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-          <Briefcase className="w-5 h-5 text-blue-600" />
-          İş Deneyimi
+        <h3 className={`text-lg font-semibold flex items-center gap-2 ${
+          isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+        }`}>
+          <Briefcase className={`w-5 h-5 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`} />
+          {t('experience')}
         </h3>
         <button
           onClick={() => setIsAdding(!isAdding)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+            isDark
+              ? 'text-[#22D3EE] bg-[#22D3EE]/10 hover:bg-[#22D3EE]/20'
+              : 'text-[#0062cc] bg-[#0062cc]/10 hover:bg-[#0062cc]/20'
+          }`}
         >
           <Plus className="w-4 h-4" />
-          {isAdding ? 'İptal' : 'Ekle'}
+          {isAdding ? 'Iptal' : 'Ekle'}
         </button>
       </div>
 
       {isAdding && (
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-4">
+        <div className={`p-4 rounded-lg border space-y-4 ${
+          isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'
+        }`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <label className={labelClasses}>Şirket Adı *</label>
+              <label className={labelClasses}>Sirket Adi *</label>
               <div className="relative">
-                <Building2 className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Building2 className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
+                  isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
+                }`} />
                 <input
                   type="text"
                   value={newExperience.company}
                   onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
-                  placeholder="örn: Microsoft"
+                  placeholder="ornegin: Microsoft"
                   className={`${inputClasses} pl-10`}
                 />
               </div>
@@ -77,15 +100,17 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
                 type="text"
                 value={newExperience.position}
                 onChange={(e) => setNewExperience({ ...newExperience, position: e.target.value })}
-                placeholder="örn: Senior Software Engineer"
+                placeholder="ornegin: Senior Software Engineer"
                 className={inputClasses}
               />
             </div>
 
             <div>
-              <label className={labelClasses}>Başlangıç Tarihi</label>
+              <label className={labelClasses}>Baslangic Tarihi</label>
               <div className="relative">
-                <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Calendar className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
+                  isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
+                }`} />
                 <input
                   type="month"
                   value={newExperience.startDate}
@@ -96,34 +121,38 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
             </div>
 
             <div>
-              <label className={labelClasses}>Bitiş Tarihi</label>
+              <label className={labelClasses}>Bitis Tarihi</label>
               <div className="relative">
-                <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Calendar className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
+                  isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
+                }`} />
                 <input
                   type="month"
                   value={newExperience.endDate}
                   onChange={(e) => setNewExperience({ ...newExperience, endDate: e.target.value })}
                   disabled={newExperience.current}
-                  className={`${inputClasses} pl-10 ${newExperience.current ? 'bg-gray-100' : ''}`}
+                  className={`${inputClasses} pl-10 ${newExperience.current ? (isDark ? 'bg-[#1F2937]' : 'bg-[#F1F3F5]') : ''}`}
                 />
               </div>
-              <label className="flex items-center gap-2 mt-2 text-sm text-gray-600">
+              <label className={`flex items-center gap-2 mt-2 text-sm ${
+                isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'
+              }`}>
                 <input
                   type="checkbox"
                   checked={newExperience.current}
                   onChange={(e) => setNewExperience({ ...newExperience, current: e.target.checked, endDate: '' })}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className={`rounded ${isDark ? 'border-[#4B5563] text-[#22D3EE] focus:ring-[#22D3EE]' : 'border-[#E2E8F0] text-[#0062cc] focus:ring-[#0062cc]'}`}
                 />
-                Halen çalışıyorum
+                Halen calisiyorum
               </label>
             </div>
 
             <div className="md:col-span-2">
-              <label className={labelClasses}>Açıklama</label>
+              <label className={labelClasses}>Aciklama</label>
               <textarea
                 value={newExperience.description}
                 onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
-                placeholder="Görevlerinizi ve başarılarınızı açıklayın. ATS sistemleri için görev tanımlarınızda sektöre özel anahtar kelimeler kullanın."
+                placeholder="Gorevlerinizi ve basarilarinizi aciklayin..."
                 rows={4}
                 className={`${inputClasses} resize-none`}
               />
@@ -133,7 +162,11 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
           <div className="flex justify-end">
             <button
               onClick={handleAdd}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              className={`px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors ${
+                isDark
+                  ? 'bg-[#22D3EE] hover:bg-[#0BC5EA] text-[#111827]'
+                  : 'bg-[#0062cc] hover:bg-[#004c9e]'
+              }`}
             >
               Kaydet
             </button>
@@ -143,23 +176,31 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
 
       <div className="space-y-3">
         {experience.map((exp) => (
-          <div key={exp.id} className="bg-white p-4 rounded-lg border border-gray-200">
+          <div key={exp.id} className={`p-4 rounded-lg border ${
+            isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-white border-[#E2E8F0]'
+          }`}>
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h4 className="font-medium text-gray-900">{exp.position}</h4>
-                <p className="text-sm text-gray-600">{exp.company}</p>
-                <p className="text-xs text-gray-500 mt-1">
+                <h4 className={`font-medium ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>
+                  {exp.position}
+                </h4>
+                <p className={`text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>{exp.company}</p>
+                <p className={`text-xs mt-1 ${isDark ? 'text-[#6B7280]' : 'text-[#A0AEC0]'}`}>
                   {exp.startDate && new Date(exp.startDate).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })}
                   {' - '}
                   {exp.current ? 'Devam ediyor' : exp.endDate && new Date(exp.endDate).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })}
                 </p>
                 {exp.description && (
-                  <p className="text-sm text-gray-600 mt-2 line-clamp-2">{exp.description}</p>
+                  <p className={`text-sm mt-2 line-clamp-2 ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+                    {exp.description}
+                  </p>
                 )}
               </div>
               <button
                 onClick={() => onRemove(exp.id)}
-                className="p-1.5 text-gray-400 hover:text-red-500 transition-colors"
+                className={`p-1.5 transition-colors ${
+                  isDark ? 'text-[#9CA3AF] hover:text-red-400' : 'text-[#A0AEC0] hover:text-red-500'
+                }`}
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -168,9 +209,9 @@ export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemov
         ))}
 
         {experience.length === 0 && !isAdding && (
-          <div className="text-center py-8 text-gray-500">
-            <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-            <p className="text-sm">Henüz iş deneyimi eklenmemiş</p>
+          <div className={`text-center py-8 ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+            <Briefcase className={`w-12 h-12 mx-auto mb-3 ${isDark ? 'text-[#374151]' : 'text-[#E2E8F0]'}`} />
+            <p className="text-sm">Henuz is deneyimi eklenmemis</p>
           </div>
         )}
       </div>

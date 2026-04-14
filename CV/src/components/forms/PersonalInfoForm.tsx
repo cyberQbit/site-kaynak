@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { User, Mail, Phone, MapPin, Link2, Globe, FileText } from 'lucide-react';
 import type { PersonalInfo } from '../../types/cv';
+import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;
@@ -9,6 +11,8 @@ interface PersonalInfoFormProps {
 
 export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
   const [localData, setLocalData] = useState(data);
+  const { theme } = useTheme();
+  const { t } = useLanguage();
 
   const handleChange = (field: keyof PersonalInfo, value: string) => {
     const updated = { ...localData, [field]: value };
@@ -16,34 +20,48 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
     onChange({ [field]: value });
   };
 
-  const inputClasses = "w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm";
-  const labelClasses = "block text-sm font-medium text-gray-700 mb-1.5";
-  const iconClasses = "w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2";
+  const isDark = theme === 'dark';
+
+  const inputClasses = `w-full px-4 py-2.5 border rounded-lg focus:ring-2 transition-all text-sm ${
+    isDark
+      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE] focus:border-[#22D3EE]'
+      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc] focus:border-[#0062cc]'
+  }`;
+
+  const labelClasses = `block text-sm font-medium mb-1.5 ${
+    isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+  }`;
+
+  const iconClasses = `w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
+    isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
+  }`;
 
   return (
     <div className="space-y-5">
-      <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-        <User className="w-5 h-5 text-blue-600" />
-        Kişisel Bilgiler
+      <h3 className={`text-lg font-semibold flex items-center gap-2 ${
+        isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+      }`}>
+        <User className={`w-5 h-5 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`} />
+        {t('personal_info')}
       </h3>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="md:col-span-2">
-          <label className={labelClasses}>Ad Soyad *</label>
+          <label className={labelClasses}>{t('full_name')} *</label>
           <div className="relative">
             <User className={iconClasses} />
             <input
               type="text"
               value={localData.fullName}
               onChange={(e) => handleChange('fullName', e.target.value)}
-              placeholder="örn: Ahmet Yılmaz"
+              placeholder={t('full_name')}
               className={`${inputClasses} pl-10`}
             />
           </div>
         </div>
 
         <div>
-          <label className={labelClasses}>E-posta *</label>
+          <label className={labelClasses}>{t('email')} *</label>
           <div className="relative">
             <Mail className={iconClasses} />
             <input
@@ -57,7 +75,7 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
         </div>
 
         <div>
-          <label className={labelClasses}>Telefon *</label>
+          <label className={labelClasses}>{t('phone')} *</label>
           <div className="relative">
             <Phone className={iconClasses} />
             <input
@@ -71,14 +89,14 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
         </div>
 
         <div className="md:col-span-2">
-          <label className={labelClasses}>Konum *</label>
+          <label className={labelClasses}>{t('location')} *</label>
           <div className="relative">
             <MapPin className={iconClasses} />
             <input
               type="text"
               value={localData.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              placeholder="örn: İstanbul, Türkiye"
+              placeholder="Istanbul, Turkiye"
               className={`${inputClasses} pl-10`}
             />
           </div>
@@ -113,7 +131,7 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
         </div>
 
         <div className="md:col-span-2">
-          <label className={labelClasses}>Web Sitesi / Portföy</label>
+          <label className={labelClasses}>{t('website')} / Portfoy</label>
           <div className="relative">
             <Globe className={iconClasses} />
             <input
@@ -127,19 +145,19 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
         </div>
 
         <div className="md:col-span-2">
-          <label className={labelClasses}>Profesyonel Özet *</label>
+          <label className={labelClasses}>{t('summary')} *</label>
           <div className="relative">
-            <FileText className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
+            <FileText className={`w-4 h-4 absolute left-3 top-3 ${isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'}`} />
             <textarea
               value={localData.summary}
               onChange={(e) => handleChange('summary', e.target.value)}
-              placeholder="Kendinizi ve kariyer hedeflerinizi kısaca tanımlayın..."
+              placeholder={t('summary')}
               rows={4}
               className={`${inputClasses} pl-10 resize-none`}
             />
           </div>
-          <p className="text-xs text-gray-500 mt-1">
-            ATS sistemlerinin doğru analiz yapabilmesi için anahtar kelimeler içermesi önemlidir.
+          <p className={`text-xs mt-1 ${isDark ? 'text-[#9CA3AF]' : 'text-[#6C757D]'}`}>
+            ATS sistemlerinin dogru analiz yapabilmesi icin anahtar kelimeler icermesi onemlidir.
           </p>
         </div>
       </div>

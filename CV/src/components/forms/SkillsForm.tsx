@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Wrench, Plus, Trash2, Star } from 'lucide-react';
 import type { Skill } from '../../types/cv';
+import { useTheme } from '../../context/ThemeContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface SkillsFormProps {
   skills: Skill[];
@@ -9,9 +11,9 @@ interface SkillsFormProps {
 }
 
 const skillLevels = [
-  { value: 'Beginner', label: 'Başlangıç', color: 'bg-gray-400' },
+  { value: 'Beginner', label: 'Baslangic', color: 'bg-gray-400' },
   { value: 'Intermediate', label: 'Orta', color: 'bg-blue-400' },
-  { value: 'Advanced', label: 'İleri', color: 'bg-blue-500' },
+  { value: 'Advanced', label: 'Ileri', color: 'bg-blue-500' },
   { value: 'Expert', label: 'Uzman', color: 'bg-blue-600' },
 ] as const;
 
@@ -22,6 +24,10 @@ export function SkillsForm({ skills, onAdd, onRemove }: SkillsFormProps) {
     level: 'Intermediate',
   });
 
+  const { theme } = useTheme();
+  const { t } = useLanguage();
+  const isDark = theme === 'dark';
+
   const handleAdd = () => {
     if (newSkill.name.trim()) {
       onAdd(newSkill);
@@ -30,35 +36,50 @@ export function SkillsForm({ skills, onAdd, onRemove }: SkillsFormProps) {
     }
   };
 
-  const inputClasses = "w-full px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm";
-  const labelClasses = "block text-sm font-medium text-gray-700 mb-1.5";
+  const inputClasses = `w-full px-4 py-2.5 border rounded-lg focus:ring-2 transition-all text-sm ${
+    isDark
+      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE] focus:border-[#22D3EE]'
+      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc] focus:border-[#0062cc]'
+  }`;
+
+  const labelClasses = `block text-sm font-medium mb-1.5 ${
+    isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+  }`;
 
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-          <Wrench className="w-5 h-5 text-blue-600" />
-          Yetenekler
+        <h3 className={`text-lg font-semibold flex items-center gap-2 ${
+          isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
+        }`}>
+          <Wrench className={`w-5 h-5 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`} />
+          {t('skills')}
         </h3>
         <button
           onClick={() => setIsAdding(!isAdding)}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
+            isDark
+              ? 'text-[#22D3EE] bg-[#22D3EE]/10 hover:bg-[#22D3EE]/20'
+              : 'text-[#0062cc] bg-[#0062cc]/10 hover:bg-[#0062cc]/20'
+          }`}
         >
           <Plus className="w-4 h-4" />
-          {isAdding ? 'İptal' : 'Ekle'}
+          {isAdding ? 'Iptal' : 'Ekle'}
         </button>
       </div>
 
       {isAdding && (
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-4">
+        <div className={`p-4 rounded-lg border space-y-4 ${
+          isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'
+        }`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className={labelClasses}>Yetenek Adı *</label>
+              <label className={labelClasses}>Yetenek Adi *</label>
               <input
                 type="text"
                 value={newSkill.name}
                 onChange={(e) => setNewSkill({ ...newSkill, name: e.target.value })}
-                placeholder="örn: React, Python, Proje Yönetimi"
+                placeholder="ornegin: React, Python, Proje Yonetimi"
                 className={inputClasses}
               />
             </div>
@@ -82,7 +103,11 @@ export function SkillsForm({ skills, onAdd, onRemove }: SkillsFormProps) {
           <div className="flex justify-end">
             <button
               onClick={handleAdd}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              className={`px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors ${
+                isDark
+                  ? 'bg-[#22D3EE] hover:bg-[#0BC5EA] text-[#111827]'
+                  : 'bg-[#0062cc] hover:bg-[#004c9e]'
+              }`}
             >
               Kaydet
             </button>
@@ -96,13 +121,21 @@ export function SkillsForm({ skills, onAdd, onRemove }: SkillsFormProps) {
           return (
             <div
               key={skill.id}
-              className="group flex items-center gap-2 px-3 py-1.5 bg-white border border-gray-200 rounded-full hover:border-blue-300 transition-colors"
+              className={`group flex items-center gap-2 px-3 py-1.5 border rounded-full transition-colors ${
+                isDark
+                  ? 'bg-[#374151] border-[#4B5563] hover:border-[#22D3EE]'
+                  : 'bg-white border-[#E2E8F0] hover:border-[#0062cc]'
+              }`}
             >
-              <span className="text-sm font-medium text-gray-700">{skill.name}</span>
+              <span className={`text-sm font-medium ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>
+                {skill.name}
+              </span>
               <span className={`w-2 h-2 rounded-full ${levelInfo?.color || 'bg-gray-400'}`} title={levelInfo?.label} />
               <button
                 onClick={() => onRemove(skill.id)}
-                className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500 transition-all"
+                className={`opacity-0 group-hover:opacity-100 p-0.5 transition-all ${
+                  isDark ? 'text-[#9CA3AF] hover:text-red-400' : 'text-[#A0AEC0] hover:text-red-500'
+                }`}
               >
                 <Trash2 className="w-3 h-3" />
               </button>
@@ -111,19 +144,22 @@ export function SkillsForm({ skills, onAdd, onRemove }: SkillsFormProps) {
         })}
 
         {skills.length === 0 && !isAdding && (
-          <div className="w-full text-center py-8 text-gray-500">
-            <Wrench className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-            <p className="text-sm">Henüz yetenek eklenmemiş</p>
+          <div className={`w-full text-center py-8 ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+            <Wrench className={`w-12 h-12 mx-auto mb-3 ${isDark ? 'text-[#374151]' : 'text-[#E2E8F0]'}`} />
+            <p className="text-sm">Henuz yetenek eklenmemis</p>
           </div>
         )}
       </div>
 
-      <div className="bg-blue-50 p-3 rounded-lg">
-        <p className="text-xs text-blue-700 flex items-start gap-2">
+      <div className={`p-3 rounded-lg ${
+        isDark ? 'bg-[#22D3EE]/10' : 'bg-[#0062cc]/10'
+      }`}>
+        <p className={`text-xs flex items-start gap-2 ${
+          isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'
+        }`}>
           <Star className="w-4 h-4 flex-shrink-0 mt-0.5" />
           <span>
-            ATS sistemleri için iş ilanındaki anahtar kelimeleri yeteneklerinize eklemeniz önerilir.
-            Teknik yetenekler (programlama dilleri, araçlar) ve yumuşak yetenekler (liderlik, iletişim) ekleyebilirsiniz.
+            ATS sistemleri icin is ilanindaki anahtar kelimeleri yeteneklerinize eklemeniz onerilir.
           </span>
         </p>
       </div>

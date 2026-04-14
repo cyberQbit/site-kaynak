@@ -1,0 +1,35 @@
+{
+  "name": "CV Olusturucu - ATS Uyumlu Profesyonel CV",
+  "short_name": "CV Olusturucu",
+  "description": "ATS uyumlu, profesyonel CV olusturun. LinkedIn profilinizi ice aktarin ve PDF olarak indirin.",
+  "start_url": "/CV-olustur/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#22D3EE",
+  "orientation": "portrait-primary",
+  "scope": "/CV-olustur/",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "./screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "./screenshot-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
+}

@@ -1,43 +1,17 @@
 import { useState } from 'react';
 import { Link2, Loader2, AlertCircle, CheckCircle, Info } from 'lucide-react';
 import type { CVData } from '../../types/cv';
+import { useTheme } from '../../context/ThemeContext';
 
 interface LinkedInImportProps {
   onImport: (data: Partial<CVData>) => void;
 }
 
-// LinkedIn profil verilerini çekme fonksiyonu
 async function scrapeLinkedInProfile(url: string): Promise<Partial<CVData> | null> {
   try {
-    // LinkedIn profil URL'sinden kullanıcı adını çıkar
     const usernameMatch = url.match(/linkedin\.com\/in\/([a-zA-Z0-9_-]+)/i);
     if (!usernameMatch) return null;
-    
-    // Kullanıcı adı çıkarıldı - gerçek API entegrasyonunda kullanılabilir
-    // const username = usernameMatch[1];
-    
-    // Proxy/Scraper API kullanarak LinkedIn verisi çek
-    // Seçenek 1: RapidAPI LinkedIn Scraper
-    // Seçenek 2: ScrapingBee API
-    // Seçenek 3: Kendi proxy sunucunuz
-    
-    // Şu an için demo amaçlı basit bir simülasyon yapıyoruz
-    // Gerçek uygulamada aşağıdaki API'lerden biri kullanılabilir:
-    
-    /* 
-    // Örnek: RapidAPI LinkedIn Data Scraper
-    const response = await fetch(`https://linkedin-data-scraper.p.rapidapi.com/profile?username=${username}`, {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': 'YOUR_API_KEY',
-        'X-RapidAPI-Host': 'linkedin-data-scraper.p.rapidapi.com'
-      }
-    });
-    const data = await response.json();
-    */
-    
-    // Demo veri döndür (gerçek API entegrasyonu için yukarıdaki kod kullanılabilir)
-    return null; // API entegrasyonu yapılana kadar null döndür
+    return null;
   } catch (error) {
     console.error('LinkedIn scraping error:', error);
     return null;
@@ -48,22 +22,24 @@ export function LinkedInImport({ onImport }: LinkedInImportProps) {
   const [linkedinUrl, setLinkedinUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null);
+  
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   const handleImport = async () => {
     if (!linkedinUrl.trim()) {
       setStatus({
         type: 'error',
-        message: 'Lütfen LinkedIn profil URL\'nizi girin.',
+        message: 'Lutfen LinkedIn profil URL\'nizi girin.',
       });
       return;
     }
 
-    // URL doğrulama
     const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9_-]+\/?$/;
     if (!linkedinRegex.test(linkedinUrl)) {
       setStatus({
         type: 'error',
-        message: 'Geçerli bir LinkedIn profil URL\'si girin. Örn: linkedin.com/in/ad-soyad',
+        message: 'Gecerli bir LinkedIn profil URL\'si girin. Orn: linkedin.com/in/ad-soyad',
       });
       return;
     }
@@ -71,45 +47,59 @@ export function LinkedInImport({ onImport }: LinkedInImportProps) {
     setIsLoading(true);
     setStatus({
       type: 'info',
-      message: 'LinkedIn profili taranıyor... Bu işlem birkaç saniye sürebilir.',
+      message: 'LinkedIn profili taraniyor...',
     });
 
     try {
-      // LinkedIn'den veri çekme denemesi
       const profileData = await scrapeLinkedInProfile(linkedinUrl);
       
       if (profileData && profileData.personalInfo) {
         onImport(profileData);
         setStatus({
           type: 'success',
-          message: `LinkedIn profili başarıyla içe aktarıldı! Hoş geldin, ${profileData.personalInfo.fullName || 'Kullanıcı'}!`,
+          message: `LinkedIn profili basariyla ice aktarildi!`,
         });
       } else {
-        // API entegrasyonu olmadığı için kullanıcıya bilgi ver
         setStatus({
           type: 'error',
-          message: 'LinkedIn API entegrasyonu aktif değil. Verileri manuel olarak girebilirsiniz.',
+          message: 'LinkedIn API entegrasyonu aktif degil. Verileri manuel olarak girebilirsiniz.',
         });
       }
     } catch (error) {
       setStatus({
         type: 'error',
-        message: 'LinkedIn verisi çekilemedi. Lütfen bilgilerinizi manuel olarak girin.',
+        message: 'LinkedIn verisi cekilemedi. Lutfen bilgilerinizi manuel olarak girin.',
       });
     } finally {
       setIsLoading(false);
     }
   };
 
+  const inputClasses = `flex-1 px-4 py-2.5 border rounded-lg focus:ring-2 transition-all text-sm ${
+    isDark
+      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE] focus:border-[#22D3EE]'
+      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc] focus:border-[#0062cc]'
+  }`;
+
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-xl border border-blue-100">
+    <div className={`p-5 rounded-xl border ${
+      isDark
+        ? 'bg-gradient-to-br from-[#1F2937] to-[#111827] border-[#22D3EE]/30'
+        : 'bg-gradient-to-br from-[#F0F9FF] to-[#E0F2FE] border-[#0062cc]/30'
+    }`}>
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-blue-600 rounded-lg">
+        <div className={`p-2 rounded-lg ${
+          isDark ? 'bg-[#22D3EE]' : 'bg-[#0062cc]'
+        }`}>
           <Link2 className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h3 className="font-semibold text-gray-900">LinkedIn'den İçe Aktar</h3>
-          <p className="text-sm text-gray-600">Profil bilgilerinizi otomatik olarak çekin</p>
+          <h3 className={`font-semibold ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>
+            LinkedIn'den Ice Aktar
+          </h3>
+          <p className={`text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+            Profil bilgilerinizi otomatik olarak cekin
+          </p>
         </div>
       </div>
 
@@ -120,17 +110,21 @@ export function LinkedInImport({ onImport }: LinkedInImportProps) {
             value={linkedinUrl}
             onChange={(e) => setLinkedinUrl(e.target.value)}
             placeholder="https://linkedin.com/in/kullaniciadi"
-            className="flex-1 px-4 py-2.5 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm"
+            className={inputClasses}
           />
           <button
             onClick={handleImport}
             disabled={isLoading}
-            className="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+            className={`px-4 py-2.5 text-white text-sm font-medium rounded-lg transition-colors flex items-center gap-2 disabled:opacity-50 ${
+              isDark
+                ? 'bg-[#22D3EE] hover:bg-[#0BC5EA] text-[#111827]'
+                : 'bg-[#0062cc] hover:bg-[#004c9e]'
+            }`}
           >
             {isLoading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                İşleniyor...
+                Isleniyor...
               </>
             ) : (
               <>
@@ -143,12 +137,18 @@ export function LinkedInImport({ onImport }: LinkedInImportProps) {
 
         {status && (
           <div
-            className={`flex items-start gap-2 p-3 rounded-lg text-sm ${
+            className={`flex items-start gap-2 p-3 rounded-lg text-sm border ${
               status.type === 'success'
-                ? 'bg-green-50 text-green-700 border border-green-200'
+                ? isDark
+                  ? 'bg-green-900/20 text-green-400 border-green-800'
+                  : 'bg-green-50 text-green-700 border-green-200'
                 : status.type === 'error'
-                ? 'bg-red-50 text-red-700 border border-red-200'
-                : 'bg-blue-50 text-blue-700 border border-blue-200'
+                ? isDark
+                  ? 'bg-red-900/20 text-red-400 border-red-800'
+                  : 'bg-red-50 text-red-700 border-red-200'
+                : isDark
+                  ? 'bg-[#22D3EE]/10 text-[#22D3EE] border-[#22D3EE]/30'
+                  : 'bg-[#0062cc]/10 text-[#0062cc] border-[#0062cc]/30'
             }`}
           >
             {status.type === 'success' ? (
@@ -162,12 +162,16 @@ export function LinkedInImport({ onImport }: LinkedInImportProps) {
           </div>
         )}
 
-        <div className="flex items-start gap-2 text-xs text-gray-500 bg-white/50 p-3 rounded-lg">
+        <div className={`flex items-start gap-2 text-xs p-3 rounded-lg ${
+          isDark
+            ? 'bg-[#374151]/50 text-[#9CA3AF]'
+            : 'bg-white/50 text-[#4A5568]'
+        }`}>
           <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
-          <div className="space-y-1">
+          <div>
             <p>
-              <strong>Not:</strong> LinkedIn API entegrasyonu için RapidAPI veya benzeri bir servis gereklidir.
-              Profilinizin herkese açık (public) olması gerekir.
+              <strong>Not:</strong> LinkedIn API entegrasyonu icin RapidAPI veya benzeri bir servis gereklidir.
+              Profilinizin herkese acik (public) olmasi gerekir.
             </p>
           </div>
         </div>
