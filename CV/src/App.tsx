@@ -197,8 +197,22 @@ function AppContent() {
 
         @media (max-width: 1024px) {
           .dp { display: none !important; }
-          .mg { grid-template-columns: 1fr !important; height: auto !important; min-height: calc(100vh - 70px) !important; }
+          .mg { grid-template-columns: 1fr !important; height: auto !important; min-height: calc(100vh - 70px) !important; padding: 12px 14px 14px !important; gap: 14px !important;}
           #mpb { display: inline-flex !important; }
+        }
+        
+        @media (max-width: 768px) {
+          .cvglass { border-radius: 12px !important; }
+          header > div { padding: 0 16px !important; }
+          .btn-g { padding: 6px 12px !important; font-size: 12px !important; }
+        }
+
+        @media (max-width: 480px) {
+          .nav-tab { min-width: 60px !important; padding: 9px 8px 7px !important; font-size: 10px !important; }
+          .cv-header-title { font-size: 14px !important; }
+          .cv-header-subtitle { font-size: 10px !important; }
+          .cv-icon-box { width: 34px !important; height: 34px !important; border-radius: 9px !important; }
+          .cv-action-btn { width: 32px !important; height: 32px !important; border-radius: 8px !important; }
         }
       `}</style>
 
@@ -212,7 +226,7 @@ function AppContent() {
         <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{
+              <div className="cv-icon-box" style={{
               width: '40px', height: '40px', borderRadius: '11px', flexShrink: 0,
               background: `linear-gradient(135deg, ${ACCENT} 0%, #818CF8 100%)`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -221,15 +235,15 @@ function AppContent() {
               <FileText size={19} color="#06111F" strokeWidth={2.2} />
             </div>
             <div>
-              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '16.5px', fontWeight: 600, lineHeight: 1, letterSpacing: '-0.01em' }}>CV Oluşturucu</p>
-              <p style={{ fontSize: '11px', color: tm, lineHeight: 1, marginTop: '3px' }}>ATS Uyumlu Profesyonel CV</p>
+              <p className="cv-header-title" style={{ fontFamily: "'Playfair Display', serif", fontSize: '16.5px', fontWeight: 600, lineHeight: 1, letterSpacing: '-0.01em' }}>CV Oluşturucu</p>
+              <p className="cv-header-subtitle" style={{ fontSize: '11px', color: tm, lineHeight: 1, marginTop: '3px' }}>ATS Uyumlu Profesyonel CV</p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <div style={{ display: 'flex', gap: '2px', background: isDark ? 'rgba(15,23,42,0.7)' : 'rgba(241,245,249,0.9)', borderRadius: '10px', padding: '3px', border: `1px solid ${pbd}` }}>
               {(['tr','en','es'] as const).map(lang => (
-                <button key={lang} onClick={() => setLanguage(lang)} style={{
+              <button key={lang} className="nav-tab" onClick={() => setLanguage(lang)} style={{
                   padding: '4px 10px', borderRadius: '7px', fontSize: '11px', fontWeight: 700,
                   border: 'none', cursor: 'pointer', letterSpacing: '0.05em',
                   background: language === lang ? (isDark ? 'rgba(56,189,248,0.14)' : '#fff') : 'transparent',
@@ -246,16 +260,16 @@ function AppContent() {
               <Eye size={14} /> Önizle
             </button>
 
-            <button title="Sıfırla" onClick={() => { if (confirm('CV verilerini sıfırlamak istiyor musunuz?')) resetCV(); }} style={{ width: '36px', height: '36px', borderRadius: '9px', border: 'none', cursor: 'pointer', background: 'transparent', color: tm, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.14s' }}
+            <button className="cv-action-btn" title="Sıfırla" onClick={() => { if (confirm('CV verilerini sıfırlamak istiyor musunuz?')) resetCV(); }} style={{ width: '36px', height: '36px', borderRadius: '9px', border: 'none', cursor: 'pointer', background: 'transparent', color: tm, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.14s' }}
               onMouseOver={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = isDark ? 'rgba(248,113,113,0.1)' : 'rgba(239,68,68,0.07)'; b.style.color = '#F87171'; }}
               onMouseOut={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = 'transparent'; b.style.color = tm; }}
             ><RotateCcw size={15} /></button>
 
-            <button onClick={toggleTheme} style={{ width: '36px', height: '36px', borderRadius: '9px', border: `1px solid ${pbd}`, cursor: 'pointer', background: isDark ? 'rgba(56,189,248,0.08)' : 'rgba(14,165,233,0.06)', color: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.14s' }}>
+            <button className="cv-action-btn" onClick={toggleTheme} style={{ width: '36px', height: '36px', borderRadius: '9px', border: `1px solid ${pbd}`, cursor: 'pointer', background: isDark ? 'rgba(56,189,248,0.08)' : 'rgba(14,165,233,0.06)', color: ACCENT, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.14s' }}>
               {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
 
-            <a href="/" style={{ width: '36px', height: '36px', borderRadius: '9px', color: tm, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', transition: 'all 0.14s' }}
+            <a className="cv-action-btn" href="/" style={{ width: '36px', height: '36px', borderRadius: '9px', color: tm, display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', transition: 'all 0.14s' }}
               onMouseOver={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = isDark ? 'rgba(148,163,184,0.1)' : 'rgba(100,116,139,0.08)'; a.style.color = tp; }}
               onMouseOut={e => { const a = e.currentTarget as HTMLAnchorElement; a.style.background = 'transparent'; a.style.color = tm; }}
             ><Home size={16} /></a>
@@ -278,7 +292,7 @@ function AppContent() {
               const Icon = sec.icon;
               const active = activeSection === sec.id;
               return (
-                <button key={sec.id} onClick={() => setActiveSection(sec.id)} style={{
+                <button className="nav-tab" key={sec.id} onClick={() => setActiveSection(sec.id)} style={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px',
                   padding: '11px 10px 9px',
                   minWidth: '68px', background: 'transparent',
@@ -333,4 +347,5 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
 
