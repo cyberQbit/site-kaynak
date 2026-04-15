@@ -38,7 +38,7 @@ export async function generatePDF(data: CVData): Promise<void> {
     let heightLeft = pdfHeight - pageHeight;
     let position = 0;
     
-    while (heightLeft > 0) {
+    while (heightLeft > 2) {
       position -= pageHeight;
       pdf.addPage();
       pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, pdfHeight);

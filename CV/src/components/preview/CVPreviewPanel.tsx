@@ -164,10 +164,8 @@ function ScaledPreview({ data }: { data: CVData }) {
   const A4_PX = 794;
 
   return (
-    <div style={{ padding: '20px 12px 32px', display: 'flex', justifyContent: 'center' }}>
-      <div style={{
-        width: `${A4_PX}px`,
-        transform: `scale(var(--cv-scale, 0.68))`,
+    <div className="print-wrapper" style={{ padding: "20px 12px 32px", display: "flex", justifyContent: "center" }}>
+      <div className="print-scale-wrapper" style={{ width: `${A4_PX}px`, transform: `scale(var(--cv-scale, 0.68))`,
         transformOrigin: 'top center',
         // collapse the extra space after scaling down
         marginBottom: `calc((var(--cv-scale, 0.68) - 1) * 297mm)`,
@@ -203,3 +201,4 @@ const printStyles = `
     }
   }
 `;
+
