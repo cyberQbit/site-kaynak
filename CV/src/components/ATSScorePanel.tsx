@@ -1,75 +1,120 @@
 import type { CVData } from '../types/cv';
 import { calculateATSScore } from '../utils/atsScore';
 import { useTheme } from '../context/ThemeContext';
+import { ShieldCheck } from 'lucide-react';
 
-interface ATSScorePanelProps {
-  data: CVData;
-}
+interface ATSScorePanelProps { data: CVData; }
 
 export function ATSScorePanel({ data }: ATSScorePanelProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const { total, sections } = calculateATSScore(data);
 
-  const getColor = (pct: number) =>
-    pct >= 80 ? '#22c55e' : pct >= 55 ? '#f59e0b' : '#ef4444';
+  const tp = isDark ? '#F1F5F9' : '#0F172A';
+  const tm = isDark ? '#94A3B8' : '#64748B';
+  const pbd = isDark ? 'rgba(56,189,248,0.09)' : 'rgba(14,165,233,0.15)';
 
-  const totalPct = total;
-  const strokeDasharray = 2 * Math.PI * 28;
-  const strokeDashoffset = strokeDasharray * (1 - totalPct / 100);
-  const color = getColor(totalPct);
-
-  const label = totalPct >= 80 ? 'Mükemmel' : totalPct >= 60 ? 'İyi' : totalPct >= 40 ? 'Orta' : 'Zayıf';
+  const getColor = (pct: number) => pct >= 80 ? '#22c55e' : pct >= 55 ? '#f59e0b' : '#ef4444';
+  const color = getColor(total);
+  const label = total >= 80 ? 'Mükemmel' : total >= 60 ? 'İyi' : total >= 40 ? 'Orta' : 'Zayıf';
+  const r = 36;
+  const circ = 2 * Math.PI * r;
+  const offset = circ * (1 - total / 100);
 
   return (
-    <div className={`p-4 rounded-xl border ${isDark ? 'bg-[#1F2937] border-[#374151]' : 'bg-white border-[#E2E8F0]'}`}>
-      <div className="flex items-center gap-4 mb-4">
-        {/* Circular gauge */}
-        <div className="relative flex-shrink-0">
-          <svg width="72" height="72" viewBox="0 0 72 72">
-            <circle cx="36" cy="36" r="28" fill="none"
-              stroke={isDark ? '#374151' : '#F1F3F5'} strokeWidth="6" />
-            <circle cx="36" cy="36" r="28" fill="none"
-              stroke={color} strokeWidth="6"
-              strokeDasharray={strokeDasharray}
-              strokeDashoffset={strokeDashoffset}
+    <div>
+      {/* Section header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+        <div className="sec-icon"><ShieldCheck size={14} /></div>
+        <span style={{ fontSize: '14px', fontWeight: 700, color: tp }}>ATS Uyum Skoru</span>
+      </div>
+
+      {/* Score card */}
+      <div style={{
+        background: isDark ? 'rgba(15,23,42,0.55)' : 'rgba(248,250,252,0.9)',
+        border: `1px solid ${pbd}`,
+        borderRadius: '16px',
+        padding: '24px',
+        marginBottom: '16px',
+        display: 'flex', alignItems: 'center', gap: '24px',
+      }}>
+        {/* Circle gauge */}
+        <div style={{ position: 'relative', flexShrink: 0 }}>
+          <svg width="92" height="92" viewBox="0 0 92 92">
+            {/* Track */}
+            <circle cx="46" cy="46" r={r} fill="none"
+              stroke={isDark ? 'rgba(56,189,248,0.1)' : '#E2E8F0'}
+              strokeWidth="7" />
+            {/* Progress */}
+            <circle cx="46" cy="46" r={r} fill="none"
+              stroke={color} strokeWidth="7"
+              strokeDasharray={circ}
+              strokeDashoffset={offset}
               strokeLinecap="round"
-              transform="rotate(-90 36 36)"
-              style={{ transition: 'stroke-dashoffset 0.6s ease' }}
+              transform="rotate(-90 46 46)"
+              style={{ transition: 'stroke-dashoffset 0.7s cubic-bezier(0.4,0,0.2,1), stroke 0.4s' }}
             />
+            {/* Glow ring */}
+            <circle cx="46" cy="46" r={r} fill="none"
+              stroke={color} strokeWidth="1.5"
+              strokeDasharray={circ}
+              strokeDashoffset={offset}
+              strokeLinecap="round"
+              transform="rotate(-90 46 46)"
+              opacity="0.3"
+              filter="url(#glow)"
+              style={{ transition: 'stroke-dashoffset 0.7s' }}
+            />
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
           </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-lg font-bold" style={{ color }}>{total}</span>
-            <span className="text-xs" style={{ color: isDark ? '#6B7280' : '#9CA3AF' }}>/100</span>
+          <div style={{
+            position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+          }}>
+            <span style={{ fontSize: '22px', fontWeight: 800, color, lineHeight: 1 }}>{total}</span>
+            <span style={{ fontSize: '10px', color: tm, fontWeight: 500 }}>/100</span>
           </div>
         </div>
+
         <div>
-          <p className={`font-semibold text-sm ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>ATS Uyum Skoru</p>
-          <p className="text-xs font-medium" style={{ color }}>{label}</p>
-          <p className={`text-xs mt-0.5 ${isDark ? 'text-[#6B7280]' : 'text-[#9CA3AF]'}`}>
-            Tarayıcı sistemleri tarafından okunabilirlik
+          <p style={{ fontSize: '13px', fontWeight: 600, color: tp, marginBottom: '2px' }}>Tarayıcı uyumluluğu</p>
+          <p style={{ fontSize: '22px', fontWeight: 800, color, lineHeight: 1, marginBottom: '4px' }}>{label}</p>
+          <p style={{ fontSize: '12px', color: tm, lineHeight: 1.4, maxWidth: '200px' }}>
+            ATS sistemlerinin CV içeriğini ne kadar kolay okuyabileceğinin göstergesi
           </p>
         </div>
       </div>
 
-      <div className="space-y-2">
+      {/* Section breakdown */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {sections.map((sec: any) => {
           const pct = Math.round((sec.score / sec.max) * 100);
           const c = getColor(pct);
           return (
-            <div key={sec.label}>
-              <div className="flex justify-between items-center mb-0.5">
-                <span className={`text-xs ${isDark ? 'text-[#D1D5DB]' : 'text-[#374151]'}`}>{sec.label}</span>
-                <span className="text-xs font-medium" style={{ color: c }}>{sec.score}/{sec.max}</span>
+            <div key={sec.label} style={{
+              background: isDark ? 'rgba(15,23,42,0.45)' : 'rgba(248,250,252,0.8)',
+              border: `1px solid ${pbd}`,
+              borderRadius: '12px', padding: '12px 14px',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <span style={{ fontSize: '13px', fontWeight: 600, color: tp }}>{sec.label}</span>
+                <span style={{ fontSize: '12px', fontWeight: 700, color: c }}>{sec.score}/{sec.max}</span>
               </div>
-              <div className={`h-1.5 rounded-full overflow-hidden ${isDark ? 'bg-[#374151]' : 'bg-[#F1F3F5]'}`}>
-                <div className="h-full rounded-full transition-all duration-500"
-                  style={{ width: `${pct}%`, backgroundColor: c }} />
+              <div style={{ height: '5px', borderRadius: '10px', background: isDark ? 'rgba(56,189,248,0.08)' : '#E2E8F0', overflow: 'hidden' }}>
+                <div style={{
+                  height: '100%', width: `${pct}%`, background: c,
+                  borderRadius: '10px',
+                  boxShadow: pct > 0 ? `0 0 8px ${c}55` : 'none',
+                  transition: 'width 0.6s cubic-bezier(0.4,0,0.2,1)',
+                }} />
               </div>
               {sec.score < sec.max && (
-                <p className={`text-xs mt-0.5 ${isDark ? 'text-[#6B7280]' : 'text-[#9CA3AF]'}`}>
-                  💡 {sec.tip}
-                </p>
+                <p style={{ fontSize: '11.5px', color: tm, marginTop: '5px' }}>💡 {sec.tip}</p>
               )}
             </div>
           );

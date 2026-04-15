@@ -1,4 +1,4 @@
-import { User, Mail, Phone, MapPin, Linkedin, Github, Globe, FileText } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Linkedin, Github, Globe, AlignLeft, Briefcase } from 'lucide-react';
 import type { PersonalInfo } from '../../types/cv';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
@@ -8,107 +8,113 @@ interface PersonalInfoFormProps {
   onChange: (info: Partial<PersonalInfo>) => void;
 }
 
+const ACCENT      = '#38BDF8';
+
 export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
   const { theme } = useTheme();
   const { t } = useLanguage();
   const isDark = theme === 'dark';
 
-  const inputBase = `w-full px-3 py-2 rounded-lg border text-sm transition-colors outline-none focus:ring-2 ${
-    isDark
-      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE]/40 focus:border-[#22D3EE]'
-      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc]/30 focus:border-[#0062cc]'
-  }`;
+  const tm = isDark ? '#94A3B8' : '#64748B';
+  const tp = isDark ? '#F1F5F9' : '#0F172A';
 
-  const labelBase = `block text-xs font-medium mb-1 ${isDark ? 'text-[#D1D5DB]' : 'text-[#374151]'}`;
-
-  function Field({
-    label, value, onChange: onFieldChange, placeholder, icon: Icon, type = 'text', rows,
+  function IconInput({
+    label, value, onUpdate, placeholder, icon: Icon, type = 'text',
   }: {
-    label: string; value: string; onChange: (v: string) => void;
-    placeholder?: string; icon?: React.FC<{ className?: string }>;
-    type?: string; rows?: number;
+    label: string; value: string; onUpdate: (v: string) => void;
+    placeholder?: string; icon: React.FC<{ size?: number; color?: string }>;
+    type?: string;
   }) {
     return (
       <div>
-        <label className={labelBase}>{label}</label>
-        <div className="relative">
-          {Icon && (
-            <Icon className={`w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none ${isDark ? 'text-[#6B7280]' : 'text-[#A0AEC0]'}`} />
-          )}
-          {rows ? (
-            <textarea
-              value={value}
-              onChange={e => onFieldChange(e.target.value)}
-              placeholder={placeholder}
-              rows={rows}
-              className={`${inputBase} resize-none`}
-            />
-          ) : (
-            <input
-              type={type}
-              value={value}
-              onChange={e => onFieldChange(e.target.value)}
-              placeholder={placeholder}
-              className={`${inputBase} ${Icon ? 'pl-8' : ''}`}
-            />
-          )}
+        <label className="cvl">{label}</label>
+        <div style={{ position: 'relative' }}>
+          <span style={{
+            position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)',
+            pointerEvents: 'none', color: tm, display: 'flex',
+          }}>
+            <Icon size={14} color={tm} />
+          </span>
+          <input
+            type={type}
+            value={value}
+            onChange={e => onUpdate(e.target.value)}
+            placeholder={placeholder}
+            className="cvi"
+          />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2 mb-1">
-        <User className={`w-4 h-4 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`} />
-        <h3 className={`font-semibold text-sm ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>
-          {t('personal_info')}
-        </h3>
+    <div>
+      {/* Section header */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
+        <div className="sec-icon"><User size={14} /></div>
+        <span style={{ fontSize: '14px', fontWeight: 700, color: tp }}>{t('personal_info')}</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="col-span-2">
-          <Field label={t('full_name')} value={data.fullName} onChange={v => onChange({ fullName: v })}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+        {/* Full name - full width */}
+        <div style={{ gridColumn: '1 / -1' }}>
+          <IconInput label={t('full_name')} value={data.fullName} onUpdate={v => onChange({ fullName: v })}
             placeholder="Aydın Aydemir" icon={User} />
         </div>
-        <div className="col-span-2">
-          <Field label="Ünvan / Pozisyon" value={data.jobTitle} onChange={v => onChange({ jobTitle: v })}
-            placeholder="Senior Software Engineer" />
+
+        {/* Job title - full width */}
+        <div style={{ gridColumn: '1 / -1' }}>
+          <IconInput label="Ünvan / Pozisyon" value={data.jobTitle || ''} onUpdate={v => onChange({ jobTitle: v })}
+            placeholder="Senior Software Engineer" icon={Briefcase} />
         </div>
-        <Field label={t('email')} value={data.email} onChange={v => onChange({ email: v })}
+
+        {/* Email + Phone */}
+        <IconInput label={t('email')} value={data.email} onUpdate={v => onChange({ email: v })}
           placeholder="ornek@mail.com" icon={Mail} type="email" />
-        <Field label={t('phone')} value={data.phone} onChange={v => onChange({ phone: v })}
+        <IconInput label={t('phone')} value={data.phone} onUpdate={v => onChange({ phone: v })}
           placeholder="+90 5XX XXX XX XX" icon={Phone} />
-        <div className="col-span-2">
-          <Field label={t('location')} value={data.location} onChange={v => onChange({ location: v })}
+
+        {/* Location - full width */}
+        <div style={{ gridColumn: '1 / -1' }}>
+          <IconInput label={t('location')} value={data.location} onUpdate={v => onChange({ location: v })}
             placeholder="İstanbul, Türkiye" icon={MapPin} />
         </div>
-        <Field label="LinkedIn" value={data.linkedin} onChange={v => onChange({ linkedin: v })}
+
+        {/* LinkedIn + GitHub */}
+        <IconInput label="LinkedIn" value={data.linkedin} onUpdate={v => onChange({ linkedin: v })}
           placeholder="linkedin.com/in/..." icon={Linkedin} />
-        <Field label="GitHub" value={data.github} onChange={v => onChange({ github: v })}
+        <IconInput label="GitHub" value={data.github} onUpdate={v => onChange({ github: v })}
           placeholder="github.com/..." icon={Github} />
-        <div className="col-span-2">
-          <Field label={t('website')} value={data.website} onChange={v => onChange({ website: v })}
+
+        {/* Website - full width */}
+        <div style={{ gridColumn: '1 / -1' }}>
+          <IconInput label={t('website')} value={data.website} onUpdate={v => onChange({ website: v })}
             placeholder="aydinaydmr.com.tr" icon={Globe} />
         </div>
-      </div>
 
-      <div>
-        <label className={labelBase}>
-          <span className="flex items-center gap-1">
-            <FileText className="w-3 h-3" /> {t('summary')}
-          </span>
-        </label>
-        <textarea
-          value={data.summary}
-          onChange={e => onChange({ summary: e.target.value })}
-          placeholder="5+ yıllık deneyime sahip, React ve Node.js uzmanı yazılım geliştirici. Ölçeklenebilir uygulamalar tasarlar, ekip liderliği deneyimine sahip."
-          rows={4}
-          className={`${inputBase} resize-none`}
-        />
-        <p className={`text-xs mt-1 ${isDark ? 'text-[#6B7280]' : 'text-[#9CA3AF]'}`}>
-          💡 İş ilanındaki anahtar kelimeleri kullanın — ATS skoru yükselir
-        </p>
+        {/* Summary - full width */}
+        <div style={{ gridColumn: '1 / -1' }}>
+          <label className="cvl" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <AlignLeft size={11} /> {t('summary')}
+          </label>
+          <textarea
+            value={data.summary}
+            onChange={e => onChange({ summary: e.target.value })}
+            placeholder="5+ yıllık deneyime sahip, React ve Node.js uzmanı yazılım geliştirici..."
+            rows={4}
+            className="cvi"
+            style={{ paddingLeft: '12px' }}
+          />
+          {/* Word count + tip */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '5px' }}>
+            <p style={{ fontSize: '11px', color: tm }}>
+              💡 İş ilanındaki anahtar kelimeleri kullanın — ATS skoru artar
+            </p>
+            <span style={{ fontSize: '11px', color: data.summary.length > 50 ? ACCENT : tm, fontWeight: 600 }}>
+              {data.summary.length} kr
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );
