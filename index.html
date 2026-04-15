@@ -408,10 +408,16 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
 <style>.lang-sel{display:inline-flex;gap:4px;margin-left:8px;font-family:var(--body);font-size:11px;align-items:center}.lang-btn{background:transparent;border:1px solid var(--pnl-bd);color:var(--tp);cursor:pointer;border-radius:var(--r-sm);padding:3px 6px;transition:var(--t);outline:none}.lang-btn:hover{background:var(--acc-d);color:#fff}.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none!important;}.goog-te-banner-frame{display:none!important}body{top:0!important}</style>
 </head>
 <body>
+  <script>
+    if(sessionStorage.getItem('skip_loader') === 'true') {
+      document.write('<style>#loader{display:none!important}*{animation-duration:0.01ms!important;animation-delay:0.01ms!important;transition-duration:0.01ms!important;}</style>');
+      sessionStorage.removeItem('skip_loader');
+    }
+  </script>
 
 <!-- LOADING SCREEN -->
 <div id="loader" role="status" aria-label="Yükleniyor">
-  <div class="ld-logo" aria-hidden="true">
+  <div class="ld-logo" aria-hidden="true" translate="no" class="notranslate">
     <span class="ld-char">c</span><span class="ld-char">y</span><span class="ld-char">b</span><span class="ld-char">e</span><span class="ld-char">r</span><span class="ld-char">Q</span><span class="ld-char">b</span><span class="ld-char">i</span><span class="ld-char">t</span>
   </div>
   <div class="ld-bar"><div class="ld-prog"></div></div>
@@ -438,7 +444,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
 <!-- NAV -->
 <nav role="navigation" aria-label="Ana navigasyon">
   <div class="ni">
-    <a href="#" class="logo" aria-label="cyberQbit — Ana Sayfa">
+    <a href="#" class="logo notranslate" translate="no" aria-label="cyberQbit — Ana Sayfa">
       <img src="/A.ico" alt="cyberQbit favicon" class="logo-img" 
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="logo-fb" style="display:none">cQ</div>
@@ -473,6 +479,11 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   <button class="nb" onclick="scr('about');closeMob()">Hakkında</button>
   <button class="nb" onclick="toggleTerm();closeMob()">⌘ Terminal</button>
   <a href="https://aydinaydmr.com.tr/CV-olustur/" class="ncta" onclick="return cvTransition(event)" style="margin-top:4px;justify-content:center">CV Oluştur →</a>
+  <div class="lang-sel" translate="no" style="justify-content:center;margin-top:12px;margin-bottom:12px;gap:8px;margin-left:0">
+    <button class="lang-btn" onclick="changeLanguage('tr')">TR</button>
+    <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+    <button class="lang-btn" onclick="changeLanguage('es')">ES</button>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -648,7 +659,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
           <div style="font-family:var(--mono);font-size:9.5px;color:var(--acc);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px">⭐ Öne Çıkan Araç</div>
           <h3 style="font-family:var(--disp);font-size:24px;font-weight:800;letter-spacing:-.7px;margin-bottom:8px">SwiftHub Core</h3>
           <p style="font-size:13.5px;color:var(--tm);line-height:1.65;max-width:480px;margin-bottom:18px">cyberQbit ekosisteminin merkez komuta çekirdeği. Zero-footprint mimarisi ile disk'e hiçbir iz bırakmadan WinSwift, DevSwift, NetSwift ve Core modüllerini çalıştırır.</p>
-          <div style="background:var(--bg3);border:1px solid var(--pnl-bd);border-radius:var(--r-md);padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--acc);display:flex;align-items:center;gap:8px;width:fit-content;max-width:100%;overflow-x:auto;margin-bottom:18px">
+          <div translate="no" class="notranslate" style="background:var(--bg3);border:1px solid var(--pnl-bd);border-radius:var(--r-md);padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--acc);display:flex;align-items:center;gap:8px;width:fit-content;max-width:100%;overflow-x:auto;margin-bottom:18px">
             <span style="color:var(--tm);flex-shrink:0">PS&gt;</span>
             <span style="white-space:nowrap">irm aydinaydmr.com.tr/core | iex</span>
           </div>
@@ -658,7 +669,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:7px">
-          <div style="background:var(--bg3);border:1px solid var(--pnl-bd);border-radius:var(--r-md);padding:13px 17px;font-family:var(--mono);font-size:10.5px;color:var(--tm);line-height:2;white-space:nowrap">
+          <div translate="no" class="notranslate" style="background:var(--bg3);border:1px solid var(--pnl-bd);border-radius:var(--r-md);padding:13px 17px;font-family:var(--mono);font-size:10.5px;color:var(--tm);line-height:2;white-space:nowrap">
             <span style="color:var(--grn)">✓</span> WinSwift — Optimize Edici<br>
             <span style="color:var(--grn)">✓</span> DevSwift — İnşa Edici<br>
             <span style="color:var(--grn)">✓</span> NetSwift — Koruyucu<br>
@@ -802,7 +813,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
 </footer>
 
 <!-- TERMINAL -->
-<div id="terminal" role="dialog" aria-label="Terminal" aria-modal="false">
+<div id="terminal" role="dialog" aria-label="Terminal" aria-modal="false" translate="no" class="notranslate">
   <div class="thdr">
     <div class="thdr-l">
       <div class="tdots" aria-hidden="true"><div class="td3 tdr"></div><div class="td3 tdy"></div><div class="td3 tdg"></div></div>
@@ -1248,7 +1259,7 @@ const MD={
 
 function openMod(id){
   const d=MD[id];if(!d)return;
-  const cmdHTML=d.cmd?`<div class="mcmd"><span class="ps">PS&gt;</span>${d.cmd}</div>`:'';
+  const cmdHTML=d.cmd?`<div class="mcmd notranslate" translate="no"><span class="ps">PS&gt;</span>${d.cmd}</div>`:'';
   document.getElementById('mc').innerHTML=`
     <div class="mhdr"><div class="mhl"><div class="mbi ${d.ic}">${d.icon}</div><div><div class="mttl">${d.name}</div><div class="msbttl">${d.sub}</div></div></div><button class="mx" onclick="closeMod()" aria-label="Kapat">✕</button></div>
     <div class="mbdy">
@@ -1283,6 +1294,17 @@ if('serviceWorker' in navigator){
 </script>
 <script src="js/i18n.js"></script><script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,es', autoDisplay: false}, 'google_translate_element');}</script><script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script><div id="google_translate_element" style="display:none"></div></body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

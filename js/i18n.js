@@ -21,7 +21,10 @@
       currentLang = 'en';
     }
     localStorage.setItem('user_lang', currentLang);
-    if(currentLang !== 'tr') window.location.reload(); // reload to apply GT script
+    if(currentLang !== 'tr' && !window.location.search.includes('lang=')) {
+      sessionStorage.setItem('skip_loader', 'true');
+      window.location.href = window.location.pathname + '?lang=' + currentLang;
+    } 
   }
 
   if (currentLang && currentLang !== 'tr') {
@@ -42,5 +45,6 @@ function changeLanguage(lang) {
     document.cookie = "googtrans=/tr/" + lang + "; path=/; domain=" + window.location.hostname;
     document.cookie = "googtrans=/tr/" + lang + "; path=/;";
   }
-  window.location.reload();
+  sessionStorage.setItem('skip_loader', 'true');
+  window.location.href = window.location.pathname + '?lang=' + lang;
 }
