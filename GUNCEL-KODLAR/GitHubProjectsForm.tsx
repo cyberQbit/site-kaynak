@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Code2, Star, GitFork, Check, RefreshCw, X } from 'lucide-react';
+import { Code2, Trash2, Star, GitFork, Check, RefreshCw, X } from 'lucide-react';
 import type { GitHubProject } from '../../types/cv';
 
 interface Props {

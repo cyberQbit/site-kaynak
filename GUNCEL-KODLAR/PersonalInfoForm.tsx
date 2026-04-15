@@ -1,6 +1,5 @@
 import { User, Mail, Phone, MapPin, Linkedin, Github, Globe, AlignLeft, Briefcase } from 'lucide-react';
 import type { PersonalInfo } from '../../types/cv';
-import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface PersonalInfoFormProps {
@@ -8,110 +7,93 @@ interface PersonalInfoFormProps {
   onChange: (info: Partial<PersonalInfo>) => void;
 }
 
-const ACCENT      = '#38BDF8';
-const ACCENT_GLOW = 'rgba(56,189,248,0.15)';
+function Field({ label, value, onUpdate, placeholder, icon: Icon, type = 'text', noIcon = false }: {
+  label: string; value: string; onUpdate: (v: string) => void;
+  placeholder?: string; icon?: React.FC<{ size?: number }>; type?: string; noIcon?: boolean;
+}) {
+  return (
+    <div>
+      <label className="cvl">{label}</label>
+      <div className={noIcon ? '' : 'input-wrap'}>
+        {!noIcon && Icon && (
+          <span className="input-icon"><Icon size={13} /></span>
+        )}
+        <input
+          type={type}
+          value={value}
+          onChange={e => onUpdate(e.target.value)}
+          placeholder={placeholder}
+          className={`cvi${noIcon ? ' no-icon' : ''}`}
+          autoComplete="off"
+          autoCapitalize={type === 'email' ? 'none' : undefined}
+        />
+      </div>
+    </div>
+  );
+}
 
 export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
-  const { theme } = useTheme();
   const { t } = useLanguage();
-  const isDark = theme === 'dark';
-
-  const tm = isDark ? '#94A3B8' : '#64748B';
-  const tp = isDark ? '#F1F5F9' : '#0F172A';
-
-  function IconInput({
-    label, value, onUpdate, placeholder, icon: Icon, type = 'text',
-  }: {
-    label: string; value: string; onUpdate: (v: string) => void;
-    placeholder?: string; icon: React.FC<{ size?: number; color?: string }>;
-    type?: string;
-  }) {
-    return (
-      <div>
-        <label className="cvl">{label}</label>
-        <div style={{ position: 'relative' }}>
-          <span style={{
-            position: 'absolute', left: '11px', top: '50%', transform: 'translateY(-50%)',
-            pointerEvents: 'none', color: tm, display: 'flex',
-          }}>
-            <Icon size={14} color={tm} />
-          </span>
-          <input
-            type={type}
-            value={value}
-            onChange={e => onUpdate(e.target.value)}
-            placeholder={placeholder}
-            className="cvi"
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div>
-      {/* Section header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '18px' }}>
+      {/* Section heading */}
+      <div className="sec-head">
         <div className="sec-icon"><User size={14} /></div>
-        <span style={{ fontSize: '14px', fontWeight: 700, color: tp }}>{t('personal_info')}</span>
+        <span className="sec-title">{t('personal_info')}</span>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-        {/* Full name - full width */}
-        <div style={{ gridColumn: '1 / -1' }}>
-          <IconInput label={t('full_name')} value={data.fullName} onUpdate={v => onChange({ fullName: v })}
-            placeholder="Aydın Aydemir" icon={User} />
+      <div className="form-grid" style={{ gap: '12px' }}>
+        {/* Full name */}
+        <Field label={t('full_name')} value={data.fullName}
+          onUpdate={v => onChange({ fullName: v })} placeholder="Aydın Aydemir" icon={User} />
+
+        {/* Job title */}
+        <Field label="Ünvan / Pozisyon" value={data.jobTitle || ''}
+          onUpdate={v => onChange({ jobTitle: v })} placeholder="Senior Software Engineer" icon={Briefcase} />
+
+        {/* Email + Phone — 2 cols on sm+ */}
+        <div className="form-grid-2" style={{ gap: '12px' }}>
+          <Field label={t('email')} value={data.email}
+            onUpdate={v => onChange({ email: v })} placeholder="ornek@mail.com" icon={Mail} type="email" />
+          <Field label={t('phone')} value={data.phone}
+            onUpdate={v => onChange({ phone: v })} placeholder="+90 5XX XXX XX XX" icon={Phone} type="tel" />
         </div>
 
-        {/* Job title - full width */}
-        <div style={{ gridColumn: '1 / -1' }}>
-          <IconInput label="Ünvan / Pozisyon" value={data.jobTitle || ''} onUpdate={v => onChange({ jobTitle: v })}
-            placeholder="Senior Software Engineer" icon={Briefcase} />
+        {/* Location */}
+        <Field label={t('location')} value={data.location}
+          onUpdate={v => onChange({ location: v })} placeholder="İstanbul, Türkiye" icon={MapPin} />
+
+        {/* LinkedIn + GitHub — 2 cols on sm+ */}
+        <div className="form-grid-2" style={{ gap: '12px' }}>
+          <Field label="LinkedIn" value={data.linkedin}
+            onUpdate={v => onChange({ linkedin: v })} placeholder="linkedin.com/in/..." icon={Linkedin} />
+          <Field label="GitHub" value={data.github}
+            onUpdate={v => onChange({ github: v })} placeholder="github.com/..." icon={Github} />
         </div>
 
-        {/* Email + Phone */}
-        <IconInput label={t('email')} value={data.email} onUpdate={v => onChange({ email: v })}
-          placeholder="ornek@mail.com" icon={Mail} type="email" />
-        <IconInput label={t('phone')} value={data.phone} onUpdate={v => onChange({ phone: v })}
-          placeholder="+90 5XX XXX XX XX" icon={Phone} />
+        {/* Website */}
+        <Field label={t('website')} value={data.website}
+          onUpdate={v => onChange({ website: v })} placeholder="aydinaydmr.com.tr" icon={Globe} />
 
-        {/* Location - full width */}
-        <div style={{ gridColumn: '1 / -1' }}>
-          <IconInput label={t('location')} value={data.location} onUpdate={v => onChange({ location: v })}
-            placeholder="İstanbul, Türkiye" icon={MapPin} />
-        </div>
-
-        {/* LinkedIn + GitHub */}
-        <IconInput label="LinkedIn" value={data.linkedin} onUpdate={v => onChange({ linkedin: v })}
-          placeholder="linkedin.com/in/..." icon={Linkedin} />
-        <IconInput label="GitHub" value={data.github} onUpdate={v => onChange({ github: v })}
-          placeholder="github.com/..." icon={Github} />
-
-        {/* Website - full width */}
-        <div style={{ gridColumn: '1 / -1' }}>
-          <IconInput label={t('website')} value={data.website} onUpdate={v => onChange({ website: v })}
-            placeholder="aydinaydmr.com.tr" icon={Globe} />
-        </div>
-
-        {/* Summary - full width */}
-        <div style={{ gridColumn: '1 / -1' }}>
-          <label className="cvl" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-            <AlignLeft size={11} /> {t('summary')}
+        {/* Summary */}
+        <div>
+          <label className="cvl" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlignLeft size={10} /> {t('summary')}
           </label>
           <textarea
             value={data.summary}
             onChange={e => onChange({ summary: e.target.value })}
-            placeholder="5+ yıllık deneyime sahip, React ve Node.js uzmanı yazılım geliştirici..."
+            placeholder="5+ yıllık deneyime sahip, React ve Node.js uzmanı yazılım geliştirici. Ölçeklenebilir uygulamalar tasarlar, ekip liderliği deneyimine sahip."
             rows={4}
             className="cvi"
-            style={{ paddingLeft: '12px' }}
+            style={{ paddingLeft: '12px', minHeight: '96px' }}
           />
-          {/* Word count + tip */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '5px' }}>
-            <p style={{ fontSize: '11px', color: tm }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '5px' }}>
+            <p style={{ fontSize: '11.5px', color: 'var(--tm)' }}>
               💡 İş ilanındaki anahtar kelimeleri kullanın — ATS skoru artar
             </p>
-            <span style={{ fontSize: '11px', color: data.summary.length > 50 ? ACCENT : tm, fontWeight: 600 }}>
+            <span style={{ fontSize: '11px', color: data.summary.length > 50 ? 'var(--accent)' : 'var(--ts)', fontWeight: 600 }}>
               {data.summary.length} kr
             </span>
           </div>
