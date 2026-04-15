@@ -926,12 +926,12 @@ function initRadarChart() {
     if (!svg) return;
 
     const skills = [
-        { name: 'HTML/CSS',   value: 85 },
-        { name: 'JavaScript', value: 70 },
-        { name: 'Python',     value: 65 },
-        { name: 'SQL',        value: 80 },
-        { name: 'Siber Güv.', value: 70 },
-        { name: 'Cloud',      value: 65 },
+        { name: 'HTML/CSS',     value: 85 },
+        { name: 'JS / TS',      value: 80 },
+        { name: 'C# & .NET',    value: 70 },
+        { name: 'Flutter/Dart', value: 65 },
+        { name: 'Siber Güv.',   value: 75 },
+        { name: 'Scripting',    value: 85 },
     ];
 
     const cx = 150, cy = 150, r = 100;
