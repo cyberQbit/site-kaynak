@@ -145,9 +145,9 @@ export function CVPreviewPanel({ data, onMobileClose }: CVPreviewPanelProps) {
         ) : (
           <div style={{ padding: '24px 16px', display: 'flex', justifyContent: 'center' }}>
             <div style={{
-              transform: 'scale(0.71)',
+              transform: 'scale(var(--cv-scale, 0.71))',
               transformOrigin: 'top center',
-              marginBottom: 'calc((0.71 - 1) * 297mm)',
+              marginBottom: 'calc((var(--cv-scale, 0.71) - 1) * 297mm)',
               boxShadow: '0 8px 40px rgba(0,0,0,0.22)',
               borderRadius: '2px',
             }}>
@@ -168,3 +168,4 @@ export function CVPreviewPanel({ data, onMobileClose }: CVPreviewPanelProps) {
     </div>
   );
 }
+
