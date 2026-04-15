@@ -26,7 +26,7 @@ export function CVPreviewPanel({ data, onMobileClose }: CVPreviewPanelProps) {
 
   const handleDownloadPDF = async () => {
     setIsGenerating(true);
-    try { generatePDF(data); }
+    try { await generatePDF(data); }
     catch (err) { console.error(err); alert('PDF oluşturulurken hata oluştu.'); }
     finally { setIsGenerating(false); }
   };
