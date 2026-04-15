@@ -174,6 +174,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
 #mob-menu.open{display:flex}
 #mob-menu .nb{width:100%;text-align:left;padding:10px 14px;font-size:14px}
 #mob-menu .ncta{width:100%;text-align:center;padding:10px;font-size:13.5px;margin-top:8px}
+#mob-menu .tbtn{width:100%;text-align:center;padding:10px;font-size:13.5px;margin-top:8px;justify-content:center}
 
 /* ═══ HERO ═══ */
 #hero{min-height:100vh;display:flex;align-items:center;padding-top:62px;position:relative;overflow:hidden}
@@ -377,7 +378,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   .ag{grid-template-columns:1fr}
   .tools-big-inner{grid-template-columns:1fr}
   .pg{grid-template-columns:1fr}
-  .nl .nb:not(.tbtn):not(.ncta){display:none}
+  .nl .nb, .nl .tbtn, .nl .ncta, .nl .lang-sel {display:none}
   .ham{display:flex}
   .hero-photo{order:-1;display:flex;justify-content:center}
   .hero-photo-inner{width:160px!important;height:160px!important;border-radius:50%}
@@ -475,7 +476,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   <button class="nb" onclick="scr('projects');closeMob()">Projeler</button>
   <button class="nb" onclick="scr('tools');closeMob()">Araçlar</button>
   <button class="nb" onclick="scr('about');closeMob()">Hakkında</button>
-  <button class="nb" onclick="toggleTerm();closeMob()">⌘ Terminal</button>
+  <button class="tbtn" onclick="toggleTerm();closeMob()" style="display:flex;align-items:center;gap:6px">⌘ Terminal</button>
   <a href="https://aydinaydmr.com.tr/CV-olustur/" class="ncta" onclick="return cvTransition(event)" style="margin-top:4px;justify-content:center">CV Oluştur →</a>
   <div class="lang-sel" translate="no" style="justify-content:center;margin-top:12px;margin-bottom:12px;gap:8px;margin-left:0">
     <button class="lang-btn" onclick="changeLanguage('tr')">TR</button>
@@ -1301,6 +1302,8 @@ if('serviceWorker' in navigator){
 </script>
 <script src="js/i18n.js"></script><script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,es', autoDisplay: false}, 'google_translate_element');}</script><script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script><div id="google_translate_element" style="display:none"></div></body>
 </html>
+
+
 
 
 
