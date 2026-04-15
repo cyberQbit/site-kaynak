@@ -109,7 +109,7 @@ export function EducationForm({ education, onAdd, onUpdate, onRemove }: Educatio
 
       {isAdding && (
         <div className={`p-4 rounded-xl border space-y-4 ${isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'}`}>
-          <EduFields values={draft} onChange={v => setDraft(prev => ({ ...prev, ...v }))} />
+          {EduFields({ values: draft, onChange: v => setDraft(prev => ({ ...prev, ...v })) })}
           <div className="flex justify-end gap-2">
             <button onClick={() => setIsAdding(false)}
               className={`px-3 py-1.5 rounded-lg text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>İptal</button>
@@ -127,7 +127,7 @@ export function EducationForm({ education, onAdd, onUpdate, onRemove }: Educatio
           <div key={edu.id} className={`rounded-xl border ${isDark ? 'bg-[#1F2937] border-[#374151]' : 'bg-white border-[#E2E8F0]'}`}>
             {editingId === edu.id ? (
               <div className="p-4 space-y-4">
-                <EduFields values={{ ...edu, ...editDraft }} onChange={v => setEditDraft(p => ({ ...p, ...v }))} />
+                {EduFields({ values: { ...edu, ...editDraft }, onChange: v => setEditDraft(p => ({ ...p, ...v })) })}
                 <div className="flex justify-end gap-2">
                   <button onClick={() => { setEditingId(null); setEditDraft({}); }}
                     className={`px-3 py-1.5 rounded-lg text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>İptal</button>

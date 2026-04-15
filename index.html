@@ -180,8 +180,8 @@
 
                     <div class="project-card no-image">
                         <div class="project-content">
-                            <h3 class="project-title">CV Oluşturucu</h3>
-                            <p class="project-description">ATS uyumlu, profesyonel CV oluşturun. LinkedIn profilinizi içe aktarın ve PDF olarak indirin.</p>
+                            <h3 class="project-title" data-key="project_cv_name">CV Oluşturucu</h3>
+                            <p class="project-description" data-key="project_cv_desc">ATS uyumlu, profesyonel CV oluşturun. LinkedIn profilinizi içe aktarın ve PDF olarak indirin.</p>
                             <div class="project-tags">
                                 <span class="project-tag">React</span>
                                 <span class="project-tag">TypeScript</span>
@@ -554,19 +554,19 @@
                 <form id="contact-form" class="contact-form">
                     <div class="form-group">
                         <label for="contact-name" data-key="contact_name_label">İsim</label>
-                        <input type="text" id="contact-name" name="name" required placeholder="Adınız">
+                        <input type="text" id="contact-name" name="name" required placeholder="Adınız" data-key="contact_name_placeholder">
                     </div>
                     <div class="form-group">
                         <label for="contact-email" data-key="contact_email_label">E-posta</label>
-                        <input type="email" id="contact-email" name="email" required placeholder="E-posta adresiniz">
+                        <input type="email" id="contact-email" name="email" required placeholder="E-posta adresiniz" data-key="contact_email_placeholder">
                     </div>
                     <div class="form-group">
                         <label for="contact-subject" data-key="contact_subject_label">Konu</label>
-                        <input type="text" id="contact-subject" name="subject" required placeholder="Konu">
+                        <input type="text" id="contact-subject" name="subject" required placeholder="Konu" data-key="contact_subject_placeholder">
                     </div>
                     <div class="form-group">
                         <label for="contact-message" data-key="contact_message_label">Mesaj</label>
-                        <textarea id="contact-message" name="message" rows="5" required placeholder="Mesajınız..."></textarea>
+                        <textarea id="contact-message" name="message" rows="5" required placeholder="Mesajınız..." data-key="contact_message_placeholder"></textarea>
                     </div>
                     <div class="h-captcha" data-captcha="true" data-theme="dark"></div>
                     <button type="submit" class="submit-btn" data-key="contact_submit_btn">Gönder</button>
@@ -576,9 +576,9 @@
         </main>
 
         <div class="controls">
-            <a href="./CV-olustur/" class="cv-fab" title="CV Oluştur" aria-label="CV Oluşturucu">
+            <a href="./CV-olustur/" class="cv-fab" title="CV Oluştur" aria-label="CV Oluşturucu" data-key="cv_fab">
                 <i data-lucide="file-text"></i>
-                <span class="cv-fab-tooltip">CV Oluştur</span>
+                <span class="cv-fab-tooltip" data-key="cv_fab_tooltip">CV Oluştur</span>
             </a>
             <div class="language-switcher">
                 <button data-lang="tr">TR</button>

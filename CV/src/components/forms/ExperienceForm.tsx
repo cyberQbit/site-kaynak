@@ -150,7 +150,7 @@ export function ExperienceForm({ experience, onAdd, onUpdate, onRemove }: Experi
       {/* Add Form */}
       {isAdding && (
         <div className={`p-4 rounded-xl border space-y-4 ${isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'}`}>
-          <ExpFields values={draft} onChange={v => setDraft(prev => ({ ...prev, ...v }))} />
+            {ExpFields({ values: draft, onChange: v => setDraft(prev => ({ ...prev, ...v })) })}
           <div className="flex justify-end gap-2">
             <button onClick={() => setIsAdding(false)}
               className={`px-3 py-1.5 rounded-lg text-sm ${isDark ? 'text-[#9CA3AF] hover:bg-[#4B5563]' : 'text-[#4A5568] hover:bg-[#E2E8F0]'}`}>
@@ -171,10 +171,10 @@ export function ExperienceForm({ experience, onAdd, onUpdate, onRemove }: Experi
           <div key={exp.id} className={`rounded-xl border ${isDark ? 'bg-[#1F2937] border-[#374151]' : 'bg-white border-[#E2E8F0]'}`}>
             {editingId === exp.id ? (
               <div className="p-4 space-y-4">
-                <ExpFields
-                  values={{ ...exp, ...editDraft }}
-                  onChange={v => setEditDraft(prev => ({ ...prev, ...v }))}
-                />
+                {ExpFields({
+                  values: { ...exp, ...editDraft },
+                  onChange: v => setEditDraft(prev => ({ ...prev, ...v }))
+                })}
                 <div className="flex justify-end gap-2">
                   <button onClick={() => { setEditingId(null); setEditDraft({}); }}
                     className={`px-3 py-1.5 rounded-lg text-sm ${isDark ? 'text-[#9CA3AF] hover:bg-[#374151]' : 'text-[#4A5568] hover:bg-[#F1F3F5]'}`}>

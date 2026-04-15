@@ -128,6 +128,14 @@ const translations = {
         "contact_email_label": "E-posta",
         "contact_subject_label": "Konu",
         "contact_message_label": "Mesaj",
+        "contact_name_placeholder": "Adınız",
+        "contact_email_placeholder": "E-posta adresiniz",
+        "contact_subject_placeholder": "Konu",
+        "contact_message_placeholder": "Mesajınız...",
+        "project_cv_name": "CV Oluşturucu",
+        "project_cv_desc": "ATS uyumlu, profesyonel CV oluşturun. LinkedIn profilinizi içe aktarın ve PDF olarak indirin.",
+        "cv_fab_tooltip": "CV Oluştur",
+        "footer_rights": "Tüm Hakları Saklıdır.",
         "contact_submit_btn": "Gönder",
         "contact_success_msg": "Mesajınız başarıyla gönderildi! Teşekkür ederiz. ✓",
         "contact_error_msg": "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin. ✗",
@@ -241,6 +249,14 @@ const translations = {
         "contact_email_label": "Email",
         "contact_subject_label": "Subject",
         "contact_message_label": "Message",
+        "contact_name_placeholder": "Your Name",
+        "contact_email_placeholder": "Your Email",
+        "contact_subject_placeholder": "Subject",
+        "contact_message_placeholder": "Your Message...",
+        "project_cv_name": "CV Builder",
+        "project_cv_desc": "Create an ATS-friendly, professional CV. Import your LinkedIn profile and download as PDF.",
+        "cv_fab_tooltip": "Create CV",
+        "footer_rights": "All Rights Reserved.",
         "contact_submit_btn": "Send",
         "contact_success_msg": "Message sent successfully! Thank you. ✓",
         "contact_error_msg": "An error occurred while sending your message. Please try again. ✗",
@@ -354,6 +370,14 @@ const translations = {
         "contact_email_label": "Correo Electrónico",
         "contact_subject_label": "Asunto",
         "contact_message_label": "Mensaje",
+        "contact_name_placeholder": "Tu Nombre",
+        "contact_email_placeholder": "Tu Correo Electrónico",
+        "contact_subject_placeholder": "Asunto",
+        "contact_message_placeholder": "Tu Mensaje...",
+        "project_cv_name": "Creador de CV",
+        "project_cv_desc": "Cree un CV profesional compatible con ATS. Importe su perfil de LinkedIn y descárguelo en PDF.",
+        "cv_fab_tooltip": "Crear CV",
+        "footer_rights": "Todos los derechos reservados.",
         "contact_submit_btn": "Enviar",
         "contact_success_msg": "¡Tu mensaje se envió exitosamente! Gracias. ✓",
         "contact_error_msg": "Ocurrió un error al enviar tu mensaje. Por favor, intenta de nuevo. ✗",
@@ -471,6 +495,8 @@ function setLanguage(lang) {
                 element.setAttribute('aria-label', translation);
             } else if (element.tagName === 'BUTTON') {
                 element.textContent = translation;
+            } else if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                element.setAttribute('placeholder', translation);
             } else {
                 element.textContent = translation;
             }
@@ -1054,3 +1080,4 @@ window.addEventListener('load', () => {
 
     hidePreloader();
 });
+
