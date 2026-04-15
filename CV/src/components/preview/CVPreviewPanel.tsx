@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Download, FileText, Printer, Loader2, Eye, X } from 'lucide-react';
+import { Download, FileText, Loader2, Eye, X } from 'lucide-react';
 import type { CVData } from '../../types/cv';
 import { CVPreview } from './CVPreview';
 import { useTheme } from '../../context/ThemeContext';
@@ -37,14 +37,6 @@ export function CVPreviewPanel({ data, onMobileClose, headerOnly, bodyOnly }: CV
   /* ── Actions strip (reused in both full and overlay header) ─ */
   const Actions = () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-      <button
-        onClick={() => window.print()}
-        title="Yazdır"
-        className="btn-icon"
-      >
-        <Printer size={14} />
-      </button>
-
       <button
         onClick={handleDownloadPDF}
         disabled={isGenerating || isEmpty}
