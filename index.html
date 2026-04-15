@@ -16,7 +16,7 @@
 <!-- ═══ Open Graph ═══ -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Aydın Aydemir (cyberQbit) — Yazılım Geliştirici">
-<meta property="og:description" content="CepteKabin, SwiftHub, MooWeather ve CV Builder projelerinin yaratıcısı. Android, Windows ve Web araçları geliştiren Ankaralı yazılım öğrencisi.">
+<meta property="og:description" content="CepteKabin, SwiftHub, MooWeather ve CV Builder projelerinin yaratıcısı. Android, Windows ve Web araçları geliştiren yazılım öğrencisi.">
 <meta property="og:url" content="https://aydinaydmr.com.tr/">
 <meta property="og:site_name" content="cyberQbit — Aydın Aydemir">
 <meta property="og:image" content="https://aydinaydmr.com.tr/images/profile_placeholder.webp">
@@ -378,6 +378,9 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   .ham{display:flex}
   .hero-photo{order:-1;display:flex;justify-content:center}
   .hero-photo-inner{width:160px!important;height:160px!important;border-radius:50%}
+    .nl{gap:8px}
+    .tbtn{padding:5px 9px;font-size:10px}
+    .ncta{padding:6px 12px;font-size:11px}
 }
 @media(max-width:640px){
   .w{padding:0 16px}
@@ -388,7 +391,10 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   .sb{gap:20px}
   .cc{padding:36px 22px}
   .nl{gap:4px}
-  #scroll-top{bottom:16px;right:16px}
+  .tbtn{padding:4px 7px;font-size:9.5px;letter-spacing:0}
+    .ncta{padding:5px 10px;font-size:10px;gap:4px}
+    .hero-photo-inner{width:130px!important;height:130px!important;margin:0 auto}
+    #scroll-top{bottom:16px;right:16px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -687,7 +693,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
     <div class="ag">
       <div class="rev">
         <div class="at2">
-          <p>Merhaba! Ben <strong>Aydın Aydemir</strong>, <strong>@cyberQbit</strong> olarak bilinen Ankaralı bir yazılım öğrencisi ve geliştirici.</p>
+          <p>Merhaba! Ben <strong>Aydın Aydemir</strong>, <strong>cyberQbit</strong> olarak bilinen bir yazılım öğrencisi ve geliştiricisi.</p>
           <p>Hem <strong>Ankara Üniversitesi</strong>'nde Bilgisayar Programcılığı hem de <strong>Atatürk Üniversitesi</strong>'nde Web Tasarım ve Kodlama alanlarında çift önlisans yapıyorum.</p>
           <p>Android mobil uygulamalardan Windows scripting araçlarına, React web uygulamalarından C# .NET backend API'lerine kadar geniş bir yelpazede proje geliştiriyorum. Siber güvenlik, açık kaynak ekosistemi ve kullanıcı odaklı tasarım üçgeninde çalışmayı seviyorum.</p>
           <p>Aynı zamanda <strong><a href="https://github.com/sponsors/cyberQbit" target="_blank" rel="noopener">GitHub Sponsors</a></strong> ve <strong><a href="https://patreon.com/aydinaydmr" target="_blank" rel="noopener">Patreon</a></strong> üzerinden desteklenebilir bir açık kaynak geliştiriciyim.</p>
@@ -751,10 +757,10 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
       <h2 class="cttl">İletişime Geç</h2>
       <p class="csub">Proje fikrin mi var, iş birliği mi istiyorsun ya da sadece merhaba mı demek istiyorsun?</p>
       <div class="cgrid" role="list">
-        <a href="mailto:contact@aydinaydmr.com.tr" class="cit" role="listitem">
+        <a href="mailto:aydinaydmr@proton.me" class="cit" role="listitem">
           <div class="cico">✉️</div>
           <div class="clbl">E-posta</div>
-          <div class="cval">contact@aydinaydmr.com.tr</div>
+          <div class="cval">aydinaydmr@proton.me</div>
         </a>
         <a href="https://linkedin.com/in/aydinaydmr" target="_blank" rel="noopener" class="cit" role="listitem">
           <div class="cico">💼</div>
@@ -905,7 +911,7 @@ function sizePhoto(){
   const wrap=document.getElementById('hero-photo-wrap');
   const nameEl=document.querySelector('.hn');
   if(!wrap||!nameEl)return;
-  if(window.innerWidth<960){wrap.style.display='none';return;}
+  if(window.innerWidth<960){wrap.style.display='';const inn=document.getElementById('photo-inner');if(inn){inn.style.width='';inn.style.height=''}return;}
   wrap.style.display='';
   // Measure the widest line of the hero name
   const lines=nameEl.querySelectorAll('span.cy');
@@ -1267,3 +1273,10 @@ if('serviceWorker' in navigator){
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
