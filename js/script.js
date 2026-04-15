@@ -546,22 +546,10 @@ animatedElements.forEach(el => { if (el) observer.observe(el); });
 // === YUKARI ÇIK BUTONU + PROGRESS CIRCLE ===
 // ==============================================
 function scrollToTop() {
-    const scrollDuration = 1200;
-    const scrollStart = window.scrollY;
-    const scrollStartTime = performance.now();
-
-    function easeInOutCubic(t) {
-        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    }
-
-    function animate(currentTime) {
-        const elapsed = currentTime - scrollStartTime;
-        const progress = Math.min(elapsed / scrollDuration, 1);
-        window.scrollTo(0, scrollStart - scrollStart * easeInOutCubic(progress));
-        if (progress < 1) requestAnimationFrame(animate);
-    }
-
-    requestAnimationFrame(animate);
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function handleScrollButtonVisibility() {

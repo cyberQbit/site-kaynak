@@ -410,9 +410,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
 <body>
   <script>
     if(sessionStorage.getItem('skip_loader') === 'true') {
-      document.write('<style>#loader{display:none!important}*{animation-duration:0.01ms!important;animation-delay:0.01ms!important;transition-duration:0.01ms!important;}</style>');
-      sessionStorage.removeItem('skip_loader');
-    }
+        document.write('<style>#loader{display:none!important}#loader *{animation:none!important;transition:none!important}</style>');
   </script>
 
 <!-- LOADING SCREEN -->
