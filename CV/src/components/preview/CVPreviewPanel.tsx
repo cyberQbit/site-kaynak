@@ -1,61 +1,29 @@
-import { useRef, useState } from 'react';
-import { Download, FileText, Printer, Loader2 } from 'lucide-react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { useState } from 'react';
+import { Download, FileText, Printer, Loader2, Eye } from 'lucide-react';
 import type { CVData } from '../../types/cv';
 import { CVPreview } from './CVPreview';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { generatePDF } from '../../utils/pdfGenerator';
 
 interface CVPreviewPanelProps {
   data: CVData;
+  onMobileClose?: () => void;
 }
 
-export function CVPreviewPanel({ data }: CVPreviewPanelProps) {
-  const previewRef = useRef<HTMLDivElement>(null);
+export function CVPreviewPanel({ data, onMobileClose }: CVPreviewPanelProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const { theme } = useTheme();
   const { t } = useLanguage();
+  const isDark = theme === 'dark';
 
   const handleDownloadPDF = async () => {
-    if (!previewRef.current) return;
-
     setIsGenerating(true);
-    
     try {
-      const element = previewRef.current;
-      
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        windowWidth: element.scrollWidth,
-        windowHeight: element.scrollHeight,
-      });
-
-      const imgData = canvas.toDataURL('image/png');
-      
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight) * 0.95;
-      
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 5;
-      
-      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-      
-      const fileName = `${data.personalInfo.fullName || 'CV'}_${new Date().toISOString().split('T')[0]}.pdf`;
-      pdf.save(fileName);
-    } catch (error) {
-      console.error('PDF olusturma hatasi:', error);
-      alert('PDF olusturulurken bir hata olustu.');
+      generatePDF(data);
+    } catch (err) {
+      console.error('PDF hatası:', err);
+      alert('PDF oluşturulurken bir hata oluştu.');
     } finally {
       setIsGenerating(false);
     }
@@ -65,93 +33,132 @@ export function CVPreviewPanel({ data }: CVPreviewPanelProps) {
     window.print();
   };
 
-  const isEmpty = !data.personalInfo.fullName && 
-                  data.experience.length === 0 && 
-                  data.education.length === 0 && 
-                  data.skills.length === 0;
+  const isEmpty = !data.personalInfo.fullName &&
+    data.experience.length === 0 &&
+    data.education.length === 0 &&
+    data.skills.length === 0;
 
   return (
     <div className="h-full flex flex-col">
-      <div className={`flex items-center justify-between p-4 border-b no-print transition-colors duration-300 ${
-        theme === 'dark' 
-          ? 'bg-[#1F2937] border-[#4B5563]' 
-          : 'bg-white border-[#E2E8F0]'
-      }`}>
+      {/* Panel Header */}
+      <div
+        className="flex items-center justify-between px-4 py-3 border-b no-print flex-shrink-0"
+        style={{
+          backgroundColor: isDark ? '#1F2937' : '#ffffff',
+          borderColor: isDark ? '#374151' : '#E2E8F0',
+        }}
+      >
         <div className="flex items-center gap-2">
-          <FileText className={`w-5 h-5 ${
-            theme === 'dark' ? 'text-[#22D3EE]' : 'text-[#0062cc]'
-          }`} />
-          <h2 className={`font-semibold ${
-            theme === 'dark' ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
-          }`}>
+          <Eye className="w-4 h-4" style={{ color: isDark ? '#22D3EE' : '#0062cc' }} />
+          <span className="font-semibold text-sm" style={{ color: isDark ? '#F3F4F6' : '#1A202C' }}>
             {t('preview')}
-          </h2>
+          </span>
+          <span
+            className="text-xs px-2 py-0.5 rounded-full font-medium"
+            style={{
+              backgroundColor: isDark ? '#22D3EE20' : '#0062cc15',
+              color: isDark ? '#22D3EE' : '#0062cc',
+            }}
+          >
+            ATS
+          </span>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <button
             onClick={handlePrint}
-            disabled={isEmpty}
-            className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-              theme === 'dark'
-                ? 'text-[#F3F4F6] bg-[#374151] border border-[#4B5563] hover:bg-[#4B5563]'
-                : 'text-[#1A202C] bg-white border border-[#E2E8F0] hover:bg-[#F8F9FA]'
-            }`}
+            title="Yazdır"
+            className="p-2 rounded-lg transition-colors"
+            style={{
+              color: isDark ? '#9CA3AF' : '#4A5568',
+              backgroundColor: 'transparent',
+            }}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = isDark ? '#374151' : '#F1F3F5')}
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'transparent')}
           >
             <Printer className="w-4 h-4" />
-            <span className="hidden sm:inline">{t('print')}</span>
           </button>
-          
+
           <button
             onClick={handleDownloadPDF}
-            disabled={isEmpty || isGenerating}
-            className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
-              theme === 'dark'
-                ? 'text-[#111827] bg-[#22D3EE] hover:bg-[#0BC5EA] hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]'
-                : 'text-white bg-[#0062cc] hover:bg-[#004c9e] hover:shadow-[0_0_15px_rgba(0,98,204,0.4)]'
-            }`}
+            disabled={isGenerating || isEmpty}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all disabled:opacity-40"
+            style={{
+              backgroundColor: isDark ? '#22D3EE' : '#0062cc',
+              color: isDark ? '#111827' : '#ffffff',
+            }}
           >
             {isGenerating ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>...{t('download_pdf')}</span>
-              </>
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
             ) : (
-              <>
-                <Download className="w-4 h-4" />
-                <span>{t('download_pdf')}</span>
-              </>
+              <Download className="w-3.5 h-3.5" />
             )}
+            {isGenerating ? 'Hazırlanıyor...' : t('download_pdf')}
           </button>
+
+          {onMobileClose && (
+            <button
+              onClick={onMobileClose}
+              className="lg:hidden p-2 rounded-lg text-sm"
+              style={{ color: isDark ? '#9CA3AF' : '#4A5568' }}
+            >
+              ✕
+            </button>
+          )}
         </div>
       </div>
 
-      <div className={`flex-1 overflow-auto p-4 md:p-8 transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-[#111827]' : 'bg-[#F1F3F5]'
-      }`}>
+      {/* Preview Area */}
+      <div
+        className="flex-1 overflow-auto no-print"
+        style={{ backgroundColor: isDark ? '#111827' : '#F1F3F5' }}
+      >
         {isEmpty ? (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <FileText className={`w-16 h-16 mx-auto mb-4 ${
-                theme === 'dark' ? 'text-[#374151]' : 'text-[#E2E8F0]'
-              }`} />
-              <p className={theme === 'dark' ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}>
+            <div className="text-center p-8">
+              <FileText
+                className="w-14 h-14 mx-auto mb-3"
+                style={{ color: isDark ? '#374151' : '#D1D5DB' }}
+              />
+              <p className="font-medium" style={{ color: isDark ? '#9CA3AF' : '#4A5568' }}>
                 {t('no_data')}
               </p>
-              <p className={`text-sm mt-1 ${
-                theme === 'dark' ? 'text-[#6B7280]' : 'text-[#A0AEC0]'
-              }`}
-              >
+              <p className="text-sm mt-1" style={{ color: isDark ? '#6B7280' : '#9CA3AF' }}>
                 {t('add_info')}
               </p>
             </div>
           </div>
         ) : (
-          <div ref={previewRef} className="print-only">
-            <CVPreview data={data} />
+          <div className="py-6 px-2 flex justify-center">
+            <div
+              className="shadow-xl"
+              style={{
+                transform: 'scale(0.72)',
+                transformOrigin: 'top center',
+                marginBottom: 'calc((0.72 - 1) * 297mm)',
+              }}
+            >
+              <CVPreview data={data} />
+            </div>
           </div>
         )}
       </div>
+
+      {/* Print styles */}
+      <style>{`
+        @media print {
+          body * { visibility: hidden !important; }
+          #cv-preview-root, #cv-preview-root * { visibility: visible !important; }
+          #cv-preview-root {
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 210mm !important;
+            margin: 0 !important;
+            padding: 18mm !important;
+            box-shadow: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

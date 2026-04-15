@@ -1,233 +1,288 @@
+import { useState } from 'react';
 import { useCV } from './hooks/useCV';
 import { PersonalInfoForm } from './components/forms/PersonalInfoForm';
 import { ExperienceForm } from './components/forms/ExperienceForm';
 import { EducationForm } from './components/forms/EducationForm';
 import { SkillsForm } from './components/forms/SkillsForm';
+import { CertificatesForm, LanguagesForm } from './components/forms/CertificatesAndLanguages';
 import { GitHubProjectsForm } from './components/forms/GitHubProjectsForm';
-import { LinkedInImport } from './components/forms/LinkedInImport';
 import { CVPreviewPanel } from './components/preview/CVPreviewPanel';
-import { Footer } from './components/Footer';
-import { Preloader } from './components/Preloader';
+import { ATSScorePanel } from './components/ATSScorePanel';
+import { TemplateSelector } from './components/forms/TemplateSelector';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
-import { FileText, Sun, Moon, Home, Globe } from 'lucide-react';
+import {
+  FileText, Sun, Moon, Home, Eye, RotateCcw,
+  User, Briefcase, GraduationCap, Wrench, Award, Github, BarChart2
+} from 'lucide-react';
+
+const SECTIONS = [
+  { id: 'personal',  label: 'Kişisel',   icon: User },
+  { id: 'experience',label: 'Deneyim',   icon: Briefcase },
+  { id: 'education', label: 'Eğitim',    icon: GraduationCap },
+  { id: 'skills',    label: 'Yetenekler',icon: Wrench },
+  { id: 'extras',    label: 'Ekstralar', icon: Award },
+  { id: 'github',    label: 'GitHub',    icon: Github },
+  { id: 'ats',       label: 'ATS',       icon: BarChart2 },
+] as const;
+
+type SectionId = typeof SECTIONS[number]['id'];
 
 function AppContent() {
   const { theme, toggleTheme } = useTheme();
-  const { language, setLanguage, t } = useLanguage();
-  
+  const { language, setLanguage } = useLanguage();
+  const isDark = theme === 'dark';
+
+  const [activeSection, setActiveSection] = useState<SectionId>('personal');
+  const [showMobilePreview, setShowMobilePreview] = useState(false);
+
   const {
     cvData,
     updatePersonalInfo,
-    addExperience,
-    removeExperience,
-    addEducation,
-    removeEducation,
-    addSkill,
-    removeSkill,
-    addGitHubProject,
-    removeGitHubProject,
-    updateGitHubProject,
-    setCVDataFromLinkedIn,
+    addExperience, updateExperience, removeExperience,
+    addEducation, updateEducation, removeEducation,
+    addSkill, removeSkill,
+    addCertificate, removeCertificate,
+    addLanguage, removeLanguage,
+    addGitHubProject, removeGitHubProject, updateGitHubProject,
+    setTemplate,
+    resetCV,
   } = useCV();
 
-  const languages = [
-    { code: 'tr', label: 'TR' },
-    { code: 'en', label: 'EN' },
-    { code: 'es', label: 'ES' },
-  ];
+  const bg = isDark ? '#111827' : '#F5F7FA';
+  const panelBg = isDark ? '#1F2937' : '#FFFFFF';
+  const borderColor = isDark ? '#374151' : '#E2E8F0';
+  const textPrimary = isDark ? '#F3F4F6' : '#1A202C';
+  const textMuted = isDark ? '#9CA3AF' : '#6B7280';
+  const accent = isDark ? '#22D3EE' : '#0062cc';
 
-  const isDark = theme === 'dark';
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'personal':
+        return (
+          <div className="space-y-6">
+            <TemplateSelector current={cvData.template} onChange={setTemplate} />
+            <PersonalInfoForm data={cvData.personalInfo} onChange={updatePersonalInfo} />
+          </div>
+        );
+      case 'experience':
+        return (
+          <ExperienceForm
+            experience={cvData.experience}
+            onAdd={addExperience}
+            onUpdate={updateExperience}
+            onRemove={removeExperience}
+          />
+        );
+      case 'education':
+        return (
+          <EducationForm
+            education={cvData.education}
+            onAdd={addEducation}
+            onUpdate={updateEducation}
+            onRemove={removeEducation}
+          />
+        );
+      case 'skills':
+        return (
+          <SkillsForm skills={cvData.skills} onAdd={addSkill} onRemove={removeSkill} />
+        );
+      case 'extras':
+        return (
+          <div className="space-y-6">
+            <CertificatesForm
+              certificates={cvData.certificates}
+              onAdd={addCertificate}
+              onRemove={removeCertificate}
+            />
+            <div style={{ borderTop: `1px solid ${borderColor}`, paddingTop: '1.5rem' }}>
+              <LanguagesForm
+                languages={cvData.languages}
+                onAdd={addLanguage}
+                onRemove={removeLanguage}
+              />
+            </div>
+          </div>
+        );
+      case 'github':
+        return (
+          <GitHubProjectsForm
+            githubUsername={cvData.personalInfo.github}
+            projects={cvData.githubProjects}
+            onUsernameChange={u => updatePersonalInfo({ github: u })}
+            onAddProject={addGitHubProject}
+            onRemoveProject={removeGitHubProject}
+            onUpdateProject={updateGitHubProject}
+          />
+        );
+      case 'ats':
+        return <ATSScorePanel data={cvData} />;
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div 
-      className="min-h-screen flex flex-col"
-      style={{ 
-        backgroundColor: isDark ? '#111827' : '#FDFDFD',
-        color: isDark ? '#F3F4F6' : '#1A202C'
-      }}
-    >
-      <Preloader />
-      
-      {/* Header */}
-      <header 
-        className="sticky top-0 z-50 border-b"
-        style={{ 
-          backgroundColor: isDark ? '#1F2937' : '#FFFFFF',
-          borderColor: isDark ? '#4B5563' : '#E2E8F0'
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: bg, color: textPrimary }}>
+
+      {/* ── HEADER ─────────────────────────────────────────────── */}
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        backgroundColor: panelBg, borderBottom: `1px solid ${borderColor}`,
+      }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div 
-                className="p-2 rounded-lg"
-                style={{ backgroundColor: isDark ? '#22D3EE' : '#0062cc' }}
-              >
-                <FileText className="w-5 h-5 text-white" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ backgroundColor: accent, borderRadius: '8px', padding: '6px' }}>
+                <FileText style={{ width: '18px', height: '18px', color: '#fff' }} />
               </div>
               <div>
-                <h1 className="text-xl font-bold" style={{ color: isDark ? '#F3F4F6' : '#1A202C' }}>
-                  {t('app_title')}
-                </h1>
-                <p className="text-xs" style={{ color: isDark ? '#9CA3AF' : '#4A5568' }}>
-                  {t('app_subtitle')}
-                </p>
+                <p style={{ fontWeight: 700, fontSize: '15px', lineHeight: 1 }}>CV Oluşturucu</p>
+                <p style={{ fontSize: '11px', color: textMuted, lineHeight: 1, marginTop: '2px' }}>ATS Uyumlu Profesyonel CV</p>
               </div>
             </div>
-            
-            {/* Navigation */}
-            <div className="flex items-center gap-2">
-              {/* Home Link */}
-              <a 
-                href="https://aydinaydmr.com.tr" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105"
-                style={{ 
-                  color: isDark ? '#22D3EE' : '#0062cc',
-                  backgroundColor: isDark ? 'rgba(34, 211, 238, 0.1)' : 'rgba(0, 98, 204, 0.1)'
-                }}
-              >
-                <Home className="w-4 h-4" />
-                <span className="hidden sm:inline">{t('home')}</span>
-              </a>
 
-              {/* Language Switcher */}
-              <div 
-                className="flex items-center gap-1 p-1 rounded-lg"
-                style={{ backgroundColor: isDark ? '#374151' : '#F1F3F5' }}
-              >
-                <Globe className="w-4 h-4 mx-1" style={{ color: isDark ? '#9CA3AF' : '#4A5568' }} />
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => setLanguage(lang.code as 'tr' | 'en' | 'es')}
-                    className="px-2 py-1 text-xs font-semibold rounded transition-all duration-200"
-                    style={{
-                      backgroundColor: language === lang.code 
-                        ? isDark ? 'rgba(34, 211, 238, 0.2)' : 'rgba(0, 98, 204, 0.1)'
-                        : 'transparent',
-                      color: language === lang.code
-                        ? isDark ? '#22D3EE' : '#0062cc'
-                        : isDark ? '#9CA3AF' : '#4A5568'
-                    }}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
+            {/* Actions */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {/* Lang */}
+              {(['tr','en','es'] as const).map(lang => (
+                <button key={lang}
+                  onClick={() => setLanguage(lang)}
+                  style={{
+                    padding: '4px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 600, border: 'none', cursor: 'pointer',
+                    backgroundColor: language === lang ? (isDark ? '#22D3EE20' : '#0062cc15') : 'transparent',
+                    color: language === lang ? accent : textMuted,
+                  }}
+                >
+                  {lang.toUpperCase()}
+                </button>
+              ))}
 
-              {/* Theme Toggle */}
+              {/* Mobile preview button */}
               <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg transition-all duration-200 hover:scale-110"
-                style={{ 
-                  color: isDark ? '#22D3EE' : '#0062cc',
-                  backgroundColor: isDark ? 'transparent' : 'transparent'
+                onClick={() => setShowMobilePreview(true)}
+                className="lg:hidden"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '4px',
+                  padding: '6px 12px', borderRadius: '8px', fontSize: '12px', fontWeight: 600,
+                  backgroundColor: isDark ? '#22D3EE20' : '#0062cc15',
+                  color: accent, border: 'none', cursor: 'pointer',
                 }}
-                aria-label={isDark ? t('light_mode') : t('dark_mode')}
               >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                <Eye style={{ width: '14px', height: '14px' }} />
+                Önizle
               </button>
+
+              {/* Reset */}
+              <button
+                onClick={() => { if (confirm('CV verilerini sıfırlamak istediğinizden emin misiniz?')) resetCV(); }}
+                title="Sıfırla"
+                style={{
+                  padding: '6px', borderRadius: '8px', border: 'none', cursor: 'pointer',
+                  backgroundColor: 'transparent', color: textMuted,
+                }}
+              >
+                <RotateCcw style={{ width: '16px', height: '16px' }} />
+              </button>
+
+              {/* Theme */}
+              <button onClick={toggleTheme}
+                style={{
+                  padding: '6px', borderRadius: '8px', border: 'none', cursor: 'pointer',
+                  backgroundColor: 'transparent', color: accent,
+                }}
+              >
+                {isDark ? <Sun style={{ width: '18px', height: '18px' }} /> : <Moon style={{ width: '18px', height: '18px' }} />}
+              </button>
+
+              <a href="/"
+                style={{
+                  padding: '6px', borderRadius: '8px', color: textMuted,
+                  display: 'flex', alignItems: 'center',
+                }}
+              >
+                <Home style={{ width: '16px', height: '16px' }} />
+              </a>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-          style={{ height: 'calc(100vh - 8rem)' }}
-        >
-          {/* Left Panel - Forms */}
-          <div 
-            className="rounded-xl shadow-sm border overflow-hidden flex flex-col"
-            style={{ 
-              backgroundColor: isDark ? '#1F2937' : '#FFFFFF',
-              borderColor: isDark ? '#4B5563' : '#E2E8F0'
-            }}
-          >
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-8">
-              <LinkedInImport onImport={setCVDataFromLinkedIn} />
-              
-              <div 
-                className="border-t pt-6"
-                style={{ borderColor: isDark ? '#374151' : '#E2E8F0' }}
-              >
-                <PersonalInfoForm 
-                  data={cvData.personalInfo} 
-                  onChange={updatePersonalInfo} 
-                />
-              </div>
-              
-              <div 
-                className="border-t pt-6"
-                style={{ borderColor: isDark ? '#374151' : '#E2E8F0' }}
-              >
-                <ExperienceForm
-                  experience={cvData.experience}
-                  onAdd={addExperience}
-                  onUpdate={() => {}}
-                  onRemove={removeExperience}
-                />
-              </div>
-              
-              <div 
-                className="border-t pt-6"
-                style={{ borderColor: isDark ? '#374151' : '#E2E8F0' }}
-              >
-                <EducationForm
-                  education={cvData.education}
-                  onAdd={addEducation}
-                  onUpdate={() => {}}
-                  onRemove={removeEducation}
-                />
-              </div>
+      {/* ── MAIN ───────────────────────────────────────────────── */}
+      <main style={{ flex: 1, maxWidth: '1400px', margin: '0 auto', width: '100%', padding: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', height: 'calc(100vh - 6rem)' }}
+          className="grid-cols-1-on-mobile">
 
-              <div 
-                className="border-t pt-6"
-                style={{ borderColor: isDark ? '#374151' : '#E2E8F0' }}
-              >
-                <GitHubProjectsForm
-                  githubUsername={cvData.personalInfo.github}
-                  projects={cvData.githubProjects}
-                  onUsernameChange={(username) => updatePersonalInfo({ github: username })}
-                  onAddProject={addGitHubProject}
-                  onRemoveProject={removeGitHubProject}
-                  onUpdateProject={updateGitHubProject}
-                />
-              </div>
-              
-              <div 
-                className="border-t pt-6"
-                style={{ borderColor: isDark ? '#374151' : '#E2E8F0' }}
-              >
-                <SkillsForm
-                  skills={cvData.skills}
-                  onAdd={addSkill}
-                  onRemove={removeSkill}
-                />
-              </div>
+          {/* ── LEFT PANEL ─────────────────────────────────── */}
+          <div style={{
+            borderRadius: '16px', border: `1px solid ${borderColor}`,
+            backgroundColor: panelBg, display: 'flex', flexDirection: 'column', overflow: 'hidden',
+          }}>
+            {/* Section tabs */}
+            <div style={{
+              display: 'flex', overflowX: 'auto', borderBottom: `1px solid ${borderColor}`,
+              padding: '0 4px', gap: '2px', flexShrink: 0,
+            }}>
+              {SECTIONS.map(sec => {
+                const Icon = sec.icon;
+                const active = activeSection === sec.id;
+                return (
+                  <button
+                    key={sec.id}
+                    onClick={() => setActiveSection(sec.id)}
+                    style={{
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
+                      padding: '8px 10px', borderRadius: '8px', border: 'none', cursor: 'pointer',
+                      backgroundColor: active ? (isDark ? '#22D3EE15' : '#0062cc10') : 'transparent',
+                      color: active ? accent : textMuted,
+                      borderBottom: active ? `2px solid ${accent}` : '2px solid transparent',
+                      whiteSpace: 'nowrap', fontSize: '11px', fontWeight: active ? 600 : 400,
+                      transition: 'all 0.15s',
+                      minWidth: '56px',
+                    }}
+                  >
+                    <Icon style={{ width: '15px', height: '15px' }} />
+                    {sec.label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Section content */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '1.25rem 1rem' }}>
+              {renderSection()}
             </div>
           </div>
 
-          {/* Right Panel - Preview */}
-          <div 
-            className="rounded-xl shadow-sm border overflow-hidden hidden lg:flex flex-col"
-            style={{ 
-              backgroundColor: isDark ? '#1F2937' : '#FFFFFF',
-              borderColor: isDark ? '#4B5563' : '#E2E8F0'
-            }}
+          {/* ── RIGHT PANEL (desktop) ─────────────────────── */}
+          <div style={{
+            borderRadius: '16px', border: `1px solid ${borderColor}`,
+            backgroundColor: panelBg, display: 'flex', flexDirection: 'column', overflow: 'hidden',
+          }}
+            className="hidden lg:flex"
           >
             <CVPreviewPanel data={cvData} />
           </div>
         </div>
       </main>
 
-      <Footer />
+      {/* ── MOBILE PREVIEW OVERLAY ──────────────────────────── */}
+      {showMobilePreview && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 100,
+          backgroundColor: panelBg, display: 'flex', flexDirection: 'column',
+        }}>
+          <CVPreviewPanel data={cvData} onMobileClose={() => setShowMobilePreview(false)} />
+        </div>
+      )}
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .hidden.lg\\:flex { display: none !important; }
+          main > div { grid-template-columns: 1fr !important; height: auto !important; }
+        }
+      `}</style>
     </div>
   );
 }

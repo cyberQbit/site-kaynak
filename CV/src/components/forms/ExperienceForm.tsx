@@ -1,219 +1,214 @@
 import { useState } from 'react';
-import { Briefcase, Plus, Trash2, Calendar, Building2 } from 'lucide-react';
+import { Briefcase, Plus, Trash2, Pencil, Check, X } from 'lucide-react';
 import type { Experience } from '../../types/cv';
 import { useTheme } from '../../context/ThemeContext';
 import { useLanguage } from '../../context/LanguageContext';
 
 interface ExperienceFormProps {
   experience: Experience[];
-  onAdd: (experience: Omit<Experience, 'id'>) => void;
-  onUpdate: (id: string, experience: Partial<Experience>) => void;
+  onAdd: (exp: Omit<Experience, 'id'>) => void;
+  onUpdate: (id: string, exp: Partial<Experience>) => void;
   onRemove: (id: string) => void;
 }
 
-export function ExperienceForm({ experience, onAdd, onUpdate: _onUpdate, onRemove }: ExperienceFormProps) {
-  const [isAdding, setIsAdding] = useState(false);
-  const [newExperience, setNewExperience] = useState<Omit<Experience, 'id'>>({
-    company: '',
-    position: '',
-    startDate: '',
-    endDate: '',
-    current: false,
-    description: '',
-  });
+const emptyExp = (): Omit<Experience, 'id'> => ({
+  company: '', position: '', startDate: '', endDate: '', current: false, description: '', bullets: [],
+});
 
+function formatDate(d: string) {
+  if (!d) return '';
+  const [y, m] = d.split('-');
+  const months = ['Oca','Şub','Mar','Nis','May','Haz','Tem','Ağu','Eyl','Eki','Kas','Ara'];
+  return `${months[parseInt(m)-1]||''} ${y}`;
+}
+
+export function ExperienceForm({ experience, onAdd, onUpdate, onRemove }: ExperienceFormProps) {
   const { theme } = useTheme();
   const { t } = useLanguage();
   const isDark = theme === 'dark';
 
+  const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [draft, setDraft] = useState<Omit<Experience, 'id'>>(emptyExp());
+  const [editDraft, setEditDraft] = useState<Partial<Experience>>({});
+
+  const inputClass = `w-full px-3 py-2 rounded-lg border text-sm outline-none transition-colors focus:ring-2 ${
+    isDark
+      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE]/40 focus:border-[#22D3EE]'
+      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc]/30 focus:border-[#0062cc]'
+  }`;
+  const labelClass = `block text-xs font-medium mb-1 ${isDark ? 'text-[#D1D5DB]' : 'text-[#374151]'}`;
+
+  function ExpFields({ values, onChange }: {
+    values: Omit<Experience, 'id'>; onChange: (v: Partial<Experience>) => void;
+  }) {
+    return (
+      <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="col-span-2">
+            <label className={labelClass}>Şirket Adı *</label>
+            <input type="text" value={values.company}
+              onChange={e => onChange({ company: e.target.value })}
+              placeholder="Google, Microsoft..." className={inputClass} />
+          </div>
+          <div className="col-span-2">
+            <label className={labelClass}>Pozisyon *</label>
+            <input type="text" value={values.position}
+              onChange={e => onChange({ position: e.target.value })}
+              placeholder="Senior Frontend Developer" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Başlangıç</label>
+            <input type="month" value={values.startDate}
+              onChange={e => onChange({ startDate: e.target.value })}
+              className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Bitiş</label>
+            <input type="month" value={values.endDate}
+              onChange={e => onChange({ endDate: e.target.value })}
+              disabled={values.current} className={inputClass}
+              style={{ opacity: values.current ? 0.4 : 1 }} />
+            <label className={`flex items-center gap-1.5 mt-1 text-xs cursor-pointer ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
+              <input type="checkbox" checked={values.current}
+                onChange={e => onChange({ current: e.target.checked, endDate: '' })}
+                className="rounded" />
+              Hâlâ çalışıyorum
+            </label>
+          </div>
+          <div className="col-span-2">
+            <label className={labelClass}>Açıklama</label>
+            <textarea value={values.description}
+              onChange={e => onChange({ description: e.target.value })}
+              placeholder="Rolünüzü ve sorumluluklarınızı açıklayın..."
+              rows={3} className={`${inputClass} resize-none`} />
+          </div>
+          <div className="col-span-2">
+            <label className={labelClass}>Başarılar / Maddeler</label>
+            <div className="space-y-2">
+              {(values.bullets || []).map((b, i) => (
+                <div key={i} className="flex gap-2">
+                  <input type="text" value={b}
+                    onChange={e => {
+                      const bullets = [...(values.bullets || [])];
+                      bullets[i] = e.target.value;
+                      onChange({ bullets });
+                    }}
+                    className={`${inputClass} flex-1`} placeholder="Başarı veya sorumluluk..." />
+                  <button onClick={() => {
+                    const bullets = (values.bullets || []).filter((_, j) => j !== i);
+                    onChange({ bullets });
+                  }} className={`p-2 rounded-lg ${isDark ? 'text-red-400 hover:bg-red-900/20' : 'text-red-500 hover:bg-red-50'}`}>
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() => onChange({ bullets: [...(values.bullets || []), ''] })}
+                className={`text-xs flex items-center gap-1 px-2 py-1 rounded transition-colors ${
+                  isDark ? 'text-[#22D3EE] hover:bg-[#22D3EE]/10' : 'text-[#0062cc] hover:bg-[#0062cc]/10'
+                }`}
+              >
+                <Plus className="w-3 h-3" /> Madde ekle
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const handleAdd = () => {
-    if (newExperience.company && newExperience.position) {
-      onAdd(newExperience);
-      setNewExperience({
-        company: '',
-        position: '',
-        startDate: '',
-        endDate: '',
-        current: false,
-        description: '',
-      });
-      setIsAdding(false);
-    }
+    if (!draft.company || !draft.position) return;
+    onAdd(draft);
+    setDraft(emptyExp());
+    setIsAdding(false);
   };
 
-  const inputClasses = `w-full px-4 py-2.5 border rounded-lg focus:ring-2 transition-all text-sm ${
-    isDark
-      ? 'bg-[#374151] border-[#4B5563] text-[#F3F4F6] placeholder-[#6B7280] focus:ring-[#22D3EE] focus:border-[#22D3EE]'
-      : 'bg-white border-[#E2E8F0] text-[#1A202C] placeholder-[#A0AEC0] focus:ring-[#0062cc] focus:border-[#0062cc]'
-  }`;
-
-  const labelClasses = `block text-sm font-medium mb-1.5 ${
-    isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
-  }`;
-
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className={`text-lg font-semibold flex items-center gap-2 ${
-          isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'
-        }`}>
-          <Briefcase className={`w-5 h-5 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`} />
+        <h3 className={`font-semibold text-sm flex items-center gap-2 ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>
+          <Briefcase className={`w-4 h-4 ${isDark ? 'text-[#22D3EE]' : 'text-[#0062cc]'}`} />
           {t('experience')}
+          {experience.length > 0 && (
+            <span className={`text-xs px-1.5 py-0.5 rounded-full ${isDark ? 'bg-[#374151] text-[#9CA3AF]' : 'bg-[#F1F3F5] text-[#4A5568]'}`}>
+              {experience.length}
+            </span>
+          )}
         </h3>
         <button
-          onClick={() => setIsAdding(!isAdding)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
-            isDark
-              ? 'text-[#22D3EE] bg-[#22D3EE]/10 hover:bg-[#22D3EE]/20'
-              : 'text-[#0062cc] bg-[#0062cc]/10 hover:bg-[#0062cc]/20'
+          onClick={() => { setIsAdding(!isAdding); setDraft(emptyExp()); }}
+          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            isDark ? 'text-[#22D3EE] bg-[#22D3EE]/10 hover:bg-[#22D3EE]/20' : 'text-[#0062cc] bg-[#0062cc]/10 hover:bg-[#0062cc]/20'
           }`}
         >
-          <Plus className="w-4 h-4" />
-          {isAdding ? 'Iptal' : 'Ekle'}
+          {isAdding ? <><X className="w-3 h-3" /> İptal</> : <><Plus className="w-3 h-3" /> Ekle</>}
         </button>
       </div>
 
+      {/* Add Form */}
       {isAdding && (
-        <div className={`p-4 rounded-lg border space-y-4 ${
-          isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'
-        }`}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="md:col-span-2">
-              <label className={labelClasses}>Sirket Adi *</label>
-              <div className="relative">
-                <Building2 className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
-                  isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
-                }`} />
-                <input
-                  type="text"
-                  value={newExperience.company}
-                  onChange={(e) => setNewExperience({ ...newExperience, company: e.target.value })}
-                  placeholder="ornegin: Microsoft"
-                  className={`${inputClasses} pl-10`}
-                />
-              </div>
-            </div>
-
-            <div className="md:col-span-2">
-              <label className={labelClasses}>Pozisyon *</label>
-              <input
-                type="text"
-                value={newExperience.position}
-                onChange={(e) => setNewExperience({ ...newExperience, position: e.target.value })}
-                placeholder="ornegin: Senior Software Engineer"
-                className={inputClasses}
-              />
-            </div>
-
-            <div>
-              <label className={labelClasses}>Baslangic Tarihi</label>
-              <div className="relative">
-                <Calendar className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
-                  isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
-                }`} />
-                <input
-                  type="month"
-                  value={newExperience.startDate}
-                  onChange={(e) => setNewExperience({ ...newExperience, startDate: e.target.value })}
-                  className={`${inputClasses} pl-10`}
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className={labelClasses}>Bitis Tarihi</label>
-              <div className="relative">
-                <Calendar className={`w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 ${
-                  isDark ? 'text-[#9CA3AF]' : 'text-[#A0AEC0]'
-                }`} />
-                <input
-                  type="month"
-                  value={newExperience.endDate}
-                  onChange={(e) => setNewExperience({ ...newExperience, endDate: e.target.value })}
-                  disabled={newExperience.current}
-                  className={`${inputClasses} pl-10 ${newExperience.current ? (isDark ? 'bg-[#1F2937]' : 'bg-[#F1F3F5]') : ''}`}
-                />
-              </div>
-              <label className={`flex items-center gap-2 mt-2 text-sm ${
-                isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'
-              }`}>
-                <input
-                  type="checkbox"
-                  checked={newExperience.current}
-                  onChange={(e) => setNewExperience({ ...newExperience, current: e.target.checked, endDate: '' })}
-                  className={`rounded ${isDark ? 'border-[#4B5563] text-[#22D3EE] focus:ring-[#22D3EE]' : 'border-[#E2E8F0] text-[#0062cc] focus:ring-[#0062cc]'}`}
-                />
-                Halen calisiyorum
-              </label>
-            </div>
-
-            <div className="md:col-span-2">
-              <label className={labelClasses}>Aciklama</label>
-              <textarea
-                value={newExperience.description}
-                onChange={(e) => setNewExperience({ ...newExperience, description: e.target.value })}
-                placeholder="Gorevlerinizi ve basarilarinizi aciklayin..."
-                rows={4}
-                className={`${inputClasses} resize-none`}
-              />
-            </div>
-          </div>
-
-          <div className="flex justify-end">
-            <button
-              onClick={handleAdd}
-              className={`px-4 py-2 text-white text-sm font-medium rounded-lg transition-colors ${
-                isDark
-                  ? 'bg-[#22D3EE] hover:bg-[#0BC5EA] text-[#111827]'
-                  : 'bg-[#0062cc] hover:bg-[#004c9e]'
-              }`}
-            >
+        <div className={`p-4 rounded-xl border space-y-4 ${isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-[#F8F9FA] border-[#E2E8F0]'}`}>
+          <ExpFields values={draft} onChange={v => setDraft(prev => ({ ...prev, ...v }))} />
+          <div className="flex justify-end gap-2">
+            <button onClick={() => setIsAdding(false)}
+              className={`px-3 py-1.5 rounded-lg text-sm ${isDark ? 'text-[#9CA3AF] hover:bg-[#4B5563]' : 'text-[#4A5568] hover:bg-[#E2E8F0]'}`}>
+              İptal
+            </button>
+            <button onClick={handleAdd}
+              disabled={!draft.company || !draft.position}
+              className={`px-4 py-1.5 rounded-lg text-sm font-medium text-white disabled:opacity-40 ${isDark ? 'bg-[#22D3EE] text-[#111827] hover:bg-[#0BC5EA]' : 'bg-[#0062cc] hover:bg-[#004c9e]'}`}>
               Kaydet
             </button>
           </div>
         </div>
       )}
 
-      <div className="space-y-3">
-        {experience.map((exp) => (
-          <div key={exp.id} className={`p-4 rounded-lg border ${
-            isDark ? 'bg-[#374151] border-[#4B5563]' : 'bg-white border-[#E2E8F0]'
-          }`}>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <h4 className={`font-medium ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>
-                  {exp.position}
-                </h4>
-                <p className={`text-sm ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>{exp.company}</p>
-                <p className={`text-xs mt-1 ${isDark ? 'text-[#6B7280]' : 'text-[#A0AEC0]'}`}>
-                  {exp.startDate && new Date(exp.startDate).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })}
-                  {' - '}
-                  {exp.current ? 'Devam ediyor' : exp.endDate && new Date(exp.endDate).toLocaleDateString('tr-TR', { month: 'long', year: 'numeric' })}
-                </p>
-                {exp.description && (
-                  <p className={`text-sm mt-2 line-clamp-2 ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
-                    {exp.description}
-                  </p>
-                )}
+      {/* List */}
+      <div className="space-y-2">
+        {experience.map(exp => (
+          <div key={exp.id} className={`rounded-xl border ${isDark ? 'bg-[#1F2937] border-[#374151]' : 'bg-white border-[#E2E8F0]'}`}>
+            {editingId === exp.id ? (
+              <div className="p-4 space-y-4">
+                <ExpFields
+                  values={{ ...exp, ...editDraft }}
+                  onChange={v => setEditDraft(prev => ({ ...prev, ...v }))}
+                />
+                <div className="flex justify-end gap-2">
+                  <button onClick={() => { setEditingId(null); setEditDraft({}); }}
+                    className={`px-3 py-1.5 rounded-lg text-sm ${isDark ? 'text-[#9CA3AF] hover:bg-[#374151]' : 'text-[#4A5568] hover:bg-[#F1F3F5]'}`}>
+                    İptal
+                  </button>
+                  <button onClick={() => { onUpdate(exp.id, editDraft); setEditingId(null); setEditDraft({}); }}
+                    className={`px-4 py-1.5 rounded-lg text-sm font-medium text-white ${isDark ? 'bg-[#22D3EE] text-[#111827]' : 'bg-[#0062cc]'}`}>
+                    <Check className="w-3.5 h-3.5 inline mr-1" />Güncelle
+                  </button>
+                </div>
               </div>
-              <button
-                onClick={() => onRemove(exp.id)}
-                className={`p-1.5 transition-colors ${
-                  isDark ? 'text-[#9CA3AF] hover:text-red-400' : 'text-[#A0AEC0] hover:text-red-500'
-                }`}
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
+            ) : (
+              <div className="p-3 flex items-start justify-between gap-2">
+                <div className="flex-1 min-w-0">
+                  <p className={`font-medium text-sm truncate ${isDark ? 'text-[#F3F4F6]' : 'text-[#1A202C]'}`}>{exp.position}</p>
+                  <p className={`text-xs truncate ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>{exp.company}</p>
+                  <p className={`text-xs mt-0.5 ${isDark ? 'text-[#6B7280]' : 'text-[#9CA3AF]'}`}>
+                    {formatDate(exp.startDate)} – {exp.current ? 'Günümüz' : formatDate(exp.endDate)}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <button onClick={() => { setEditingId(exp.id); setEditDraft({}); }}
+                    className={`p-1.5 rounded-lg transition-colors ${isDark ? 'text-[#9CA3AF] hover:bg-[#374151]' : 'text-[#4A5568] hover:bg-[#F1F3F5]'}`}>
+                    <Pencil className="w-3.5 h-3.5" />
+                  </button>
+                  <button onClick={() => onRemove(exp.id)}
+                    className={`p-1.5 rounded-lg transition-colors ${isDark ? 'text-red-400 hover:bg-red-900/20' : 'text-red-500 hover:bg-red-50'}`}>
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         ))}
-
-        {experience.length === 0 && !isAdding && (
-          <div className={`text-center py-8 ${isDark ? 'text-[#9CA3AF]' : 'text-[#4A5568]'}`}>
-            <Briefcase className={`w-12 h-12 mx-auto mb-3 ${isDark ? 'text-[#374151]' : 'text-[#E2E8F0]'}`} />
-            <p className="text-sm">Henuz is deneyimi eklenmemis</p>
-          </div>
-        )}
       </div>
     </div>
   );
