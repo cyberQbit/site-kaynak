@@ -22,7 +22,7 @@ const _ak = () => atob('MTE0YWFlY2EtZWU2Yi00ZmZmLTgwODMtZjI0MjY5ZmM0MDc1');
 // ==============================================
 const translations = {
     "tr": {
-        "portfolio_title": "Aydın Aydemir'in Portföyü",
+        "portfolio_title": "Aydın Aydemir (cyberQbit) | Portföy",
         "profile_name": "Aydın<br>Aydemir",
         "bio": "Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım ve Kodlama alanlarında öğrenim gören, teknolojiye meraklı bir öğrenciyim.",
         "linkedin_label": "Aydın Aydemir'in LinkedIn Profilini Ziyaret Et",
@@ -143,7 +143,7 @@ const translations = {
         "sponsor_btn_text": "cyberQbit'e Sponsor Ol"
     },
     "en": {
-        "portfolio_title": "Aydın Aydemir's Portfolio",
+        "portfolio_title": "Aydın Aydemir (cyberQbit) | Portfolio",
         "profile_name": "Aydın<br>Aydemir",
         "bio": "I am a technology enthusiast studying Computer Programming at Ankara University and Web Design and Coding at Atatürk University.",
         "linkedin_label": "Visit Aydın Aydemir's LinkedIn Profile",
@@ -264,7 +264,7 @@ const translations = {
         "sponsor_btn_text": "Sponsor cyberQbit"
     },
     "es": {
-        "portfolio_title": "Portafolio de Aydın Aydemir",
+        "portfolio_title": "Aydın Aydemir (cyberQbit) | Portafolio",
         "profile_name": "Aydın<br>Aydemir",
         "bio": "Soy un entusiasta de la tecnología que estudia Programación Informática en la Universidad de Ankara y Diseño y Codificación Web en la Universidad de Atatürk.",
         "linkedin_label": "Visitar el Perfil de LinkedIn de Aydın Aydemir",
@@ -1080,4 +1080,5 @@ window.addEventListener('load', () => {
 
     hidePreloader();
 });
+
 
