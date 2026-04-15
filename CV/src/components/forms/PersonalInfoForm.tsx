@@ -101,7 +101,7 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
           <textarea
             value={data.summary}
             onChange={e => onChange({ summary: e.target.value })}
-            placeholder="5+ yıllık deneyime sahip, React ve Node.js uzmanı yazılım geliştirici..."
+            placeholder={t('summary_placeholder')}
             rows={4}
             className="cvi"
             style={{ paddingLeft: '12px' }}
@@ -109,10 +109,10 @@ export function PersonalInfoForm({ data, onChange }: PersonalInfoFormProps) {
           {/* Word count + tip */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '5px' }}>
             <p style={{ fontSize: '11px', color: tm }}>
-              💡 İş ilanındaki anahtar kelimeleri kullanın — ATS skoru artar
+              {t('summary_tip')}
             </p>
             <span style={{ fontSize: '11px', color: data.summary.length > 50 ? ACCENT : tm, fontWeight: 600 }}>
-              {data.summary.length} kr
+              {data.summary.length} {t('chars')}
             </span>
           </div>
         </div>
