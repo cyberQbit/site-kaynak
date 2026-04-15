@@ -164,7 +164,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;ali
 .tbtn{background:rgba(56,189,248,.07);border:1px solid var(--acc-r);color:var(--acc);font-family:var(--mono);font-size:10.5px;font-weight:500;padding:5px 11px;border-radius:var(--r-sm);cursor:pointer;transition:all var(--t);letter-spacing:.4px}
 .tbtn:hover{background:rgba(56,189,248,.14)}
 .ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:5px;cursor:pointer}
-.ham span{display:block;width:22px;height:2px;background:var(--tm);border-radius:2px;transition:all .3s}
+.ham span{display:block;width:22px;height:2px;background:var(--tm);border-radius:2px;transition:transform .3s ease, opacity .3s ease, background .3s;transform-origin:center}
+  .ham.act span:nth-child(1){transform:translateY(7px) rotate(45deg);background:var(--tp)}
+  .ham.act span:nth-child(2){opacity:0}
+  .ham.act span:nth-child(3){transform:translateY(-7px) rotate(-45deg);background:var(--tp)}
 
 /* ═══ MOBILE MENU ═══ */
 #mob-menu{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(6,12,24,.97);border-bottom:1px solid var(--pnl-bd);z-index:99;padding:16px 28px;flex-direction:column;gap:4px;backdrop-filter:blur(22px)}
@@ -390,7 +393,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   .cgrid{grid-template-columns:1fr}
   .sb{gap:20px}
   .cc{padding:36px 22px}
-  .nl{gap:4px}
+  .nl{gap:6px;margin-left:8px}
   .tbtn{padding:4px 7px;font-size:9.5px;letter-spacing:0}
     .ncta{padding:5px 10px;font-size:10px;gap:4px}
     .hero-photo-inner{width:130px!important;height:130px!important;margin:0 auto}
@@ -401,6 +404,8 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
   #bg-canvas{display:none}
 }
 </style>
+
+<style>.lang-sel{display:inline-flex;gap:4px;margin-left:8px;font-family:var(--body);font-size:11px;align-items:center}.lang-btn{background:transparent;border:1px solid var(--pnl-bd);color:var(--tp);cursor:pointer;border-radius:var(--r-sm);padding:3px 6px;transition:var(--t);outline:none}.lang-btn:hover{background:var(--acc-d);color:#fff}.VIpgJd-ZVi9od-ORHb-OEVmcd{display:none!important;}.goog-te-banner-frame{display:none!important}body{top:0!important}</style>
 </head>
 <body>
 
@@ -421,7 +426,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <!-- SCROLL TOP BUTTON -->
-<button id="scroll-top" aria-label="Sayfanın başına dön" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+<button id="scroll-top" aria-label="Sayfanın başına dön" onclick="smoothS(0,800)">
   <div class="inner-bg"></div>
   <svg class="ring" viewBox="0 0 48 48" aria-hidden="true">
     <circle class="ring-bg" cx="24" cy="24" r="22"/>
@@ -447,7 +452,12 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
       <button class="nb" onclick="scr('about')">Hakkında</button>
       <button class="tbtn" onclick="toggleTerm()" aria-label="Terminal aç/kapat">⌘ Terminal</button>
       <a href="https://aydinaydmr.com.tr/CV-olustur/" class="ncta" onclick="return cvTransition(event)">CV Oluştur →</a>
-      <button class="ham" id="ham-btn" onclick="toggleMob()" aria-label="Menüyü aç/kapat" aria-expanded="false">
+      <div class="lang-sel" translate="no">
+          <button class="lang-btn" onclick="changeLanguage('tr')">TR</button>
+          <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
+          <button class="lang-btn" onclick="changeLanguage('es')">ES</button>
+        </div>
+        <button class="ham" id="ham-btn" onclick="toggleMob()" aria-label="Menüyü aç/kapat" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -1271,8 +1281,18 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
-</body>
+<script src="js/i18n.js"></script><script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,es', autoDisplay: false}, 'google_translate_element');}</script><script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script><div id="google_translate_element" style="display:none"></div></body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
 
 
