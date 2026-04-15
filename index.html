@@ -135,8 +135,8 @@ body:has(a:hover) #cur-r,body:has(button:hover) #cur-r{width:48px;height:48px;op
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.7}
 
 /* ═══ SCROLL PROGRESS + BACK TO TOP ═══ */
-#scroll-top{position:fixed;bottom:28px;right:28px;z-index:200;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s;border:none;background:none}
-#scroll-top.vis{opacity:1;transform:translateY(0)}
+#scroll-top{position:fixed;bottom:28px;right:28px;z-index:200;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s;border:none;background:none;pointer-events:none}
+#scroll-top.vis{opacity:1;transform:translateY(0);pointer-events:auto}
 #scroll-top svg.ring{position:absolute;inset:0;width:48px;height:48px;transform:rotate(-90deg)}
 #scroll-top .ring-bg{fill:none;stroke:var(--ts);stroke-width:2.5}
 #scroll-top .ring-fill{fill:none;stroke:var(--acc);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:138.2;stroke-dashoffset:138.2;transition:stroke-dashoffset .1s linear}
@@ -432,7 +432,7 @@ footer{padding:32px 0;border-top:1px solid var(--pnl-bd);position:relative;z-ind
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <!-- SCROLL TOP BUTTON -->
-<button id="scroll-top" aria-label="Sayfanın başına dön" onclick="smoothS(0,800)">
+<button id="scroll-top" aria-label="Sayfanın başına dön" onclick="scrollToTop()">
   <div class="inner-bg"></div>
   <svg class="ring" viewBox="0 0 48 48" aria-hidden="true">
     <circle class="ring-bg" cx="24" cy="24" r="22"/>
@@ -1083,7 +1083,7 @@ const TD={
     {c:'to',v:'Eğitim:    Çift Önlisans (Ankara Ü. + Atatürk Ü.)'},
     {c:'to',v:'GitHub:    github.com/cyberQbit'},
     {c:'to',v:'LinkedIn:  linkedin.com/in/aydinaydmr'},
-    {c:'to',v:'Projeler:  14+ repo | 479+ commit'},
+    {c:'to',v:'Projeler:  14+ repo | 483+ commit'},
     {c:'',v:''},
     {c:'tdim',v:'Gönüllü:   AFAD + İHH (Şubat 2023—)'},
   ],
@@ -1294,6 +1294,7 @@ if('serviceWorker' in navigator){
 </script>
 <script src="js/i18n.js"></script><script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage: 'tr', includedLanguages: 'tr,en,es', autoDisplay: false}, 'google_translate_element');}</script><script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script><div id="google_translate_element" style="display:none"></div></body>
 </html>
+
 
 
 

@@ -1,0 +1,447 @@
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:960px){
+  .hg{grid-template-columns:1fr;gap:32px}
+  .ag{grid-template-columns:1fr}
+  .tools-big-inner{grid-template-columns:1fr}
+  .pg{grid-template-columns:1fr}
+  .nl .nb:not(.tbtn):not(.ncta){display:none}
+  .ham{display:flex}
+  .hero-photo{order:-1;display:flex;justify-content:center}
+  .hero-photo-inner{width:160px!important;height:160px!important;border-radius:50%}
+}
+@media(max-width:640px){
+  .w{padding:0 16px}
+  section{padding:68px 0}
+  .tools-small{grid-template-columns:1fr}
+  .sg{grid-template-columns:1fr}
+  .cgrid{grid-template-columns:1fr}
+  .sb{gap:20px}
+  .cc{padding:36px 22px}
+  .nl{gap:4px}
+  #scroll-top{bottom:16px;right:16px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  #bg-canvas{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+<div id="loader" role="status" aria-label="Yükleniyor">
+  <div class="ld-logo" aria-hidden="true">
+    <span class="ld-char">c</span><span class="ld-char">y</span><span class="ld-char">b</span><span class="ld-char">e</span><span class="ld-char">r</span><span class="ld-char">Q</span><span class="ld-char">b</span><span class="ld-char">i</span><span class="ld-char">t</span>
+  </div>
+  <div class="ld-bar"><div class="ld-prog"></div></div>
+  <div class="ld-sub">Aydın Aydemir • Portfolio</div>
+</div>
+
+<div id="cur" aria-hidden="true"></div>
+<div id="cur-r" aria-hidden="true"></div>
+<div id="pt" aria-hidden="true"></div>
+
+<!-- ANIMATED CANVAS BG -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<!-- SCROLL TOP BUTTON -->
+<button id="scroll-top" aria-label="Sayfanın başına dön" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <div class="inner-bg"></div>
+  <svg class="ring" viewBox="0 0 48 48" aria-hidden="true">
+    <circle class="ring-bg" cx="24" cy="24" r="22"/>
+    <circle class="ring-fill" id="ring-fill" cx="24" cy="24" r="22"/>
+  </svg>
+  <span class="arr" aria-hidden="true">↑</span>
+</button>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Ana navigasyon">
+  <div class="ni">
+    <a href="#" class="logo" aria-label="cyberQbit — Ana Sayfa">
+      <img src="/A.ico" alt="cyberQbit favicon" class="logo-img" 
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="logo-fb" style="display:none">cQ</div>
+      <span class="lt">cyber<span>Qbit</span></span>
+    </a>
+    <div class="nl">
+      <button class="nb act" onclick="scr('hero')">Ana Sayfa</button>
+      <button class="nb" onclick="scr('experience')">Deneyim</button>
+      <button class="nb" onclick="scr('projects')">Projeler</button>
+      <button class="nb" onclick="scr('tools')">Araçlar</button>
+      <button class="nb" onclick="scr('about')">Hakkında</button>
+      <button class="tbtn" onclick="toggleTerm()" aria-label="Terminal aç/kapat">⌘ Terminal</button>
+      <a href="https://aydinaydmr.com.tr/CV-olustur/" class="ncta" onclick="return cvTransition(event)">CV Oluştur →</a>
+      <button class="ham" id="ham-btn" onclick="toggleMob()" aria-label="Menüyü aç/kapat" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mob-menu" role="navigation" aria-label="Mobil navigasyon">
+  <button class="nb" onclick="scr('hero');closeMob()">Ana Sayfa</button>
+  <button class="nb" onclick="scr('experience');closeMob()">Deneyim</button>
+  <button class="nb" onclick="scr('projects');closeMob()">Projeler</button>
+  <button class="nb" onclick="scr('tools');closeMob()">Araçlar</button>
+  <button class="nb" onclick="scr('about');closeMob()">Hakkında</button>
+  <button class="nb" onclick="toggleTerm();closeMob()">⌘ Terminal</button>
+  <a href="https://aydinaydmr.com.tr/CV-olustur/" class="ncta" onclick="return cvTransition(event)" style="margin-top:4px;justify-content:center">CV Oluştur →</a>
+</div>
+
+<!-- HERO -->
+<section id="hero" aria-label="Ana Sayfa">
+  <div class="w">
+    <div class="hg" id="hg">
+      <div>
+        <div class="sdot" role="status">BT Stajyeri @ İş Yazılım — Devam Ediyor</div>
+        <h1 class="hn">
+          Aydın<br>
+          <span class="cy">Aydemir</span>
+          <span class="dm">@cyberQbit</span>
+        </h1>
+        <p class="hd">Ankara Üniversitesi'nde Bilgisayar Programcılığı ve Atatürk Üniversitesi'nde Web Tasarım & Kodlama alanlarında çift önlisans yapan; Android, Windows ve Web araçları geliştiren bir yazılım öğrencisiyim.</p>
+        <div class="ha">
+          <button class="bp magnetic" onclick="scr('projects')">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Projeleri Gör
+          </button>
+          <a href="https://linkedin.com/in/aydinaydmr" target="_blank" rel="noopener" class="bs">LinkedIn</a>
+          <a href="https://github.com/cyberQbit" target="_blank" rel="noopener" class="bs">GitHub</a>
+        </div>
+        <div class="sb" role="list" aria-label="İstatistikler">
+          <div class="st" role="listitem"><span class="sn">14<sup>+</sup></span><span class="sl">Açık kaynak proje</span></div>
+          <div class="st" role="listitem"><span class="sn">479<sup>+</sup></span><span class="sl">Commit</span></div>
+          <div class="st" role="listitem"><span class="sn">2</span><span class="sl">Üniversite</span></div>
+          <div class="st" role="listitem"><span class="sn">2</span><span class="sl">Gönüllü kuruluş</span></div>
+        </div>
+      </div>
+
+      <!-- PROFILE PHOTO -->
+      <div class="hero-photo" id="hero-photo-wrap" aria-hidden="true">
+        <div class="hero-photo-inner" id="photo-inner">
+          <img src="https://aydinaydmr.com.tr/images/profile_placeholder.webp"
+               alt="Aydın Aydemir profil fotoğrafı"
+               loading="eager"
+               fetchpriority="high"
+               onerror="this.parentElement.classList.add('photo-error')">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" aria-label="İş Deneyimi">
+  <div class="w">
+    <div class="sh rev">
+      <span class="stag">// deneyim</span>
+      <h2 class="sttl">İş <em>Deneyimi</em></h2>
+    </div>
+    <div class="etl" role="list">
+      <article class="ei cur rev" role="listitem">
+        <div class="etop">
+          <div>
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:5px;flex-wrap:wrap">
+              <span class="erol">BT Stajyeri (IT Intern)</span>
+              <span class="ebdg">Devam Ediyor</span>
+            </div>
+            <div class="eco">İş Yazılım</div>
+          </div>
+          <div class="edt">Şubat 2026 — Günümüz</div>
+        </div>
+        <p class="ede">BT departmanında sistem yönetimi, ağ yapılandırması ve kullanıcı desteği görevlerinde çalıştım. Sistem güvenliği ve veri yönetimi konularında deneyim kazandım.</p>
+      </article>
+      <article class="ei rev" role="listitem">
+        <div class="etop">
+          <div>
+            <div class="erol">AFAD Gönüllüsü</div>
+            <div class="eco" style="color:var(--ind)">T.C. İçişleri Bakanlığı — AFAD</div>
+          </div>
+          <div class="edt">Şubat 2023 — Günümüz</div>
+        </div>
+        <p class="ede">Afet ve acil durum yönetiminde aktif saha gönüllüsü. Kriz anında koordinasyon ve toplumsal destek faaliyetleri.</p>
+      </article>
+      <article class="ei rev" role="listitem">
+        <div class="etop">
+          <div>
+            <div class="erol">İHH Gönüllüsü</div>
+            <div class="eco">İHH İnsani Yardım Vakfı</div>
+          </div>
+          <div class="edt">Şubat 2023 — Günümüz</div>
+        </div>
+        <p class="ede">İnsani yardım projelerinde aktif gönüllülük. Koordinasyon ve saha çalışması.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" aria-label="Projeler">
+  <div class="w">
+    <div class="sh rev">
+      <span class="stag">// projeler</span>
+      <h2 class="sttl">İnşa <em>Ettiklerim</em></h2>
+      <p class="ssub">Gerçek ihtiyaçlardan doğan, açık kaynak projeler. Hepsine GitHub'dan ulaşabilirsin.</p>
+    </div>
+    <div class="pg" role="list">
+
+      <article class="pc rev" role="listitem" onclick="openMod('ceptekabin')">
+        <div class="ph">
+          <div class="pico icg">👗</div>
+          <div class="pbs"><span class="bdg bg2">⭐ Google Play Alpha</span><span class="bdg ba">v2.2</span></div>
+        </div>
+        <h3 class="pn">CepteKabin</h3>
+        <p class="pdsc">Yapay zeka destekli dijital gardırop uygulaması. WeatherOutfitEngine ile 7 hava kategorisinde kombin önerisi, ML Kit barkod tarama, 30 günlük takvim ve Firebase bulut senkronizasyonu.</p>
+        <div class="pts"><span class="ptag">Kotlin</span><span class="ptag">Jetpack Compose</span><span class="ptag">Firebase</span><span class="ptag">ML Kit</span><span class="ptag">Room DB</span></div>
+        <div class="pas">
+          <a href="https://github.com/cyberQbit/CepteKabin/releases/latest" target="_blank" rel="noopener" class="pab pp" onclick="event.stopPropagation()">APK İndir</a>
+          <a href="https://github.com/cyberQbit/CepteKabin" target="_blank" rel="noopener" class="pab pg2" onclick="event.stopPropagation()">GitHub</a>
+          <button class="pab pg2" style="flex:0;padding:7px 9px" onclick="event.stopPropagation();openMod('ceptekabin')">Detay</button>
+        </div>
+      </article>
+
+      <article class="pc rev rd1" role="listitem" onclick="openMod('swifthub')">
+        <div class="ph">
+          <div class="pico icb">🌌</div>
+          <div class="pbs"><span class="bdg bc">Windows</span><span class="bdg bi">Zero-Footprint</span></div>
+        </div>
+        <h3 class="pn">SwiftHub Core</h3>
+        <p class="pdsc">cyberQbit ekosisteminin merkez komuta çekirdeği. Tek PowerShell satırıyla WinSwift, DevSwift, NetSwift ve Core modüllerini bellekten çalıştıran sıfır iz mimarisi.</p>
+        <div class="pts"><span class="ptag">PowerShell</span><span class="ptag">Batch</span><span class="ptag">Windows Terminal</span><span class="ptag">WinGet</span></div>
+        <div class="pas">
+          <button class="pab pp" onclick="event.stopPropagation();openMod('swifthub')">Nasıl Kullanılır</button>
+          <a href="https://github.com/cyberQbit/SwiftHub" target="_blank" rel="noopener" class="pab pg2" onclick="event.stopPropagation()">GitHub</a>
+        </div>
+      </article>
+
+      <article class="pc rev" role="listitem" onclick="openMod('mooweather')">
+        <div class="ph">
+          <div class="pico icb">🌤</div>
+          <div class="pbs"><span class="bdg bc">Flutter</span><span class="bdg bi">Full-Stack</span></div>
+        </div>
+        <h3 class="pn">MooWeather Mobile</h3>
+        <p class="pdsc">Flutter ile geliştirilmiş premium tam yığın hava durumu uygulaması. Glassmorphism UI, Google Sign-In, özel C# .NET backend, TR/EN/ES dil desteği ve bulut senkronizasyonu.</p>
+        <div class="pts"><span class="ptag">Flutter</span><span class="ptag">Dart</span><span class="ptag">Firebase</span><span class="ptag">Riverpod</span><span class="ptag">OpenWeather API</span></div>
+        <div class="pas">
+          <a href="https://github.com/cyberQbit/MooWeather-Mobile/releases/download/v1.0.0/MooWeather.apk" target="_blank" rel="noopener" class="pab pp" onclick="event.stopPropagation()">APK İndir</a>
+          <a href="https://github.com/cyberQbit/MooWeather-Mobile" target="_blank" rel="noopener" class="pab pg2" onclick="event.stopPropagation()">GitHub</a>
+        </div>
+      </article>
+
+      <article class="pc rev rd1" role="listitem" onclick="openMod('mooback')">
+        <div class="ph">
+          <div class="pico ici">⚙️</div>
+          <div class="pbs"><span class="bdg bi">REST API</span><span class="bdg bc">C# .NET</span></div>
+        </div>
+        <h3 class="pn">MooWeather Backend</h3>
+        <p class="pdsc">MooWeather Mobile için geliştirilmiş C# .NET Core REST API. Kullanıcı kimlik doğrulaması, favori lokasyon yönetimi ve cihazlar arası bulut senkronizasyonu.</p>
+        <div class="pts"><span class="ptag">C#</span><span class="ptag">.NET Core</span><span class="ptag">REST API</span><span class="ptag">Firebase</span></div>
+        <div class="pas">
+          <a href="https://github.com/cyberQbit/MooWeather-BackEnd" target="_blank" rel="noopener" class="pab pg2" onclick="event.stopPropagation()">GitHub →</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section id="tools" aria-label="Araçlar">
+  <div class="w">
+    <div class="sh rev">
+      <span class="stag">// araçlar</span>
+      <h2 class="sttl">Canlı <em>Araçlar</em></h2>
+      <p class="ssub">Terminalde ya da tarayıcıda, tek komutla çalışan araçlar.</p>
+    </div>
+
+    <!-- SwiftHub BIG -->
+    <div class="tools-big rev" onclick="openMod('swifthub')" role="article" aria-label="SwiftHub Core aracı">
+      <div class="tools-big-inner">
+        <div>
+          <div style="font-family:var(--mono);font-size:9.5px;color:var(--acc);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px">⭐ Öne Çıkan Araç</div>
+          <h3 style="font-family:var(--disp);font-size:24px;font-weight:800;letter-spacing:-.7px;margin-bottom:8px">SwiftHub Core</h3>
+          <p style="font-size:13.5px;color:var(--tm);line-height:1.65;max-width:480px;margin-bottom:18px">cyberQbit ekosisteminin merkez komuta çekirdeği. Zero-footprint mimarisi ile disk'e hiçbir iz bırakmadan WinSwift, DevSwift, NetSwift ve Core modüllerini çalıştırır.</p>
+          <div style="background:var(--bg3);border:1px solid var(--pnl-bd);border-radius:var(--r-md);padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--acc);display:flex;align-items:center;gap:8px;width:fit-content;max-width:100%;overflow-x:auto;margin-bottom:18px">
+            <span style="color:var(--tm);flex-shrink:0">PS&gt;</span>
+            <span style="white-space:nowrap">irm aydinaydmr.com.tr/core | iex</span>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="bp magnetic" onclick="event.stopPropagation();openMod('swifthub')">Nasıl Kullanılır</button>
+            <a href="https://github.com/cyberQbit/SwiftHub" target="_blank" rel="noopener" class="bs" onclick="event.stopPropagation()">GitHub Reposu</a>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <div style="background:var(--bg3);border:1px solid var(--pnl-bd);border-radius:var(--r-md);padding:13px 17px;font-family:var(--mono);font-size:10.5px;color:var(--tm);line-height:2;white-space:nowrap">
+            <span style="color:var(--grn)">✓</span> WinSwift — Optimize Edici<br>
+            <span style="color:var(--grn)">✓</span> DevSwift — İnşa Edici<br>
+            <span style="color:var(--grn)">✓</span> NetSwift — Koruyucu<br>
+            <span style="color:var(--grn)">✓</span> Core — Tanı Motoru<br>
+            <span style="color:var(--grn)">✓</span> Zero-Footprint Mimari
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Small tools grid -->
+    <div class="tools-small rev">
+      <a href="https://github.com/cyberQbit/MooWeather-Mobile/releases/download/v1.0.0/MooWeather.apk" target="_blank" rel="noopener" class="tc" aria-label="MooWeather Mobile indirme">
+        <div class="tico icb">🌤</div>
+        <div class="tn">MooWeather Mobile</div>
+        <div class="tdesc">Flutter ile geliştirilmiş premium hava durumu uygulaması. Glassmorphism UI, Google Sign-In, C# .NET backend.</div>
+        <div class="tfoot">
+          <div class="tsl">APK v1.0.0</div>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--ts)">Flutter + Dart</span>
+        </div>
+      </a>
+      <div class="tc" onclick="openMod('ceptekabin')" role="article" aria-label="CepteKabin uygulaması">
+        <div class="tico icg">👗</div>
+        <div class="tn">CepteKabin</div>
+        <div class="tdesc">Yapay zeka destekli dijital gardırop. Google Play Kapalı Test (Alpha) sürecinde. APK GitHub'dan indirilebilir.</div>
+        <div class="tfoot">
+          <div class="tsl">Google Play Alpha</div>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--ts)">Kotlin + Compose</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" aria-label="Hakkında">
+  <div class="w">
+    <div class="sh rev">
+      <span class="stag">// hakkında</span>
+      <h2 class="sttl">Ben <em>Kimim?</em></h2>
+    </div>
+    <div class="ag">
+      <div class="rev">
+        <div class="at2">
+          <p>Merhaba! Ben <strong>Aydın Aydemir</strong>, <strong>cyberQbit</strong> olarak bilinen bir yazılım öğrencisi ve geliştiricisi.</p>
+          <p>Hem <strong>Ankara Üniversitesi</strong>'nde Bilgisayar Programcılığı hem de <strong>Atatürk Üniversitesi</strong>'nde Web Tasarım ve Kodlama alanlarında çift önlisans yapıyorum.</p>
+          <p>Android mobil uygulamalardan Windows scripting araçlarına, React web uygulamalarından C# .NET backend API'lerine kadar geniş bir yelpazede proje geliştiriyorum. Siber güvenlik, açık kaynak ekosistemi ve kullanıcı odaklı tasarım üçgeninde çalışmayı seviyorum.</p>
+          <p>Aynı zamanda <strong><a href="https://github.com/sponsors/cyberQbit" target="_blank" rel="noopener">GitHub Sponsors</a></strong> ve <strong><a href="https://patreon.com/aydinaydmr" target="_blank" rel="noopener">Patreon</a></strong> üzerinden desteklenebilir bir açık kaynak geliştiriciyim.</p>
+        </div>
+        <div class="alinks">
+          <a href="https://linkedin.com/in/aydinaydmr" target="_blank" rel="noopener" class="alink">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/cyberQbit" target="_blank" rel="noopener" class="alink">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77A5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="https://patreon.com/aydinaydmr" target="_blank" rel="noopener" class="alink">Patreon</a>
+          <a href="https://aydinaydmr.com.tr/CV-olustur/" class="alink" onclick="return cvTransition(event)">CV Oluştur</a>
+        </div>
+
+        <div style="margin-top:28px">
+          <div class="stag" style="margin-bottom:14px">// eğitim</div>
+          <div class="edu-list" role="list">
+            <div class="ec" role="listitem"><div class="ei2">🎓</div><div><div class="en">Ankara Üniversitesi</div><div class="edp">Önlisans — Bilgisayar Programcılığı</div><div class="edatee">Ekim 2024 — Devam Ediyor</div></div></div>
+            <div class="ec" role="listitem"><div class="ei2">🎓</div><div><div class="en">Atatürk Üniversitesi</div><div class="edp">Önlisans — Web Tasarım ve Kodlama</div><div class="edatee">Ekim 2024 — Devam Ediyor</div></div></div>
+            <div class="ec" role="listitem"><div class="ei2">🏫</div><div><div class="en">Pursaklar Anadolu Lisesi</div><div class="edp">Lise Diploması — Sayısal</div><div class="edatee">Eylül 2020 — Haziran 2024</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rev rd1">
+        <div class="sg">
+          <div class="sc"><div class="scat">Mobile</div><div class="sps"><span class="sp2">Kotlin</span><span class="sp2">Jetpack Compose</span><span class="sp2">Flutter</span><span class="sp2">Dart</span><span class="sp2">Android</span></div></div>
+          <div class="sc"><div class="scat">Web & Backend</div><div class="sps"><span class="sp2">React</span><span class="sp2">TypeScript</span><span class="sp2">HTML/CSS</span><span class="sp2">C#</span><span class="sp2">.NET Core</span></div></div>
+          <div class="sc"><div class="scat">Database & Cloud</div><div class="sps"><span class="sp2">Firebase</span><span class="sp2">Room DB</span><span class="sp2">SQL</span><span class="sp2">MS SQL Server</span><span class="sp2">Firestore</span></div></div>
+          <div class="sc"><div class="scat">Araçlar & Sistem</div><div class="sps"><span class="sp2">Git</span><span class="sp2">GitHub</span><span class="sp2">PowerShell</span><span class="sp2">Python</span><span class="sp2">Vite</span></div></div>
+          <div class="sc" style="grid-column:span 2"><div class="scat">İlgi & Uzmanlık</div><div class="sps"><span class="sp2">Siber Güvenlik</span><span class="sp2">Açık Kaynak</span><span class="sp2">Clean Architecture</span><span class="sp2">MVVM</span><span class="sp2">UI/UX</span><span class="sp2">Bulut Bilişim</span><span class="sp2">API Geliştirme</span></div></div>
+        </div>
+        <div style="margin-top:20px">
+          <div class="stag" style="margin-bottom:12px">// sertifikalar</div>
+          <div class="certg" role="list">
+            <div class="crt" role="listitem">Siber Güvenlik Esasları (LinkedIn)</div>
+            <div class="crt" role="listitem">İş Yerinde Siber Güvenlik (LinkedIn)</div>
+            <div class="crt" role="listitem">Bulut Bilişim: Temel Kavramlar (LinkedIn)</div>
+            <div class="crt" role="listitem">Bulut Depolama & Güvenlik (LinkedIn)</div>
+            <div class="crt" role="listitem">Programlama Esasları: API'lar (LinkedIn)</div>
+            <div class="crt" role="listitem">Yazılım Mimarisi Esasları (LinkedIn)</div>
+            <div class="crt" role="listitem">Seviye Atlayın: Python (LinkedIn)</div>
+            <div class="crt" role="listitem">JavaScript & HTML Temel Eğitimi (LinkedIn)</div>
+            <div class="crt" role="listitem">Güvenlik için Microsoft Copilot (LinkedIn)</div>
+            <div class="crt" role="listitem">Veri Analitiği Kariyer Yetenekleri (LinkedIn)</div>
+          </div>
+          <p style="font-family:var(--mono);font-size:9.5px;color:var(--ts);margin-top:7px">+ MEB: Bilgisayar İşletmenliği, Hızlı Klavye</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-label="İletişim">
+  <div class="w">
+    <div class="cc rev">
+      <h2 class="cttl">İletişime Geç</h2>
+      <p class="csub">Proje fikrin mi var, iş birliği mi istiyorsun ya da sadece merhaba mı demek istiyorsun?</p>
+      <div class="cgrid" role="list">
+        <a href="mailto:aydinaydmr@proton.me" class="cit" role="listitem">
+          <div class="cico">✉️</div>
+          <div class="clbl">E-posta</div>
+          <div class="cval">aydinaydmr@proton.me</div>
+        </a>
+        <a href="https://linkedin.com/in/aydinaydmr" target="_blank" rel="noopener" class="cit" role="listitem">
+          <div class="cico">💼</div>
+          <div class="clbl">LinkedIn</div>
+          <div class="cval">/in/aydinaydmr</div>
+        </a>
+        <button class="cit" onclick="toggleTerm()" role="listitem">
+          <div class="cico">💻</div>
+          <div class="clbl">Terminal</div>
+          <div class="cval">⌘ + ` kısayolu</div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="w">
+    <div class="fi">
+      <div class="fl">© 2026 <strong>Aydın Aydemir</strong> (@cyberQbit) — Tüm hakları saklıdır.<br>Ankara, Türkiye 🇹🇷</div>
+      <div class="fr">
+        <button class="fln" onclick="toggleTerm()">⌘ terminal</button>
+        <a href="https://aydinaydmr.com.tr/privacypolicy.html" class="fln">gizlilik</a>
+        <a href="https://github.com/cyberQbit" target="_blank" rel="noopener" class="fln">github</a>
+        <a href="https://linkedin.com/in/aydinaydmr" target="_blank" rel="noopener" class="fln">linkedin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TERMINAL -->
+<div id="terminal" role="dialog" aria-label="Terminal" aria-modal="false">
+  <div class="thdr">
+    <div class="thdr-l">
+      <div class="tdots" aria-hidden="true"><div class="td3 tdr"></div><div class="td3 tdy"></div><div class="td3 tdg"></div></div>
+      <div class="thdrtl">aydin@cyberqbit — portfolio terminal v2.0</div>
+    </div>
+    <button class="tcls" onclick="toggleTerm()" aria-label="Terminali kapat">✕ kapat</button>
+  </div>
+  <div class="tout" id="tout" role="log" aria-live="polite" aria-label="Terminal çıktısı"></div>
+  <div class="tinp-r">
+    <span class="tpmt" aria-hidden="true"><span style="color:var(--grn)">aydin</span><span style="color:var(--tm)">@</span><span style="color:var(--acc)">cyberqbit</span><span style="color:var(--tm)">:~$</span></span>
+    <input type="text" id="term-in" placeholder="komut gir... (help)" autocomplete="off" spellcheck="false" aria-label="Terminal komut girişi">
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="mo" role="dialog" aria-modal="true" aria-label="Proje detayları" onclick="if(event.target===this)closeMod()">
+  <div class="mb" id="mc" tabindex="-1"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   LOADING SCREEN
+══════════════════════════════════════════ */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('hide');
+    document.body.style.overflow='';
+  }

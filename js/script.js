@@ -5,7 +5,7 @@ const themeToggleButton = document.getElementById('theme-toggle');
 const languageSwitcher = document.querySelector('.language-switcher');
 const allLangButtons = languageSwitcher ? languageSwitcher.querySelectorAll('button') : [];
 const htmlTag = document.documentElement;
-const scrollTopButton = document.getElementById('scrollToTop');
+const scrollTopButton = document.getElementById('scroll-top');
 const particleContainer = document.querySelector('.particle-container');
 const animatedElements = document.querySelectorAll('.content-block, .quote-section');
 
@@ -566,7 +566,15 @@ function scrollToTop() {
 
 function handleScrollButtonVisibility() {
     if (!scrollTopButton) return;
-    scrollTopButton.style.display = window.scrollY > 200 ? 'flex' : 'none';
+    if (window.scrollY > 200) {
+        scrollTopButton.classList.add('vis');
+        // also setting pointer-events to auto if not handled via css or display
+        if(scrollTopButton.style.display === 'none') {
+            scrollTopButton.style.display = 'flex';
+        }
+    } else {
+        scrollTopButton.classList.remove('vis');
+    }
 }
 
 function updateScrollCircle() {
