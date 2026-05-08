@@ -4,5 +4,5 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm aydinaydmr.com.tr/core | iex`"" -Verb RunAs
     exit
 }
-# Pure RAM Execution (Zero-Footprint Ultimate)
+# Zero-Footprint Bulut Tetikleyicisi (Typo Fix)
 irm "https://raw.githubusercontent.com/cyberQbit/SwiftHub/main/SwiftHub.ps1?t=$((Get-Date).Ticks)" | iex
